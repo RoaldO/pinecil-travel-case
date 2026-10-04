@@ -37,7 +37,7 @@ De indeling van binnen (layout **B**):
 - **Bovenste rij:** twee punten, met daartussen een smal kanaal voor de lange
   poot van het inbussleuteltje.
 
-Buitenmaat ongeveer **56 breed × 38 hoog**.
+Buitenmaat ongeveer **60 breed × 38 hoog**.
 
 ### Twee materialen, twee lagen
 
@@ -84,8 +84,8 @@ punten: als de koker open is ligt hij **helemaal vrij** en is hij je grip om
 het sleuteltje eruit te trekken.
 
 De haakse poot (16 mm) past niet horizontaal — vanaf het midden is daar maar
-~14 mm ruimte — dus hij wijst **schuin omlaag naar één kant** (35°), langs de
-schouder van de bout. Hoek en kant zijn parameters. (Met een iets bredere
+~14 mm ruimte — dus hij wijst **schuin omlaag naar één kant** (15°), net over de
+schouder van de bout heen. Hoek en kant zijn parameters. (Met een iets bredere
 bovenkant kan hij ook horizontaal.)
 
 In de voorkant van inzetstuk B zit een **open kuiltje** dat bij het dichtdoen

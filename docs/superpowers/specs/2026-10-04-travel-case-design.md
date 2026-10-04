@@ -1,6 +1,6 @@
 # Pinecil V2 travel case — design spec
 
-Date: 2026-10-04. Status: approved in brainstorm, pending written-spec review.
+Date: 2026-10-04. Status: approved 2026-10-04. Revised while planning: `KEY_LEG_ANGLE` −35° → −15°, `ARC_QUAD_SEGMENTS`, criterion 12.
 
 The plain-language description of the model is [`docs/model.md`](../../model.md)
 (Dutch, kept current). This spec records the decisions, the geometry
@@ -68,7 +68,7 @@ the cap half.
 | `INSERT_CORNER_RADIUS` | 3.0 | trapezoid corner radius |
 | `TOP_EXTRA_WIDTH` | 0.0 | widen the top flat (for the groove margin) |
 | `TIP_GRIP` | 11.0 | tip protrusion past insert A's split face |
-| `KEY_LEG_ANGLE` | -35.0 | short leg, degrees from horizontal (negative = down) |
+| `KEY_LEG_ANGLE` | -15.0 | short leg, degrees from horizontal (negative = down). The brainstorm sketch had −35°, but with the key resting just above the iron (as modelled) −35° hits the iron; −20°…−5° fit. |
 | `KEY_LEG_SIDE` | 1 | +1 / −1: which side the short leg points to |
 | `POCKET_CLEARANCE` | 1.0 | grip pocket around tip ends and short leg |
 
@@ -82,7 +82,6 @@ the cap half.
 | `GLUE_CLEARANCE` | 0.2 | insert → own shell half |
 | `SLIDE_CLEARANCE` | 0.2 | insert A → shell B (overlap) |
 | `OVERLAP` | 20.0 | insert A protrusion from shell A |
-| `SPLIT_GAP` | 0.0 | material removed at a cut (0 = plain cut) |
 
 ### Velcro
 
@@ -93,6 +92,12 @@ the cap half.
 | `VELCRO_CLEARANCE` | 0.3 | added to the ring thickness and width |
 | `VELCRO_BOTTOM_LAYERS` | 2 | |
 | `BAND_BEND_RADIUS` | 5.0 | inner block corner radius |
+
+### Modelling
+
+| Name | Value | Note |
+|---|---|---|
+| `ARC_QUAD_SEGMENTS` | 16 | segments per quarter circle for every round 2D shape (≈ 0.007 mm deviation at r = 5.5) |
 
 ### Logo / print
 
@@ -187,6 +192,7 @@ the cap half.
 10. Band channel is continuous: everywhere ≥ `VELCRO_THICKNESS` (× layers)
     + `VELCRO_CLEARANCE` thick, so the band can be threaded after gluing.
 11. End stop: each insert touches its shell's end cap outside the band width.
+12. The key's short leg stays ≥ 2 × `ITEM_CLEARANCE` clear of the iron.
 
 ## Out of scope (later)
 
