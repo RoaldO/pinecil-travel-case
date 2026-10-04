@@ -11,7 +11,7 @@ from __future__ import annotations
 import math
 from functools import cache
 
-from shapely.geometry import Polygon
+from shapely.geometry import LineString, Polygon
 from shapely.geometry.base import BaseGeometry
 from shapely.ops import unary_union
 
@@ -81,7 +81,27 @@ def insert_trapezoid() -> tuple[float, float, float, float]:
     m = int(TOP_SEARCH_COARSE / TOP_SEARCH_FINE)
     best = search(centre + i * TOP_SEARCH_FINE for i in range(-m, m + 1)) or best
     _, bottom_hw, top_hw = best
+    top_hw = _widen_for_flush_groove(bottom_hw, top_hw, z0, z1)
     return bottom_hw, top_hw + p.TOP_EXTRA_WIDTH / 2, z0, z1
+
+
+def _widen_for_flush_groove(bottom_hw: float, top_hw: float, z0: float, z1: float) -> float:
+    """Smallest top half-width >= ``top_hw`` at which the band's edges still
+    lie a full layer deep in the top groove (a wider strap widens the top)."""
+    def flush(top: float) -> bool:
+        shell = _shell_around((bottom_hw, top, z0, z1))
+        return groove_edge_walls(shell)[0] >= p.VELCRO_THICKNESS
+
+    if flush(top_hw):
+        return top_hw
+    lo, hi = top_hw, top_hw + band_half_width()
+    while hi - lo > FIT_RESOLUTION:
+        mid = (lo + hi) / 2
+        if flush(mid):
+            hi = mid
+        else:
+            lo = mid
+    return hi
 
 
 def insert_profile() -> BaseGeometry:
@@ -89,10 +109,10 @@ def insert_profile() -> BaseGeometry:
     return rounded_trapezoid(b, t, z0, z1, p.INSERT_CORNER_RADIUS)
 
 
-def _grown_trapezoid(side: float, bottom: float, top: float):
-    """Insert trapezoid with its sides moved out by ``side`` (perpendicular)
-    and its bottom/top faces moved out by ``bottom``/``top``."""
-    b, t, z0, z1 = insert_trapezoid()
+def _grown_trapezoid(trap, side: float, bottom: float, top: float):
+    """Insert trapezoid ``trap`` with its sides moved out by ``side``
+    (perpendicular) and its bottom/top faces moved out by ``bottom``/``top``."""
+    b, t, z0, z1 = trap
     slope = (b - t) / (z1 - z0)  # half-width lost per mm of height
     shift = side * math.hypot(1, slope)  # horizontal shift of a slanted side
     nz0, nz1 = z0 - bottom, z1 + top
@@ -103,8 +123,13 @@ def _grown_trapezoid(side: float, bottom: float, top: float):
 
 def shell_profile() -> BaseGeometry:
     """Outer contour of the shell (z=0 at the bottom face)."""
+    return _shell_around(insert_trapezoid())
+
+
+def _shell_around(trap) -> BaseGeometry:
     side = p.GLUE_CLEARANCE + p.SHELL_SIDE_WALL
     nb, nt, nz0, nz1 = _grown_trapezoid(
+        trap,
         side,
         p.GLUE_CLEARANCE + p.SHELL_BOTTOM_WALL,
         p.GLUE_CLEARANCE + p.SHELL_TOP_WALL,
@@ -119,3 +144,19 @@ def insert_cavity(clearance: float) -> BaseGeometry:
 
 def case_height() -> float:
     return shell_profile().bounds[3]
+
+
+def band_half_width() -> float:
+    """Half the width of the band channel (band + clearance)."""
+    return p.VELCRO_WIDTH / 2 + p.VELCRO_CLEARANCE
+
+
+def groove_edge_walls(shell: BaseGeometry | None = None) -> tuple[float, float]:
+    """(top, bottom): height of the shell's surface above / below the groove
+    floor at the groove's edges. The band lies flush only if these are at
+    least one band layer (top) and VELCRO_BOTTOM_LAYERS layers (bottom)."""
+    shell = shell_profile() if shell is None else shell
+    _, z0, _, z1 = shell.bounds
+    edge = LineString([(band_half_width(), z0 - 1), (band_half_width(), z1 + 1)])
+    _, lo, _, hi = shell.intersection(edge).bounds
+    return hi - (z1 - p.RING_TOP), p.RING_BOTTOM - (lo - z0)

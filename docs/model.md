@@ -130,6 +130,10 @@ Omdat de goot niet door de PLA-wand heen mag, is de bovenwand
 Startwaarden voor het klittenband: 20 breed, 2 dik per laag, binnenbocht
 straal 5.
 
+Is het klittenband breder dan de platte bovenkant, dan wordt de bovenkant
+**vanzelf zo veel breder** dat de band ook aan zijn randen een volle laag
+diep in de goot ligt — hij steekt nergens uit.
+
 ### Het logo
 
 Het Pinecil-logo (de PINE64-dennenappel) zit als **doorkijkgat** in de kopse
@@ -171,4 +175,3 @@ laag: netjes, en er hoeft niets overbrugd te worden.
 
 - Exacte vorm van de kanalen voor bout en punten.
 - Werkelijke maten van het klittenband (breedte, dikte).
-- Of de bovenkant breder moet om de goot niet te smal te laten uitvallen.

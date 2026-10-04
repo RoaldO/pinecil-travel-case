@@ -4,7 +4,10 @@ import pytest
 
 from cad import params as p
 from cad.contents import key_short_leg_section
-from cad.profile import channel_sections, insert_profile, shell_profile
+from cad.profile import (channel_sections, groove_edge_walls, insert_profile,
+                         insert_trapezoid, shell_profile)
+
+WALL_TOLERANCE = 0.01  # mm, polygonised arcs
 
 
 def test_channels_keep_insert_wall_to_the_surface():
@@ -36,3 +39,20 @@ def test_bottom_is_wider_than_top():
     from shapely.geometry import LineString
     width = lambda z: prof.intersection(LineString([(-999, z), (999, z)])).length  # noqa: E731
     assert width(z0 + (z1 - z0) * 0.25) > width(z0 + (z1 - z0) * 0.75)
+
+
+@pytest.fixture
+def fresh_profiles():
+    """Clear the cached fit before and after a test that changes params."""
+    insert_trapezoid.cache_clear()
+    yield
+    insert_trapezoid.cache_clear()
+
+
+@pytest.mark.parametrize("velcro_width", [p.VELCRO_WIDTH, 25.0])
+def test_band_edges_lie_flush_in_the_grooves(monkeypatch, fresh_profiles, velcro_width):
+    """A wider strap must widen the top instead of standing proud at its edges."""
+    monkeypatch.setattr(p, "VELCRO_WIDTH", velcro_width)
+    top, bottom = groove_edge_walls()
+    assert top >= p.VELCRO_THICKNESS - WALL_TOLERANCE
+    assert bottom >= p.VELCRO_BOTTOM_LAYERS * p.VELCRO_THICKNESS - WALL_TOLERANCE

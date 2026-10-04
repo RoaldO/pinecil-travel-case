@@ -143,7 +143,9 @@ the cap half.
    and the swept short leg, all + `POCKET_CLEARANCE`.
 3. **Insert profile** (`profile.py`): the smallest symmetric rounded trapezoid
    (`INSERT_CORNER_RADIUS`) containing all channels offset by `INSERT_WALL`,
-   with the top half-width increased by `TOP_EXTRA_WIDTH` / 2.
+   with the top half-width widened just enough for the band's edges to lie
+   a full layer deep in the top groove (wider straps widen the top), then
+   increased by `TOP_EXTRA_WIDTH` / 2.
 4. **Shell profile**: the insert profile offset by `GLUE_CLEARANCE` +
    `SHELL_SIDE_WALL` at the sides, with the top/bottom faces moved out to
    `SHELL_TOP_WALL` / `SHELL_BOTTOM_WALL`; still a rounded trapezoid.
