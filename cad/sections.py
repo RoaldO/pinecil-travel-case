@@ -1,0 +1,111 @@
+"""Section renders straight from the 3D model, for checking by eye.
+
+    uv run python -m cad.sections   ->  build/sections.svg (+ .png via inkscape)
+
+Cross-sections (YZ) at a few X positions and one long section (XZ) through
+the middle, every part in its own colour, assembled (case closed).
+"""
+
+from __future__ import annotations
+
+import shutil
+import subprocess
+from pathlib import Path
+
+from build123d import Edge, GeomType, Plane
+
+from cad import params as p
+from cad.band import band_solid
+from cad.contents import contents_solids
+from cad.insert import insert_a, insert_b
+from cad.shell import shell_a, shell_b
+
+BUILD = Path(__file__).resolve().parent.parent / "build"
+SAMPLES_PER_CURVE = 24  # points per curved edge in the SVG
+PX_PER_MM = 8
+GAP = 12.0  # mm between panels
+
+COLOURS = {  # part name -> fill
+    "shell A": "#222222", "shell B": "#444444",
+    "insert A": "#e91e63", "insert B": "#f06292",
+    "band": "#1e88e5",
+    "iron": "#2e7d32", "key": "#555555",
+    "tip_bl": "#c08a2e", "tip_br": "#c08a2e", "tip_tl": "#c08a2e", "tip_tr": "#c08a2e",
+}
+
+
+def parts() -> dict:
+    out = {"shell A": shell_a(), "shell B": shell_b(), "insert A": insert_a(),
+           "insert B": insert_b(), "band": band_solid()}
+    out.update(contents_solids())
+    return out
+
+
+def _edge_points(edge: Edge) -> list:
+    if edge.geom_type == GeomType.LINE:
+        return [edge.position_at(0)]
+    return [edge.position_at(i / SAMPLES_PER_CURVE) for i in range(SAMPLES_PER_CURVE)]
+
+
+def _face_path(face, to_2d) -> str:
+    d = []
+    for wire in [face.outer_wire(), *face.inner_wires()]:
+        pts = [to_2d(v) for e in wire.order_edges() for v in _edge_points(e)]
+        d.append("M " + " L ".join(f"{a:.3f},{-b:.3f}" for a, b in pts) + " Z")
+    return " ".join(d)
+
+
+def _panel(all_parts: dict, plane: Plane, to_2d, title: str) -> tuple[str, tuple]:
+    paths, xs, ys = [], [], []
+    for name, solid in all_parts.items():
+        for face in solid.intersect(plane) or []:
+            paths.append(f'<path d="{_face_path(face, to_2d)}" fill="{COLOURS[name]}" '
+                         f'fill-rule="evenodd" stroke="#fff" stroke-width="0.05"/>')
+            bb = face.bounding_box()
+            for v in (bb.min, bb.max):
+                a, b = to_2d(v)
+                xs.append(a)
+                ys.append(-b)
+    box = (min(xs), min(ys), max(xs), max(ys))
+    paths.append(f'<text x="{(box[0] + box[2]) / 2:.2f}" y="{box[1] - 3:.2f}" '
+                 f'font-size="3" text-anchor="middle">{title}</text>')
+    return "".join(paths), box
+
+
+def render() -> Path:
+    all_parts = parts()
+    yz = lambda v: (v.Y, v.Z)  # noqa: E731
+    cross = [
+        (p.ITEM_START_X + p.TIP_LENGTH / 3, "in helft A"),
+        ((p.SHELL_SPLIT_X + p.INSERT_SPLIT_X) / 2, "overlap"),
+        ((p.KEY_SHORT_X0 + p.KEY_SHORT_X1) / 2, "kuiltje + haakse poot"),
+        (p.CASE_LENGTH - p.END_CAP_THICKNESS / 2, "kopse kant B (logo)"),
+    ]
+    panels, x_cursor, top, bottom = [], 0.0, 0.0, 0.0
+    for x, title in cross:
+        body, (x0, y0, x1, y1) = _panel(all_parts, Plane.YZ.offset(x), yz,
+                                        f"x = {x:.1f} — {title}")
+        panels.append(f'<g transform="translate({x_cursor - x0:.2f},0)">{body}</g>')
+        x_cursor += (x1 - x0) + GAP
+        top, bottom = min(top, y0), max(bottom, y1)
+    long_body, (lx0, ly0, lx1, ly1) = _panel(
+        all_parts, Plane.XZ, lambda v: (v.X, v.Z), "lengtedoorsnede y = 0 (dicht)")
+    long_dy = bottom - ly0 + GAP
+    panels.append(f'<g transform="translate({-lx0:.2f},{long_dy:.2f})">{long_body}</g>')
+    width = max(x_cursor, lx1 - lx0) + GAP
+    height = (long_dy + ly1) - top + GAP
+    svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{width * PX_PER_MM:.0f}" '
+           f'height="{height * PX_PER_MM:.0f}" viewBox="{-GAP / 2} {top - GAP / 2} {width} {height}" '
+           f'font-family="sans-serif"><rect x="{-GAP / 2}" y="{top - GAP / 2}" '
+           f'width="{width}" height="{height}" fill="white"/>' + "".join(panels) + "</svg>")
+    BUILD.mkdir(exist_ok=True)
+    out = BUILD / "sections.svg"
+    out.write_text(svg)
+    if inkscape := shutil.which("inkscape"):
+        subprocess.run([inkscape, str(out), "-o", str(out.with_suffix(".png"))],
+                       check=True, capture_output=True)
+    return out
+
+
+if __name__ == "__main__":
+    print(render())
