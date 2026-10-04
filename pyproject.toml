@@ -1,0 +1,18 @@
+[project]
+name = "pinecil-travel-case"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "build123d>=0.11,<0.12",
+    "shapely>=2.0",
+    "svgpathtools>=1.6",
+]
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q -p no:cacheprovider"
+filterwarnings = ["ignore::DeprecationWarning"]

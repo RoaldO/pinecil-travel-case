@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+build/
+*.stl
+*.step
+*.3mf
+.claude/settings.local.json
+.pytest_cache/
