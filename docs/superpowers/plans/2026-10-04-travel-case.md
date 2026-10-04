@@ -928,8 +928,9 @@ Expected: FAIL — `ModuleNotFoundError: No module named 'cad.insert'`.
 
 Outside the band width it runs up to the end caps (the glue end stop); in the
 band width the band ring is cut away. Insert A stops INSERT_SPLIT_GAP short of
-insert B so the shells always meet first, whatever the glue tolerance. Insert B's face has an open grip pocket
-that takes the protruding tip ends and the key's short leg.
+insert B so the shells always meet first, whatever the glue tolerance. Insert
+B's face has an open grip pocket that takes the protruding tip ends and the
+key's short leg.
 """
 
 from __future__ import annotations
