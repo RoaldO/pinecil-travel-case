@@ -1,0 +1,56 @@
+"""The PLA shell: rounded-trapezoid tube with end caps, split in A and B.
+
+The insert cavity has GLUE_CLEARANCE, and SLIDE_CLEARANCE in the overlap zone
+of shell B where insert A slides in. The band ring cuts the grooves and the
+channel behind the end caps. Shell B's end cap carries the logo, upright
+(logo top -> +Z) and centred on the band's straight vertical run.
+"""
+
+from __future__ import annotations
+
+from functools import cache
+
+from build123d import Part, Plane
+
+from cad import params as p
+from cad.band import ring_solid, straight_run_z
+from cad.build import logo_cutter
+from cad.profile import insert_cavity, shell_profile
+from cad.solids import below_x, extrude_x
+
+# The logo cutter starts this far inside the band channel and pokes the same
+# distance out of the end face, so it cuts cleanly through the end cap.
+LOGO_CUT_OVERRUN = p.RING_END / 2
+
+
+def logo_z() -> float:
+    lo, hi = straight_run_z()
+    return (lo + hi) / 2
+
+
+def logo_plane() -> Plane:
+    """Logo sketch plane on shell B's end cap: logo +Y -> case +Z, logo
+    extrusion -> case +X (outward). Seen from outside the logo is upright."""
+    x = p.CASE_LENGTH - p.END_CAP_THICKNESS - LOGO_CUT_OVERRUN
+    return Plane(origin=(x, 0, logo_z()), x_dir=(0, 1, 0), z_dir=(1, 0, 0))
+
+
+@cache
+def shell_solid() -> Part:
+    body = extrude_x(shell_profile(), 0.0, p.CASE_LENGTH)
+    body -= extrude_x(insert_cavity(p.GLUE_CLEARANCE), p.END_CAP_THICKNESS,
+                      p.CASE_LENGTH - p.END_CAP_THICKNESS)
+    body -= extrude_x(insert_cavity(p.SLIDE_CLEARANCE), p.SHELL_SPLIT_X, p.INSERT_SPLIT_X)
+    body -= ring_solid()
+    return body
+
+
+@cache
+def shell_a() -> Part:
+    return shell_solid() & below_x(p.SHELL_SPLIT_X)
+
+
+@cache
+def shell_b() -> Part:
+    cutter = logo_plane() * logo_cutter(p.END_CAP_THICKNESS + 2 * LOGO_CUT_OVERRUN)
+    return shell_solid() - below_x(p.SHELL_SPLIT_X) - cutter
