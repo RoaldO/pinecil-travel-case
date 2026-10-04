@@ -82,6 +82,7 @@ the cap half.
 | `GLUE_CLEARANCE` | 0.2 | insert → own shell half |
 | `SLIDE_CLEARANCE` | 0.2 | insert A → shell B (overlap) |
 | `OVERLAP` | 20.0 | insert A protrusion from shell A |
+| `INSERT_SPLIT_GAP` | 0.5 | axial gap between insert A and B when closed, so glue/print tolerance never stops the shells from meeting |
 
 ### Velcro
 
