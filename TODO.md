@@ -5,6 +5,7 @@
 - [ ] Test-print `build/logo-plate.stl`; pick `RIB_WIDTH` that prints cleanly
 
 ## Case
+- [ ] Work through `REVIEW-FOLLOWUPS.md` (review minors), then delete that file
 - [x] Design the Pinecil V2 travel case — spec: docs/superpowers/specs/2026-10-04-travel-case-design.md, plain-language: docs/model.md
 - [x] Model shell A/B + insert A/B, sections, viewer
 - [ ] Owner review in the viewer
