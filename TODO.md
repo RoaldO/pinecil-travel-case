@@ -1,7 +1,7 @@
 # TODO
 
 ## Logo
-- [ ] Owner validates rib centrelines L1..L6 (`make render`)
+- [x] Owner validates rib centrelines L1..L6 (`make render`) — approved 2026-10-04
 - [ ] Test-print `build/logo-plate.stl`; pick `RIB_WIDTH` that prints cleanly
 
 ## Case
