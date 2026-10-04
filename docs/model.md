@@ -58,31 +58,38 @@ kant).
 Om open te kunnen wordt alles doorgesneden, maar **buitendeel en inzetstuk op
 een andere plek**:
 
-- Het **buitendeel** wordt precies in het midden doorgesneden: twee helften
-  van ~86 mm.
-- Het **inzetstuk** wordt verder richting helft A doorgesneden. Zo ontstaat
-  een **overlap**: het inzetstuk van helft B steekt ~42 mm uit zijn
-  buitenhelft en schuift in het buitendeel van helft A. Dat lijnt de helften
-  uit bij het dichtdoen.
+- Het **inzetstuk** wordt zo doorgesneden dat de punten **11 mm uit
+  inzetstuk A steken** (`TIP_GRIP`) — dan kun je ze pakken. De bout steekt
+  nog verder uit.
+- Het **buitendeel** wordt **20 mm eerder** doorgesneden (`OVERLAP`). Zo
+  steekt inzetstuk A 20 mm uit zijn buitendeel en schuift het bij het
+  dichtdoen in buitendeel B. Dat lijnt de helften uit.
 
-Elk inzetstuk wordt in zijn eigen buitenhelft vastgezet (gelijmd), met het
-klittenband ertussen. Daarna is elke helft één geheel; alleen de overlap
-schuift.
+| | Buitendeel | Inzetstuk |
+|---|---|---|
+| Helft A | ≈ 66 | ≈ 84 |
+| Helft B — de "dop", met het **logo** | ≈ 107 | ≈ 85 |
 
-- **Helft A** — kort inzetstuk (~41 mm). Als je de koker opent steken bout,
-  punten en sleutel er ver uit, zodat je ze makkelijk pakt.
-- **Helft B — de "dop"** — lang inzetstuk (~124 mm). Op de kopse kant van
-  deze helft zit het **logo**.
+Elk inzetstuk wordt in zijn eigen buitenhelft gelijmd. Het zakt daarbij
+vanzelf tot de juiste diepte: naast de band loopt het inzetstuk door tot
+tegen de kopse kant — dat is de **eindstop**. Daarna is elke helft één
+geheel; alleen de overlap schuift.
 
 ### Het inbussleuteltje
 
-Het sleuteltje ligt helemaal achterin helft A. De haakse poot ligt dwars,
-tegen de eindwand. Om daar ruimte voor te maken beginnen de twee bovenste
-punten iets verder naar voren — precies de sleuteldikte plus speling en een
-PETG-wandje (≈ 3,5 mm, wordt uitgerekend). De lange poot ligt in het smalle kanaal tussen
-de bovenste punten en **steekt 8 mm uit het inzetstuk van helft A**, zodat je
-hem kunt pakken. Hierdoor ligt ook vast waar het inzetstuk doorgesneden
-wordt: precies 8 mm vóór het uiteinde van het sleuteltje.
+Een gewoon L-vormig inbussleuteltje. De **lange poot** steekt in een gaatje in
+inzetstuk A, tussen de twee bovenste punten (~33 van de 46 mm zit erin). De
+**haakse poot** blijft buiten inzetstuk A, net voorbij de uiteinden van de
+punten: als de koker open is ligt hij **helemaal vrij** en is hij je grip om
+het sleuteltje eruit te trekken.
+
+De haakse poot (16 mm) past niet horizontaal — vanaf het midden is daar maar
+~14 mm ruimte — dus hij wijst **schuin omlaag naar één kant** (35°), langs de
+schouder van de bout. Hoek en kant zijn parameters. (Met een iets bredere
+bovenkant kan hij ook horizontaal.)
+
+In de voorkant van inzetstuk B zit een **open kuiltje** dat bij het dichtdoen
+de uitstekende uiteinden van de punten en de haakse poot opvangt.
 
 ### Het klittenband
 
@@ -134,27 +141,29 @@ de top van de dennenappel wijst naar de smalle kant van het trapezium.
 ## Printen
 
 Elk deel wordt **rechtop** geprint (de as van de koker verticaal), het
-langste deel is het inzetstuk van de dop met ~124 mm — ruim binnen 180 mm.
+langste deel is buitendeel B met ~107 mm — ruim binnen 180 mm.
 De dop print met de kopse kant op het bed, dus de logoribben zijn de eerste
 laag: netjes, en er hoeft niets overbrugd te worden.
 
 | Deel | Materiaal | Lengte ≈ |
 |---|---|---|
-| Buitendeel A | zwart PLA | 86 |
-| Buitendeel B (dop, met logo) | zwart PLA | 86 |
-| Inzetstuk A | PETG | 41 |
-| Inzetstuk B | PETG | 124 |
+| Buitendeel A | zwart PLA | 66 |
+| Buitendeel B (dop, met logo) | zwart PLA | 107 |
+| Inzetstuk A | PETG | 84 |
+| Inzetstuk B | PETG | 85 |
 
 ## Montage
 
-1. Leg het klittenband in de goten en het kanaal van beide buitenhelften.
-2. Lijm elk inzetstuk in zijn buitenhelft; de band zit dan vast tussen de
-   twee lagen maar kan nog schuiven.
-3. Spullen in helft A, dop erover schuiven, klittenband onder dichtplakken.
+1. Lijm elk inzetstuk in zijn eigen buitenhelft; duw tot de eindstop.
+2. Laat de lijm uitharden.
+3. **Daarna pas** het klittenband doorvoeren: boven bij de sleuf naar binnen,
+   achter de kopse kant langs, onder weer naar buiten — aan beide uiteinden.
+   Zo komt er geen lijm aan het klittenband. Het kanaal heeft overal ruime
+   bochten, zodat de band erdoor te duwen is.
+4. Spullen in helft A, dop erover schuiven, klittenband onder dichtplakken.
 
 ## Nog open
 
 - Exacte vorm van de kanalen voor bout en punten.
 - Werkelijke maten van het klittenband (breedte, dikte).
 - Of de bovenkant breder moet om de goot niet te smal te laten uitvallen.
-- Lijmen of klemmen van het inzetstuk (nu: lijmen).
