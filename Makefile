@@ -12,5 +12,8 @@ render:
 sections:
 	uv run python -m cad.sections
 
+viewer:
+	uv run python -m cad.viewer
+
 clean:
 	rm -rf build __pycache__ cad/__pycache__ tests/__pycache__ .pytest_cache

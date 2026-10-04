@@ -1,0 +1,442 @@
+<title>Pinecil Travel Case</title>
+<meta name="description" content="Interactive 3D viewer for the Pinecil V2 travel case — toggle shell, insert, velcro and contents, and pull the halves apart." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" />
+<style>
+  :root {
+    --stage-bg: #e7eaee;
+    --stage-grid: #c3cad3;
+    --panel: #f7f8faee;
+    --panel-solid: #f7f8fa;
+    --edge: #d0d6dd;
+    --ink: #1b2733;
+    --ink-soft: #5b6b7a;
+    --ink-faint: #8794a1;
+    --accent: #2f6fb0;
+    --accent-ink: #ffffff;
+    --shell: #2b2f36;
+    --insert: #e91e63;
+    --band: #1e88e5;
+    --contents: #3f9a5a;
+    --shadow: 0 1px 2px rgba(20,35,50,.08), 0 8px 24px rgba(20,35,50,.10);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --stage-bg: #14171b;
+      --stage-grid: #2b313a;
+      --panel: #1c2027e6;
+      --panel-solid: #1c2027;
+      --edge: #2d343d;
+      --ink: #dbe0e6;
+      --ink-soft: #97a2ad;
+      --ink-faint: #6a747f;
+      --accent: #4b90d4;
+      --accent-ink: #0d1116;
+      --shell: #6b7380;
+    --insert: #f0508a;
+    --band: #4ba3ee;
+    --contents: #55b874;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.45);
+    }
+  }
+  :root[data-theme="dark"] {
+    --stage-bg: #14171b;
+    --stage-grid: #2b313a;
+    --panel: #1c2027e6;
+    --panel-solid: #1c2027;
+    --edge: #2d343d;
+    --ink: #dbe0e6;
+    --ink-soft: #97a2ad;
+    --ink-faint: #6a747f;
+    --accent: #4b90d4;
+    --accent-ink: #0d1116;
+    --shell: #6b7380;
+    --insert: #f0508a;
+    --band: #4ba3ee;
+    --contents: #55b874;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.45);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--stage-bg);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    overflow: hidden;
+  }
+  #stage { position: fixed; inset: 0; display: block; touch-action: none; cursor: grab; }
+  #stage:active { cursor: grabbing; }
+
+  .hud { position: fixed; z-index: 5; }
+
+  /* title block — top left, drafting convention */
+  .titleblock {
+    top: 16px; left: 16px;
+    background: var(--panel);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--edge);
+    border-radius: 3px;
+    box-shadow: var(--shadow);
+    padding: 12px 14px;
+    max-width: min(78vw, 340px);
+  }
+  .titleblock h1 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: .01em;
+    text-wrap: balance;
+  }
+  .titleblock .sub {
+    margin-top: 3px;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    letter-spacing: .02em;
+  }
+  .specs {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--edge);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 3px 14px;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11px;
+    line-height: 1.45;
+  }
+  .specs dt { color: var(--ink-faint); text-transform: uppercase; letter-spacing: .05em; font-size: 10px; padding-top: 1px; }
+  .specs dd { margin: 0; color: var(--ink); font-variant-numeric: tabular-nums; }
+
+  /* layer toggles — top right */
+  .layers {
+    top: 16px; right: 16px;
+    display: flex; flex-direction: column; gap: 6px; align-items: stretch;
+  }
+  .chip {
+    -webkit-appearance: none; appearance: none;
+    font: 500 12px/1 "IBM Plex Sans", sans-serif;
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 12px;
+    background: var(--panel);
+    backdrop-filter: blur(8px);
+    color: var(--ink);
+    border: 1px solid var(--edge);
+    border-radius: 3px;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    text-align: left;
+    transition: border-color .12s, background .12s;
+  }
+  .chip:hover { border-color: var(--ink-faint); }
+  .chip .sw { width: 11px; height: 11px; border-radius: 2px; flex: none; border: 1px solid rgba(0,0,0,.15); }
+  .chip .key { color: var(--ink-faint); font-family: "IBM Plex Mono", monospace; font-size: 10px; margin-left: auto; }
+  .chip[aria-pressed="false"] { color: var(--ink-faint); background: transparent; box-shadow: none; }
+  .chip[aria-pressed="false"] .sw { opacity: .3; }
+  .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* view presets — bottom right */
+  .views {
+    bottom: 16px; right: 16px;
+    display: flex; gap: 6px;
+    background: var(--panel);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--edge);
+    border-radius: 3px;
+    box-shadow: var(--shadow);
+    padding: 5px;
+  }
+  .views button {
+    -webkit-appearance: none; appearance: none;
+    font: 500 11px/1 "IBM Plex Mono", monospace;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    padding: 7px 10px;
+    background: transparent;
+    color: var(--ink-soft);
+    border: 0; border-radius: 2px;
+    cursor: pointer;
+  }
+  .views button:hover { background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--ink); }
+  .views button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  /* hint — bottom left */
+  .hint {
+    bottom: 16px; left: 16px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    color: var(--ink-faint);
+    letter-spacing: .03em;
+    line-height: 1.6;
+    pointer-events: none;
+  }
+  .hint b { color: var(--ink-soft); font-weight: 500; }
+
+  @media (max-width: 640px) {
+    .specs { display: none; }
+    .hint { display: none; }
+    .titleblock { max-width: 60vw; }
+  }
+
+  .explode { display: flex; align-items: center; gap: 8px; margin-top: 10px; font: 500 11px "IBM Plex Mono", monospace; color: var(--ink-soft); }
+  .explode input { flex: 1; accent-color: var(--accent); }
+
+  .loading {
+    position: fixed; inset: 0; display: grid; place-items: center;
+    font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink-soft);
+    background: var(--stage-bg);
+    z-index: 10;
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<canvas id="stage"></canvas>
+
+<div class="hud titleblock">
+  <h1>Pinecil V2 travel case</h1>
+  <div class="sub">tube · PLA shell + PETG insert · velcro loop</div>
+  <dl class="specs" id="specs"></dl>
+  <label class="explode">open <input type="range" id="explode" min="0" max="120" value="0" step="1" /> <span id="explode-val">0 mm</span></label>
+</div>
+
+<div class="hud layers" id="layers">
+  <button class="chip" data-layer="shellA" aria-pressed="true"><span class="sw" style="background:var(--shell)"></span> Shell A <span class="key">1</span></button>
+  <button class="chip" data-layer="shellB" aria-pressed="true"><span class="sw" style="background:var(--shell)"></span> Shell B (logo) <span class="key">2</span></button>
+  <button class="chip" data-layer="insertA" aria-pressed="true"><span class="sw" style="background:var(--insert)"></span> Insert A <span class="key">3</span></button>
+  <button class="chip" data-layer="insertB" aria-pressed="true"><span class="sw" style="background:var(--insert)"></span> Insert B <span class="key">4</span></button>
+  <button class="chip" data-layer="band" aria-pressed="true"><span class="sw" style="background:var(--band)"></span> Velcro <span class="key">5</span></button>
+  <button class="chip" data-layer="contents" aria-pressed="true"><span class="sw" style="background:var(--contents)"></span> Iron, tips, key <span class="key">6</span></button>
+  <button class="chip" data-layer="grid" aria-pressed="true"><span class="sw" style="background:var(--stage-grid)"></span> Grid <span class="key">7</span></button>
+</div>
+
+<div class="hud views" id="views">
+  <button data-view="iso">Iso</button>
+  <button data-view="top">Top</button>
+  <button data-view="front">Front</button>
+  <button data-view="side">Side</button>
+</div>
+
+<div class="hud hint">
+  <b>drag</b> orbit &nbsp;·&nbsp; <b>wheel</b> zoom &nbsp;·&nbsp; <b>shift-drag</b> pan
+</div>
+
+<div class="loading" id="loading">building geometry…</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+  const GEOM = "__GEOM__";
+  const SPECS = "__SPECS__";
+</script>
+<script>
+(function () {
+  "use strict";
+  const $ = (s) => document.querySelector(s);
+
+  function cssVar(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+
+  // ---- binary STL -> BufferGeometry ------------------------------------------
+  function parseSTL(b64) {
+    const bin = atob(b64);
+    const len = bin.length;
+    const buf = new ArrayBuffer(len);
+    const bytes = new Uint8Array(buf);
+    for (let i = 0; i < len; i++) bytes[i] = bin.charCodeAt(i);
+    const dv = new DataView(buf);
+    const tris = dv.getUint32(80, true);
+    const pos = new Float32Array(tris * 9);
+    let o = 84;
+    for (let t = 0; t < tris; t++) {
+      o += 12; // skip face normal
+      for (let v = 0; v < 3; v++) {
+        pos[t * 9 + v * 3 + 0] = dv.getFloat32(o, true);
+        pos[t * 9 + v * 3 + 1] = dv.getFloat32(o + 4, true);
+        pos[t * 9 + v * 3 + 2] = dv.getFloat32(o + 8, true);
+        o += 12;
+      }
+      o += 2; // attribute byte count
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+    g.computeVertexNormals();
+    return g;
+  }
+
+  // ---- scene ----------------------------------------------------------------
+  const canvas = $("#stage");
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(38, 1, 1, 4000);
+  camera.up.set(0, 0, 1); // Z is up, CAD convention
+
+  const NAMES = ["shellA", "shellB", "insertA", "insertB", "band", "contents"];
+  const geoms = {};
+  NAMES.forEach((n) => (geoms[n] = parseSTL(GEOM[n])));
+
+  // recenter on the closed case's bounding box
+  const bb = new THREE.Box3();
+  ["shellA", "shellB"].forEach((n) => { geoms[n].computeBoundingBox(); bb.union(geoms[n].boundingBox); });
+  const ctr = new THREE.Vector3();
+  bb.getCenter(ctr);
+  const size = new THREE.Vector3();
+  bb.getSize(size);
+  const radius = size.length() / 2;
+  Object.values(geoms).forEach((g) => g.translate(-ctr.x, -ctr.y, -ctr.z));
+
+  function mat(colorVar) {
+    return new THREE.MeshStandardMaterial({
+      color: new THREE.Color(cssVar(colorVar)), metalness: 0.0, roughness: 0.62,
+    });
+  }
+
+  const COLOR = { shellA: "--shell", shellB: "--shell", insertA: "--insert", insertB: "--insert", band: "--band", contents: "--contents" };
+  const meshes = {};
+  NAMES.forEach((n) => { meshes[n] = new THREE.Mesh(geoms[n], mat(COLOR[n])); scene.add(meshes[n]); });
+
+  // half B (shell B + insert B) slides along +X when "opening"
+  const movesWithB = ["shellB", "insertB"];
+
+  // grid at the case's bottom face (z = 0)
+  const bedZ = -ctr.z;
+  const grid = new THREE.GridHelper(300, 30, new THREE.Color(cssVar("--stage-grid")), new THREE.Color(cssVar("--stage-grid")));
+  grid.rotation.x = Math.PI / 2;
+  grid.position.z = bedZ - 0.05;
+  grid.material.transparent = true;
+  grid.material.opacity = 0.5;
+  scene.add(grid);
+
+  // lights
+  const hemi = new THREE.HemisphereLight(0xffffff, 0x404652, 0.55);
+  scene.add(hemi);
+  const key = new THREE.DirectionalLight(0xffffff, 0.85);
+  key.position.set(120, -160, 220);
+  scene.add(key);
+  const fill = new THREE.DirectionalLight(0xffffff, 0.35);
+  fill.position.set(-160, 120, 90);
+  scene.add(fill);
+
+  function applyThemeColors() {
+    renderer.setClearColor(new THREE.Color(cssVar("--stage-bg")), 1);
+    NAMES.forEach((n) => meshes[n].material.color.set(cssVar(COLOR[n])));
+    grid.material.color = new THREE.Color(cssVar("--stage-grid"));
+  }
+  applyThemeColors();
+  const mq = matchMedia("(prefers-color-scheme: dark)");
+  mq.addEventListener && mq.addEventListener("change", applyThemeColors);
+
+  // ---- hand-rolled orbit --------------------------------------------------
+  const target = new THREE.Vector3(0, 0, 0);
+  let theta = Math.PI * 0.28, phi = Math.PI * 0.36, dist = radius * 3.1;
+  const MINP = 0.05, MAXP = Math.PI - 0.05;
+
+  function setView(name) {
+    if (name === "iso") { theta = Math.PI * 0.28; phi = Math.PI * 0.36; }
+    else if (name === "top") { theta = -Math.PI / 2; phi = 0.001; }
+    else if (name === "front") { theta = -Math.PI / 2; phi = Math.PI / 2; }
+    else if (name === "side") { theta = 0; phi = Math.PI / 2; }
+    dist = radius * (name === "top" ? 2.7 : 3.1);
+    target.set(0, 0, 0);
+  }
+
+  function updateCamera() {
+    phi = Math.max(MINP, Math.min(MAXP, phi));
+    const sp = Math.sin(phi);
+    camera.position.set(
+      target.x + dist * sp * Math.cos(theta),
+      target.y + dist * sp * Math.sin(theta),
+      target.z + dist * Math.cos(phi)
+    );
+    camera.lookAt(target);
+  }
+
+  let drag = null;
+  canvas.addEventListener("pointerdown", (e) => {
+    drag = { x: e.clientX, y: e.clientY, pan: e.shiftKey || e.button === 1 };
+    canvas.setPointerCapture(e.pointerId);
+  });
+  canvas.addEventListener("pointermove", (e) => {
+    if (!drag) return;
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    drag.x = e.clientX; drag.y = e.clientY;
+    if (drag.pan) {
+      const s = dist * 0.0016;
+      const right = new THREE.Vector3().setFromMatrixColumn(camera.matrix, 0);
+      const up = new THREE.Vector3().setFromMatrixColumn(camera.matrix, 1);
+      target.addScaledVector(right, -dx * s);
+      target.addScaledVector(up, dy * s);
+    } else {
+      theta -= dx * 0.008;
+      phi -= dy * 0.008;
+    }
+    updateCamera();
+  });
+  const endDrag = () => { drag = null; };
+  canvas.addEventListener("pointerup", endDrag);
+  canvas.addEventListener("pointercancel", endDrag);
+  canvas.addEventListener("wheel", (e) => {
+    e.preventDefault();
+    dist *= Math.pow(1.0016, e.deltaY);
+    dist = Math.max(radius * 1.2, Math.min(radius * 8, dist));
+    updateCamera();
+  }, { passive: false });
+
+  // ---- controls ---------------------------------------------------------
+  const targets = { grid: [grid] };
+  NAMES.forEach((n) => (targets[n] = [meshes[n]]));
+  document.querySelectorAll(".chip").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const on = btn.getAttribute("aria-pressed") === "true";
+      btn.setAttribute("aria-pressed", String(!on));
+      targets[btn.dataset.layer].forEach((m) => (m.visible = !on));
+    });
+  });
+  document.querySelectorAll("#views button").forEach((btn) => {
+    btn.addEventListener("click", () => { setView(btn.dataset.view); updateCamera(); });
+  });
+  const keys = ["shellA", "shellB", "insertA", "insertB", "band", "contents", "grid"];
+  addEventListener("keydown", (e) => {
+    const i = parseInt(e.key, 10) - 1;
+    if (i >= 0 && i < keys.length) document.querySelector(`.chip[data-layer="${keys[i]}"]`).click();
+    const vmap = { i: "iso", t: "top", f: "front", s: "side" };
+    if (vmap[e.key]) { setView(vmap[e.key]); updateCamera(); }
+  });
+  const slider = $("#explode");
+  slider.addEventListener("input", () => {
+    const d = Number(slider.value);
+    movesWithB.forEach((n) => (meshes[n].position.x = d));
+    $("#explode-val").textContent = d + " mm";
+  });
+  // spec sheet from the model's parameters
+  const dl = $("#specs");
+  Object.entries(SPECS).forEach(([k, v]) => {
+    const dt = document.createElement("dt"); dt.textContent = k;
+    const dd = document.createElement("dd"); dd.textContent = v;
+    dl.append(dt, dd);
+  });
+
+  // ---- resize + loop ---------------------------------------------------
+  function resize() {
+    const w = innerWidth, h = innerHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  addEventListener("resize", resize);
+  resize();
+  setView("iso");
+  updateCamera();
+
+  function loop() {
+    requestAnimationFrame(loop);
+    renderer.render(scene, camera);
+  }
+  loop();
+  $("#loading").remove();
+})();
+</script>
