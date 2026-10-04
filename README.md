@@ -1,12 +1,16 @@
 # pinecil-travel-case
 
-A 3D-printable travel case for a **Pinecil V2** soldering iron. The case itself
-comes later; the first part is the Pinecil logo (the PINE64 pinecone) as a
-pattern of through-holes, with parametric rib width.
+A 3D-printable travel case for a **Pinecil V2** soldering iron with 4 spare tips
+and the M2 hex key: a rounded-trapezoid tube, black PLA shell + PETG insert,
+closed by one loop of double-sided velcro. The Pinecil logo (the PINE64
+pinecone) is cut through the cap's end face.
 
 **Tracking:** `TODO.md` in this repo.
 
-Geometry is authored in [build123d](https://github.com/gumyr/build123d).
+Geometry is authored in [build123d](https://github.com/gumyr/build123d). The
+model in plain language (Dutch): [`docs/model.md`](docs/model.md). Decisions
+and acceptance criteria: the
+[design spec](docs/superpowers/specs/2026-10-04-travel-case-design.md).
 
 ## Pinecil logo
 
@@ -30,22 +34,31 @@ Parameters (`cad/params.py`):
 
 ## Layout
 
-- `cad/pinecil_logo.svg` — the pinecone artwork (see *Source* below)
-- `cad/params.py` — every dimension
-- `cad/pinecil_logo.py` — SVG → pieces, rib centrelines, holes (2D, shapely)
-- `cad/build.py` — build123d: `logo_cutter()` (reusable for the case) and the test plate
-- `cad/render.py` — validation render: artwork + centreline ids, and the resulting plate
-- `tests/` — geometry assertions
+- `cad/params.py` — every dimension; derived lengths are computed
+- `cad/contents.py` — iron, tips and key: layout B and envelopes
+- `cad/profile.py` — channel sections, fitted insert trapezoid, shell profile
+- `cad/band.py` — the velcro band ring (grooves + channel behind the end caps)
+- `cad/insert.py`, `cad/shell.py` — the printable parts, split in A and B
+- `cad/solids.py` — 2D section → 3D extrusion helpers
+- `cad/pinecil_logo.py`, `cad/pinecil_logo.svg` — the logo (see above)
+- `cad/build.py` — exports; `logo_cutter()`; logo test plate
+- `cad/sections.py`, `cad/viewer.py`, `docs/viewer/` — section renders, 3D viewer
+- `cad/render.py` — logo centreline validation render
+- `tests/` — geometry assertions, one file per module
 
 ## Build
 
 ```sh
-make test     # pytest
-make render   # build/logo-centerlines.svg (+ .png via inkscape)
-make build    # build/logo-plate.step + build/logo-plate.stl
+make test       # pytest (~20 s)
+make build      # build/{shell-a,shell-b,insert-a,insert-b,logo-plate}.{step,stl}
+make sections   # build/sections.svg (+ .png) — cross-sections from the 3D model
+make viewer     # build/travel-case-viewer.html — standalone 3D viewer
+make render     # build/logo-centerlines.svg — logo rib centrelines
 ```
 
-Requires `uv`.
+Print every part standing (axis vertical); shell B end-cap-down so the logo
+ribs are the first layer. Glue each insert into its shell half up to the end
+stop, let it cure, then thread the velcro (see `docs/model.md`, Montage).
 
 ## Source
 
