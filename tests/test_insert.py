@@ -4,9 +4,12 @@ import pytest
 
 from cad import params as p
 from cad.contents import contents_solids, key_short_leg_section
-from cad.insert import insert_a, insert_b, pocket_section
+from cad.band import BAND_HALF_WIDTH, ring_section
+from cad.insert import channel_cuts, insert_a, insert_b, pocket_section
+from cad.solids import extrude_y
 
 VOLUME_TOLERANCE = 1e-3  # mm³: "no overlap"
+WALL_TOLERANCE = 0.01  # mm, polygonised arcs
 INSERTS = {"insert A": insert_a, "insert B": insert_b}
 
 
@@ -51,3 +54,11 @@ def test_inserts_leave_a_gap_so_the_shells_close_first():
 def test_inserts_rest_on_the_end_caps():
     assert insert_a().bounding_box().min.X == pytest.approx(p.END_CAP_THICKNESS)
     assert insert_b().bounding_box().max.X == pytest.approx(p.CASE_LENGTH - p.END_CAP_THICKNESS)
+
+
+def test_channels_keep_insert_wall_from_the_band_bends():
+    """Where the band bends round the insert's ends, at least INSERT_WALL of
+    PETG must stay between the band channel and every item channel."""
+    near_band = extrude_y(ring_section().buffer(p.INSERT_WALL - WALL_TOLERANCE),
+                          BAND_HALF_WIDTH)
+    assert (channel_cuts() & near_band).volume < VOLUME_TOLERANCE

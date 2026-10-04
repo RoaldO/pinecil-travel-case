@@ -16,10 +16,10 @@ from shapely.geometry.base import BaseGeometry
 from shapely.ops import unary_union
 
 from cad import params as p
-from cad.band import ring_solid
+from cad.band import BAND_HALF_WIDTH, ring_section, ring_solid
 from cad.contents import key_short_leg_section
 from cad.profile import channel_sections, insert_profile
-from cad.solids import below_x, extrude_x
+from cad.solids import below_x, extrude_x, extrude_y
 
 TIP_NAMES = ("tip_bl", "tip_br", "tip_tl", "tip_tr")
 
@@ -35,19 +35,30 @@ def pocket_section() -> BaseGeometry:
 
 
 @cache
+def channel_cuts() -> Part:
+    """Everything cut out of the insert for the contents: item channels, key
+    hole and grip pocket."""
+    ch = channel_sections()
+    cuts = extrude_x(ch["iron"], p.CAVITY_START_X, p.CAVITY_END_X)
+    for name in TIP_NAMES:
+        cuts += extrude_x(ch[name], p.CAVITY_START_X, p.TIP_END_X + p.ITEM_END_CLEARANCE)
+    cuts += extrude_x(ch["key"], p.KEY_LONG_X0 - p.ITEM_END_CLEARANCE, p.KEY_SHORT_X1)
+    cuts += extrude_x(pocket_section(), p.INSERT_SPLIT_X,
+                      p.KEY_SHORT_X1 + p.POCKET_CLEARANCE)
+    # Where the band bends round the insert's ends its channel cuts diagonally
+    # past the square channel ends; round those ends off so INSERT_WALL of
+    # PETG always stays between band and items.
+    near_band = extrude_y(ring_section().buffer(p.INSERT_WALL, p.ARC_QUAD_SEGMENTS),
+                          BAND_HALF_WIDTH + p.INSERT_WALL)
+    return cuts - near_band
+
+
+@cache
 def insert_solid() -> Part:
     """The whole insert, before splitting."""
-    ch = channel_sections()
     body = extrude_x(insert_profile(), p.END_CAP_THICKNESS,
                      p.CASE_LENGTH - p.END_CAP_THICKNESS)
-    body -= ring_solid()
-    body -= extrude_x(ch["iron"], p.CAVITY_START_X, p.CAVITY_END_X)
-    for name in TIP_NAMES:
-        body -= extrude_x(ch[name], p.CAVITY_START_X, p.TIP_END_X + p.ITEM_END_CLEARANCE)
-    body -= extrude_x(ch["key"], p.KEY_LONG_X0 - p.ITEM_END_CLEARANCE, p.KEY_SHORT_X1)
-    body -= extrude_x(pocket_section(), p.INSERT_SPLIT_X,
-                      p.KEY_SHORT_X1 + p.POCKET_CLEARANCE)
-    return body
+    return body - ring_solid() - channel_cuts()
 
 
 @cache
