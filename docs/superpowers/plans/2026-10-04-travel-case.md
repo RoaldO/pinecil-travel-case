@@ -155,6 +155,9 @@ END_CAP_THICKNESS = 2.0  # the logo is cut through this
 GLUE_CLEARANCE = 0.2  # insert -> its own shell half
 SLIDE_CLEARANCE = 0.2  # insert A -> shell B, in the overlap
 OVERLAP = 20.0  # insert A protrudes this far from shell A
+# Axial gap left between insert A and insert B when the case is closed, so
+# print/glue tolerance on the inserts can never stop the shells from closing.
+INSERT_SPLIT_GAP = 0.5
 
 # --- Velcro --------------------------------------------------------------------
 
@@ -853,7 +856,7 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 
 **Interfaces:**
 - Consumes: `ring_solid()` (Task 4), `channel_sections()`, `insert_profile()` (Task 3), `key_short_leg_section()` (Task 2), `extrude_x`, `below_x` (Task 4).
-- Produces: `pocket_section()` (YZ shapely), `insert_solid()`, `insert_a()`, `insert_b()` (cached `Part`s).
+- Produces: `pocket_section()` (YZ shapely), `insert_solid()`, `insert_a()` (ends `INSERT_SPLIT_GAP` before `INSERT_SPLIT_X`), `insert_b()` (starts at `INSERT_SPLIT_X`) — cached `Part`s.
 
 - [ ] **Step 1: Write the failing test** — create `tests/test_insert.py`:
 
@@ -902,6 +905,12 @@ def test_key_short_leg_is_free_when_opened():
     assert p.KEY_SHORT_X0 > p.INSERT_SPLIT_X > p.SHELL_SPLIT_X
 
 
+def test_inserts_leave_a_gap_so_the_shells_close_first():
+    gap = insert_b().bounding_box().min.X - insert_a().bounding_box().max.X
+    assert gap == pytest.approx(p.INSERT_SPLIT_GAP)
+    assert insert_b().bounding_box().min.X == pytest.approx(p.INSERT_SPLIT_X)
+
+
 def test_inserts_rest_on_the_end_caps():
     assert insert_a().bounding_box().min.X == pytest.approx(p.END_CAP_THICKNESS)
     assert insert_b().bounding_box().max.X == pytest.approx(p.CASE_LENGTH - p.END_CAP_THICKNESS)
@@ -918,7 +927,8 @@ Expected: FAIL — `ModuleNotFoundError: No module named 'cad.insert'`.
 """The PETG insert: solid trapezoid with a channel per item, split in A and B.
 
 Outside the band width it runs up to the end caps (the glue end stop); in the
-band width the band ring is cut away. Insert B's face has an open grip pocket
+band width the band ring is cut away. Insert A stops INSERT_SPLIT_GAP short of
+insert B so the shells always meet first, whatever the glue tolerance. Insert B's face has an open grip pocket
 that takes the protruding tip ends and the key's short leg.
 """
 
@@ -967,7 +977,9 @@ def insert_solid() -> Part:
 
 @cache
 def insert_a() -> Part:
-    return insert_solid() & below_x(p.INSERT_SPLIT_X)
+    """Insert A stops INSERT_SPLIT_GAP short of insert B, so the shells
+    always close first."""
+    return insert_solid() & below_x(p.INSERT_SPLIT_X - p.INSERT_SPLIT_GAP)
 
 
 @cache
@@ -977,7 +989,7 @@ def insert_b() -> Part:
 
 - [ ] **Step 4: Run to verify it passes**
 
-Run: `uv run pytest tests/test_insert.py -q` → 13 passed (~5 s). Then `make test`.
+Run: `uv run pytest tests/test_insert.py -q` → 14 passed (~5 s). Then `make test`.
 
 - [ ] **Step 5: Commit**
 
@@ -1367,7 +1379,7 @@ sections:
 Run: `uv run pytest tests/test_outputs.py -q` → 2 passed. Then:
 
 ```bash
-make build      # prints 5 parts: logo-plate, shell-a 65.9, shell-b 106.9, insert-a 83.9, insert-b 84.9 long
+make build      # prints 5 parts: logo-plate, shell-a 65.9, shell-b 106.9, insert-a 83.4, insert-b 84.9 long
 make sections   # build/sections.svg + .png
 ```
 
@@ -1905,7 +1917,7 @@ def specs() -> dict[str, str]:
     return {
         "Case": f"{p.CASE_LENGTH:.1f} × {maxx - minx:.1f} × {case_height():.1f} mm",
         "Shell A / B": f"{p.SHELL_SPLIT_X:.1f} / {p.CASE_LENGTH - p.SHELL_SPLIT_X:.1f} mm",
-        "Insert A / B": f"{p.INSERT_SPLIT_X - p.END_CAP_THICKNESS:.1f} / "
+        "Insert A / B": f"{p.INSERT_SPLIT_X - p.INSERT_SPLIT_GAP - p.END_CAP_THICKNESS:.1f} / "
                         f"{p.CASE_LENGTH - p.END_CAP_THICKNESS - p.INSERT_SPLIT_X:.1f} mm",
         "Overlap": f"{p.OVERLAP:g} mm",
         "Velcro": f"{p.VELCRO_WIDTH:g} × {p.VELCRO_THICKNESS:g} mm",

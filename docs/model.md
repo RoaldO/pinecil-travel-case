@@ -67,13 +67,18 @@ een andere plek**:
 
 | | Buitendeel | Inzetstuk |
 |---|---|---|
-| Helft A | ≈ 66 | ≈ 84 |
+| Helft A | ≈ 66 | ≈ 83,5 |
 | Helft B — de "dop", met het **logo** | ≈ 107 | ≈ 85 |
 
 Elk inzetstuk wordt in zijn eigen buitenhelft gelijmd. Het zakt daarbij
 vanzelf tot de juiste diepte: naast de band loopt het inzetstuk door tot
 tegen de kopse kant — dat is de **eindstop**. Daarna is elke helft één
 geheel; alleen de overlap schuift.
+
+Tussen de twee inzetstukken blijft als de koker dicht is een **spleetje van
+0,5 mm** (`INSERT_SPLIT_GAP`): inzetstuk A is daarvoor iets ingekort. Zo
+kunnen lijm- en printtoleranties nooit verhinderen dat de twee buitendelen
+netjes op elkaar aansluiten — de buitendelen raken elkaar altijd eerst.
 
 ### Het inbussleuteltje
 
@@ -149,7 +154,7 @@ laag: netjes, en er hoeft niets overbrugd te worden.
 |---|---|---|
 | Buitendeel A | zwart PLA | 66 |
 | Buitendeel B (dop, met logo) | zwart PLA | 107 |
-| Inzetstuk A | PETG | 84 |
+| Inzetstuk A | PETG | 83,5 |
 | Inzetstuk B | PETG | 85 |
 
 ## Montage

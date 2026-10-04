@@ -1,6 +1,6 @@
 # Pinecil V2 travel case — design spec
 
-Date: 2026-10-04. Status: approved 2026-10-04. Revised while planning: `KEY_LEG_ANGLE` −35° → −15°, `ARC_QUAD_SEGMENTS`, criterion 12.
+Date: 2026-10-04. Status: approved 2026-10-04. Revised while planning: `KEY_LEG_ANGLE` −35° → −15°, `ARC_QUAD_SEGMENTS`, `INSERT_SPLIT_GAP`, criteria 12–13.
 
 The plain-language description of the model is [`docs/model.md`](../../model.md)
 (Dutch, kept current). This spec records the decisions, the geometry
@@ -153,7 +153,7 @@ the cap half.
      `RING_BOTTOM` at the bottom, corner radius `BAND_BEND_RADIUS`;
    - ring = outer − inner, extruded over y ∈ ±(`VELCRO_WIDTH` /2 +
      `VELCRO_CLEARANCE`).
-6. **Insert** (`insert.py`): profile extruded from `END_CAP_THICKNESS` to
+6. **Insert** (`insert.py`): insert A ends `INSERT_SPLIT_GAP` short of `INSERT_SPLIT_X`; profile extruded from `END_CAP_THICKNESS` to
    `CASE_LENGTH` − `END_CAP_THICKNESS` (so outside the band width it rests on
    the end caps = end stop), minus channels, minus grip pocket, minus ring
    (+ `VELCRO_CLEARANCE`); split at `INSERT_SPLIT_X` → insert A, insert B.
@@ -193,6 +193,7 @@ the cap half.
     + `VELCRO_CLEARANCE` thick, so the band can be threaded after gluing.
 11. End stop: each insert touches its shell's end cap outside the band width.
 12. The key's short leg stays ≥ 2 × `ITEM_CLEARANCE` clear of the iron.
+13. Insert A ends `INSERT_SPLIT_GAP` before insert B (shells close first).
 
 ## Out of scope (later)
 
