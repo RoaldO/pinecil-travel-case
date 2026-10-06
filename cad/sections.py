@@ -116,10 +116,15 @@ def render() -> Path:
     BUILD.mkdir(exist_ok=True)
     out = BUILD / "sections.svg"
     out.write_text(svg)
-    if inkscape := shutil.which("inkscape"):
-        subprocess.run([inkscape, str(out), "-o", str(out.with_suffix(".png"))],
-                       check=True, capture_output=True)
+    to_png(out)
     return out
+
+
+def to_png(svg: Path) -> None:
+    """svg -> png next to it, if inkscape is installed."""
+    if inkscape := shutil.which("inkscape"):
+        subprocess.run([inkscape, str(svg), "-o", str(svg.with_suffix(".png"))],
+                       check=True, capture_output=True)
 
 
 if __name__ == "__main__":

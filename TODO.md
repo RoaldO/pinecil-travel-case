@@ -30,4 +30,6 @@
 - [x] Magnets so the case clicks shut: two bottom corners + top centre, holes
       in both insert faces; the case widens to fit (docs/model.md "Magneetjes")
 - [x] Magnet size confirmed: ø3 × 2
+- [x] Test-print coupons (`make coupons`)
+- [ ] Print the coupons; correct clearances in params.py — plan: docs/testprint.md
 - [ ] Test print (shell B end cap + logo first?)

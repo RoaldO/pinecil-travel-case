@@ -420,6 +420,23 @@ laag: netjes, en er hoeft niets overbrugd te worden.
 | Inzetstuk A | PETG | 85,5 |
 | Inzetstuk B | PETG | 85,5 |
 
+### Testprints
+
+Voordat de hele koker geprint wordt, eerst **testplakjes** (`make coupons`,
+in `build/coupons/`): dunne plakjes (8–10 mm) uit de échte onderdelen, op de
+plekken waar de pasvorm ertoe doet, al in printstand gedraaid. Probeer er de
+echte punten, bout, sleuteltje en magneetjes in, en stel daarna de
+spelingen in `cad/params.py` bij. Het volledige stappenplan (printen, wat te
+testen, de brug in het grondvlak, welke parameter bij welke klacht):
+[`testprint.md`](testprint.md).
+
+| Plakje | Uit | Test |
+|---|---|---|
+| 1 | inzetstuk A bij de kraag | boringen ø 5,7 → zitvlak → ring van de punten; grafsteen van de bout met de gleuven van display, knopje en boutje |
+| 2a + 2b | voorkant inzetstuk A + mond buitendeel B | 2a schuift in 2b: schuifspeling en inloop; magneetjes, gaatje + uitlijngroefje van het sleuteltje |
+| 3 | voorkant inzetstuk B | klikt op 2a (magneetjes); trechter met het echte sleuteltje; boringen van de punt-einden; gleuven van montageboutje en voetje |
+| 4a + 4b | uiteinde buitendeel A + grondvlak inzetstuk A | 4b in 4a: lijmspeling, afschuining, eindstop, kanaal klittenband |
+
 ## Montage
 
 1. Lijm de magneetjes in de voorkant van beide inzetstukken (let op de

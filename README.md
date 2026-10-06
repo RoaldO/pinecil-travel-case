@@ -42,6 +42,7 @@ Parameters (`cad/params.py`):
 - `cad/solids.py` — 2D section → 3D extrusion helpers
 - `cad/pinecil_logo.py`, `cad/pinecil_logo.svg` — the logo (see above)
 - `cad/build.py` — exports; `logo_cutter()`; logo test plate
+- `cad/coupons.py` — test-print slices where the fit matters
 - `cad/sections.py`, `cad/viewer.py`, `docs/viewer/` — section renders, 3D viewer
 - `cad/render.py` — logo centreline validation render
 - `tests/` — geometry assertions, one file per module
@@ -51,6 +52,7 @@ Parameters (`cad/params.py`):
 ```sh
 make test       # pytest (~20 s)
 make build      # build/{shell-a,shell-b,insert-a,insert-b,logo-plate}.{step,stl}
+make coupons    # build/coupons/*.{stl,step} — thin test-print slices of the real parts
 make sections   # build/sections.svg (+ .png) — cross-sections from the 3D model
 make viewer     # build/travel-case-viewer.html — standalone 3D viewer
 make render     # build/logo-centerlines.svg — logo rib centrelines

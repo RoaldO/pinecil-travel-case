@@ -1,10 +1,13 @@
-.PHONY: test build render sections viewer clean
+.PHONY: test build coupons render sections viewer clean
 
 test:
 	uv run pytest
 
 build:
 	uv run python -m cad.build
+
+coupons:
+	uv run python -m cad.coupons
 
 render:
 	uv run python -m cad.render
