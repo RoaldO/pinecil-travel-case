@@ -31,7 +31,6 @@ PLATE_MARGIN = 3.0  # plate edge to logo bounding box, each side
 
 # --- Contents (simplified envelopes) ------------------------------------------
 
-IRON_LENGTH = 159.0  # with tip, measured
 # The handle's cross-section is a "tombstone": a half cylinder round the tip
 # axis, with a block as wide as its diameter on its flat side and that
 # block's far corners rounded. It lies round side down, so the flat face with
@@ -39,6 +38,10 @@ IRON_LENGTH = 159.0  # with tip, measured
 # A, the tip points into insert B. Sections are (diameter, total height,
 # corner radius).
 IRON_HANDLE_LENGTH = 103.3  # base to where the tip comes out
+# The iron carries a tip like the spares, pointing the same way: its base
+# (white rings) inside the handle, the collar right against the handle's
+# front. IRON_LENGTH (derived below) is with the longest tip; measured 159
+# with an 89.3 tip.
 IRON_BODY_SECTION = (13.9, 16.85, 2.0)  # hard plastic, the whole handle long
 # The rubber grip sits over the body (which runs on underneath it, so there
 # the iron is body and grip together): from / length along the handle, measured
@@ -134,6 +137,8 @@ RING_BOTTOM = VELCRO_BOTTOM_LAYERS * VELCRO_THICKNESS + VELCRO_CLEARANCE
 SHELL_TOP_WALL = RING_TOP + SHELL_FLOOR
 SHELL_BOTTOM_WALL = RING_BOTTOM + SHELL_FLOOR
 
+TIP_BASE_LENGTH = sum(length for length, _ in TIP_BASE_STEPS)  # base end -> collar
+IRON_LENGTH = IRON_HANDLE_LENGTH + TIP_LENGTH - TIP_BASE_LENGTH
 CAVITY_LENGTH = IRON_LENGTH + 2 * ITEM_END_CLEARANCE
 CAVITY_START_X = END_CAP_THICKNESS + RING_END + INSERT_END_WALL
 CAVITY_END_X = CAVITY_START_X + CAVITY_LENGTH
@@ -141,7 +146,7 @@ CASE_LENGTH = CAVITY_END_X + INSERT_END_WALL + RING_END + END_CAP_THICKNESS
 
 ITEM_START_X = CAVITY_START_X + ITEM_END_CLEARANCE  # iron and all tips start here
 TIP_END_X = ITEM_START_X + TIP_LENGTH
-TIP_COLLAR_X = ITEM_START_X + sum(length for length, _ in TIP_BASE_STEPS)  # rests here
+TIP_COLLAR_X = ITEM_START_X + TIP_BASE_LENGTH  # rests here
 INSERT_SPLIT_X = TIP_END_X - TIP_GRIP
 SHELL_SPLIT_X = INSERT_SPLIT_X - OVERLAP
 

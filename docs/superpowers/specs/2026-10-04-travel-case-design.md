@@ -47,7 +47,7 @@ the cap half.
 
 | Name | Value | Note |
 |---|---|---|
-| `IRON_LENGTH` | 159.0 | measured, with tip |
+| `IRON_LENGTH` | 161.5 (derived) | `IRON_HANDLE_LENGTH` + `TIP_LENGTH` − tip base length: the iron's tip is a spare-tip shape, base inside the handle, collar against its front (measured 159 with an 89.3 tip) |
 | `IRON_HANDLE_LENGTH` | 103.3 | base (deep in A) to where the tip comes out |
 | `IRON_BODY_SECTION` | (13.9, 16.85, 2) | hard plastic, whole handle: (Ø, tombstone height, corner R); round side down (D14) |
 | `IRON_GRIP_FROM` / `_LENGTH` | 63.8 / 30 | rubber grip, from the base; the body runs on under it |
@@ -138,7 +138,7 @@ the cap half.
 - `SHELL_SPLIT_X` = `INSERT_SPLIT_X` − `OVERLAP` (≈ 65.9).
 - Key: short leg at x = `TIP_END_X` + `ITEM_CLEARANCE`; long leg runs back
   `KEY_LONG_LEG` from there (≈ 33 mm of it inside insert A).
-- Part lengths ≈ shell A 66, shell B 107, insert A 84, insert B 85.
+- Part lengths ≈ shell A 68, shell B 107.5, insert A 85.5, insert B 85.5.
 
 ## Geometry definitions
 

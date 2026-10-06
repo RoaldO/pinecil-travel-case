@@ -126,7 +126,12 @@ def _iron_piece_sections(y: float, z: float, keep_out: bool = False
         bump(p.IRON_SCREW_AT, p.IRON_SCREW_HEAD_DIAMETER, p.IRON_SCREW_HEAD_HEIGHT),
         *(bump(at, p.IRON_BUTTON_DIAMETER, p.IRON_BUTTON_HEIGHT, extra)
           for at in p.IRON_BUTTONS_AT),
-        (p.IRON_HANDLE_LENGTH, p.IRON_LENGTH, _circle(y, z, p.TIP_SLEEVE_DIAMETER)),
+        # its tip: collar right against the handle, then the sleeve (the
+        # tip's base is inside the handle)
+        (p.IRON_HANDLE_LENGTH, p.IRON_HANDLE_LENGTH + p.TIP_COLLAR_LENGTH,
+         _circle(y, z, p.TIP_DIAMETER)),
+        (p.IRON_HANDLE_LENGTH + p.TIP_COLLAR_LENGTH, p.IRON_LENGTH,
+         _circle(y, z, p.TIP_SLEEVE_DIAMETER)),
     ]
     if keep_out:  # the display is flush: it only adds room above it
         w = p.IRON_DISPLAY_WIDTH / 2 + extra

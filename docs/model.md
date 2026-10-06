@@ -16,7 +16,7 @@ stukken geprint wordt die rechtop staan.
 
 | Voorwerp | Maat (vereenvoudigd) |
 |---|---|
-| Pinecil V2 met punt erop | 159 lang; handvat 103,3 lang, "grafsteen" ≤ 14,6 breed × 19,2 hoog — zie *De bout* |
+| Pinecil V2 met punt erop | 161,5 lang met de langste punt (gemeten 159 met een punt van 89,3); handvat 103,3 lang, "grafsteen" ≤ 14,6 breed × 17,5 hoog — zie *De bout* |
 | 4 reservepunten | ≤ 92 lang (langste gemeten 89,3); voet getrapt, kraag ø 11, daarna ≤ ø 5,5 — zie *De punten* |
 | Inbussleutel | L-vorm: lange poot 46, haakse poot 16, dikte 1,46 |
 
@@ -84,7 +84,12 @@ over de hele lengte, met een **rubber handvat** eromheen:
 | boutje op de platte kant | hart op 14,7 | kop ø 3,4 | steekt 1,1 uit | — |
 | 2 knopjes op de platte kant | harten op 23,15 en 60,6 | ø 4,9 | steken 0,7 uit | — |
 | display op de platte kant | 19 – 55 | 9,55 breed | vlak (steekt niet uit) | — |
-| punt | 103,3 – 159 | ≤ 5,5 | — | — |
+| punt: kraag | 103,3 – 107,3 | 11 | — | — |
+| punt: huls tot het eind | 107,3 – 161,5 | ≤ 5,5 | — | — |
+
+De punt in de bout is dezelfde als de reservepunten (zie *De punten*) en
+wijst dezelfde kant op: de voet zit in het handvat, de kraag direct tegen de
+neus. De lengte van de bout volgt daaruit, met de langste punt (92).
 
 Alle delen hebben dezelfde as. Het plastic loopt **onder het rubber door**:
 daar is de bout lijf en rubber samen. Het rubber is breder, onder dieper en
@@ -134,7 +139,7 @@ smaller en hoger dan eerst).
 
 ### Lengte en de twee helften
 
-Totale lengte ongeveer **173 mm**. Van buiten naar binnen, aan elk uiteinde:
+Totale lengte ongeveer **175 mm**. Van buiten naar binnen, aan elk uiteinde:
 kopse kant (2) → kanaal voor het klittenband (band + speling) → eindwand van
 het inzetstuk (1,6) → de ruimte voor de spullen (bout + 1 mm speling aan elke
 kant).
@@ -151,8 +156,8 @@ een andere plek**:
 
 | | Buitendeel | Inzetstuk |
 |---|---|---|
-| Helft A | ≈ 66 | ≈ 83,5 |
-| Helft B — de "dop", met het **logo** | ≈ 107 | ≈ 85 |
+| Helft A | ≈ 68 | ≈ 85,5 |
+| Helft B — de "dop", met het **logo** | ≈ 107,5 | ≈ 85,5 |
 
 Elk inzetstuk wordt in zijn eigen buitenhelft gelijmd. Het zakt daarbij
 vanzelf tot de juiste diepte: naast de band loopt het inzetstuk door tot
@@ -236,16 +241,16 @@ de top van de dennenappel wijst naar de smalle kant van het trapezium.
 ## Printen
 
 Elk deel wordt **rechtop** geprint (de as van de koker verticaal), het
-langste deel is buitendeel B met ~107 mm — ruim binnen 180 mm.
+langste deel is buitendeel B met ~107,5 mm — ruim binnen 180 mm.
 De dop print met de kopse kant op het bed, dus de logoribben zijn de eerste
 laag: netjes, en er hoeft niets overbrugd te worden.
 
 | Deel | Materiaal | Lengte ≈ |
 |---|---|---|
-| Buitendeel A | zwart PLA | 66 |
-| Buitendeel B (dop, met logo) | zwart PLA | 107 |
-| Inzetstuk A | PETG | 83,5 |
-| Inzetstuk B | PETG | 85 |
+| Buitendeel A | zwart PLA | 68 |
+| Buitendeel B (dop, met logo) | zwart PLA | 107,5 |
+| Inzetstuk A | PETG | 85,5 |
+| Inzetstuk B | PETG | 85,5 |
 
 ## Montage
 

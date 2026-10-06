@@ -42,3 +42,8 @@ def test_tip_base_narrows_going_deeper():
 def test_tip_collar_sits_deep_enough_in_insert_a():
     mouth = p.INSERT_SPLIT_X - p.INSERT_SPLIT_GAP
     assert mouth - p.TIP_COLLAR_X >= p.TIP_COLLAR_MIN_DEPTH
+
+
+def test_iron_length_is_handle_plus_longest_tip_past_its_base():
+    assert p.IRON_LENGTH == pytest.approx(
+        p.IRON_HANDLE_LENGTH + p.TIP_LENGTH - sum(length for length, _ in p.TIP_BASE_STEPS))
