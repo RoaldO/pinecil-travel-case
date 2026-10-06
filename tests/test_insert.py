@@ -118,9 +118,12 @@ def test_iron_screw_head_gets_a_groove_up_to_insert_a_face_only():
     flat = z + h - d / 2
     groove = box(-0.5, flat + 0.2, 0.5, flat + p.IRON_SCREW_HEAD_HEIGHT)
     screw = p.ITEM_START_X + p.IRON_SCREW_AT
+    mount_end = p.ITEM_START_X + p.IRON_MOUNT_SCREW_AT + p.IRON_MOUNT_SCREW_HEAD_DIAMETER / 2
     for x0, x1, s in bore_pieces("iron"):
         if x1 <= screw - p.IRON_SCREW_HEAD_DIAMETER / 2:
             continue  # deeper than the screw: no groove needed
+        if p.INSERT_SPLIT_X <= x0 < mount_end:
+            continue  # in B the mounting screw's (larger) groove runs here
         in_a = x0 < p.INSERT_SPLIT_X
         assert (groove.difference(s).area < 1e-6) == in_a, (x0, x1)
 
@@ -168,3 +171,45 @@ def test_iron_display_keeps_extra_room():
     x1 = p.ITEM_START_X + p.IRON_DISPLAY_TO + p.IRON_CONTROL_CLEARANCE - 0.05
     assert not _hits(room.buffer(p.ITEM_CLEARANCE - 0.05), x0, x1, insert_a())
     assert _hits(room.buffer(p.ITEM_CLEARANCE + 0.05), x0, x1, insert_a())
+
+
+def test_iron_mount_screw_grooves_insert_b_up_to_its_face_only():
+    """The mounting screw sits in half B; insert B slides over it from the
+    tip end, so its groove runs from the screw to B's face — not into A."""
+    from shapely.geometry import box
+
+    from cad.contents import iron_axis
+
+    _, z = iron_axis()
+    d, h, _ = p.IRON_BODY_SECTION
+    flat = z + h - d / 2
+    top = flat + p.IRON_MOUNT_SCREW_HEAD_HEIGHT
+    groove = box(-0.5, top - 0.5, 0.5, top)
+    screw_end = p.ITEM_START_X + p.IRON_MOUNT_SCREW_AT + p.IRON_MOUNT_SCREW_HEAD_DIAMETER / 2
+    for x0, x1, s in bore_pieces("iron"):
+        if x0 >= screw_end:
+            continue  # deeper in B than the screw: no groove needed
+        in_b = x0 >= p.INSERT_SPLIT_X
+        assert (groove.difference(s).area < 1e-6) == in_b, (x0, x1)
+
+
+def test_iron_foot_corners_groove_insert_b_up_to_its_face_only():
+    """The foot (half square under the round side) is in half B: its corners
+    groove insert B's bore from the foot to B's face, not insert A's."""
+    import math
+
+    from shapely.geometry import Point
+
+    from cad.contents import iron_axis
+
+    y, z = iron_axis()
+    r = p.IRON_BODY_SECTION[0] / 2
+    fr = p.IRON_FOOT_CORNER_RADIUS
+    inset = (fr - 0.1) / math.sqrt(2)  # just inside the foot's rounded corner
+    corner = Point(y + r - fr + inset, z - r + fr - inset)
+    foot_end = p.ITEM_START_X + p.IRON_FOOT_TO
+    for x0, x1, s in bore_pieces("iron"):
+        if x0 >= foot_end:
+            continue
+        in_b = x0 >= p.INSERT_SPLIT_X
+        assert s.contains(corner) == in_b, (x0, x1)

@@ -84,6 +84,8 @@ over de hele lengte, met een **rubber handvat** eromheen:
 | boutje op de platte kant | hart op 14,7 | kop ø 3,4 | steekt 1,1 uit | — |
 | 2 knopjes op de platte kant | harten op 23,15 en 60,6 | ø 4,9 | steken 0,7 uit | — |
 | display op de platte kant | 19 – 55 | 9,55 breed | vlak (steekt niet uit) | — |
+| montageboutje (houdt de punt vast) op de platte kant | hart op 98,5 | kop ø 6 | steekt 2,8 uit | — |
+| voetje onder de ronde kant | 98,4 – 102 | half vierkant 13,9 breed, 6,95 diep | — | R 1 |
 | punt: kraag | 103,3 – 107,3 | 11 | — | — |
 | punt: huls tot het eind | 107,3 – 161,5 | ≤ 5,5 | — | — |
 
@@ -112,6 +114,17 @@ houdt het kanaal **1 mm extra** ruimte (`IRON_CONTROL_CLEARANCE`, bovenop de
 tegen de wand. Die extra ruimte zit alleen in het kanaal, niet in de bout.
 Het display steekt niet uit; het voegt dus alleen die extra ruimte toe (een
 ondiepe, brede gleuf van 9,55 + 2 × 1 breed, ook tot de snede).
+
+Het **montageboutje** zit op de neus, in helft **B**. Helft B schuift vanaf de
+punt-kant over de bout, dus daar loopt zijn gleuf (6 + speling breed) van het
+boutje tot aan de snede van B — en niet in A. Aan de voorkant van B loopt die
+gleuf in elkaar over met het kuiltje van de haakse poot.
+
+Het **voetje** zit daar tegenover, onder de ronde kant: zo blijft de bout
+mooi liggen als hij op tafel ligt. Daar is de onderste helft een half
+vierkant in plaats van een halve cirkel. Ook dat ligt in B, dus ook de
+hoeken van het voetje lopen als gleufjes onder in het kanaal van B door tot
+de snede.
 
 ### Dwarsdoorsnede
 

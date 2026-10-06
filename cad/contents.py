@@ -119,11 +119,20 @@ def _iron_piece_sections(y: float, z: float, keep_out: bool = False
         return (at - r, at + r, box(y - r, flat - 1, y + r, flat + height + extra))
 
     extra = p.IRON_CONTROL_CLEARANCE if keep_out else 0.0
+    # half square below the axis, its bottom corners rounded (built mirrored
+    # so only those corners round off)
+    fr, half = p.IRON_FOOT_CORNER_RADIUS, body_d / 2
+    foot = (box(y - half, z - half, y + half, z + half)
+            .buffer(-fr, join_style="mitre").buffer(fr, p.ARC_QUAD_SEGMENTS)
+            .intersection(box(y - half, z - half, y + half, z)))
     features = [
         (0, p.IRON_HANDLE_LENGTH, tombstone(y, z, *p.IRON_BODY_SECTION)),
         (p.IRON_GRIP_FROM, p.IRON_GRIP_FROM + p.IRON_GRIP_LENGTH,
          tombstone(y, z, *p.IRON_GRIP_SECTION)),
         bump(p.IRON_SCREW_AT, p.IRON_SCREW_HEAD_DIAMETER, p.IRON_SCREW_HEAD_HEIGHT),
+        bump(p.IRON_MOUNT_SCREW_AT, p.IRON_MOUNT_SCREW_HEAD_DIAMETER,
+             p.IRON_MOUNT_SCREW_HEAD_HEIGHT),
+        (p.IRON_FOOT_FROM, p.IRON_FOOT_TO, foot),
         *(bump(at, p.IRON_BUTTON_DIAMETER, p.IRON_BUTTON_HEIGHT, extra)
           for at in p.IRON_BUTTONS_AT),
         # its tip: collar right against the handle, then the sleeve (the

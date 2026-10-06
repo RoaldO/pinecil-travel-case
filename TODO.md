@@ -16,5 +16,9 @@
 - [x] Iron screw head on the flat face (groove through insert A)
 - [x] Iron buttons (extra IRON_CONTROL_CLEARANCE)
 - [x] Iron display (flush; keep-out room only)
-- [ ] Key rework (owner has an idea, after the iron is done)
+- [x] Iron mounting screw (groove through insert B)
+- [x] Iron foot (half square under the round side; grooves insert B)
+- [ ] Describe the tip collar more precisely
+- [ ] Key rework (owner has an idea, after the iron is done); the mounting
+      screw's groove now merges with the short-leg pocket at B's face
 - [ ] Test print (shell B end cap + logo first?)

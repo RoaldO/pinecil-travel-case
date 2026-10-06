@@ -54,6 +54,9 @@ the cap half.
 | `IRON_GRIP_SECTION` | (14.6, 17.5, 4) | rubber grip: (Ø, tombstone height, corner R) |
 | `IRON_SCREW_AT` | 14.7 | screw on the flat face, centred; head centre from the base |
 | `IRON_SCREW_HEAD_DIAMETER` / `_HEIGHT` | 3.4 / 1.1 | its head sticks out → groove through insert A's bore up to A's face |
+| `IRON_MOUNT_SCREW_AT` | 98.5 | mounting screw (holds the tip) on the flat face, centred; in half B → groove through insert B's bore up to B's face |
+| `IRON_MOUNT_SCREW_HEAD_DIAMETER` / `_HEIGHT` | 6 / 2.8 | |
+| `IRON_FOOT_FROM` / `_TO` / `_CORNER_RADIUS` | 98.4 / 102 / 1 | foot under the round side: lower half a half square (body Ø wide, radius deep), bottom corners rounded; in half B → its corners groove insert B's bore up to B's face |
 | `IRON_BUTTONS_AT` | 23.15, 60.6 | two buttons on the flat face, centred; centres from the base |
 | `IRON_BUTTON_DIAMETER` / `_HEIGHT` | 4.9 / 0.7 | |
 | `IRON_DISPLAY_FROM` / `_TO` / `_WIDTH` | 19 / 55 / 9.55 | display on the flat face, centred, flush: only adds keep-out room |

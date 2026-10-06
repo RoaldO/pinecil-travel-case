@@ -53,6 +53,16 @@ IRON_GRIP_SECTION = (14.6, 17.5, 4.0)
 IRON_SCREW_AT = 14.7  # head centre, from the handle's base
 IRON_SCREW_HEAD_DIAMETER = 3.4
 IRON_SCREW_HEAD_HEIGHT = 1.1
+# Mounting screw on the flat face (holds the tip), centred; its head sticks out.
+IRON_MOUNT_SCREW_AT = 98.5  # head centre, from the handle's base
+IRON_MOUNT_SCREW_HEAD_DIAMETER = 6.0
+IRON_MOUNT_SCREW_HEAD_HEIGHT = 2.8
+# Foot under the round side, opposite the mounting screw, so the iron lies
+# steady on a table: there the lower half is a half square (as wide as the
+# body's half cylinder, as deep as its radius) instead of a half circle.
+IRON_FOOT_FROM = 98.4  # from the handle's base
+IRON_FOOT_TO = 102.0
+IRON_FOOT_CORNER_RADIUS = 1.0
 # Two buttons on the flat face, centred across it, centres from the base.
 IRON_BUTTONS_AT = (23.15, 60.6)
 IRON_BUTTON_DIAMETER = 4.9
