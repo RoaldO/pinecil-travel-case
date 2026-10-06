@@ -5,7 +5,7 @@ import itertools
 import pytest
 
 from cad import params as p
-from cad.contents import ITEM_GAP, key_short_leg_section, layout
+from cad.contents import ITEM_GAP, key_short_leg_section, layout, pieces
 
 
 def test_layout_has_all_items():
@@ -29,5 +29,10 @@ def test_layout_is_symmetric():
 
 
 def test_short_leg_clears_the_iron():
+    """...the iron pieces it lies beside (key and iron don't move relative to
+    each other: both stay in half A's frame)."""
     leg = key_short_leg_section(0)
-    assert leg.distance(layout()["iron"].section) >= 2 * p.ITEM_CLEARANCE
+    beside = [s for x0, x1, s in pieces("iron") if x0 < p.KEY_SHORT_X1 and x1 > p.KEY_SHORT_X0]
+    assert beside
+    for section in beside:
+        assert leg.distance(section) >= 2 * p.ITEM_CLEARANCE

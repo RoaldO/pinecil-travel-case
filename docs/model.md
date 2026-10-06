@@ -16,12 +16,13 @@ stukken geprint wordt die rechtop staan.
 
 | Voorwerp | Maat (vereenvoudigd) |
 |---|---|
-| Pinecil V2 met punt erop | 159 lang; handvat 103 lang, 17,4 breed × 14,4 hoog; daarna het dunne metalen puntje |
+| Pinecil V2 met punt erop | 159 lang; handvat 103,3 lang, "grafsteen" ≤ 14,6 breed × 19,2 hoog — zie *De bout* |
 | 4 reservepunten | ≤ 92 lang (langste gemeten 89,3); voet getrapt, kraag ø 11, daarna ≤ ø 5,5 — zie *De punten* |
 | Inbussleutel | L-vorm: lange poot 46, haakse poot 16, dikte 1,46 |
 
-De bout en het sleuteltje zijn voorlopig eenvoudig (ellips, cilinders,
-balkjes). De punten zijn gemodelleerd (zie *De punten*); de bout volgt nog. Dan veranderen alleen de kanalen in het
+Het sleuteltje is voorlopig eenvoudig (cilinder en balkje). Punten en bout
+zijn gemodelleerd (zie *De punten* en *De bout*); knopjes en details van de
+bout volgen nog. Dan veranderen alleen de kanalen in het
 inzetstuk.
 
 ### De punten
@@ -61,6 +62,52 @@ bed, dan liggen de schouders open naar boven en hoeft er niets te overhangen.
 
 ## Hoe het eruitziet
 
+### De bout
+
+De doorsnede van het handvat is een **grafsteen**: een halve cilinder
+waarvan het hart precies de as van de punt is, met daarop een blok even
+breed als die cilinder; de hoeken van het blok aan de kant van de cilinder
+af zijn afgerond. De bout ligt met de **ronde kant naar beneden**: de platte
+kant met het display en de twee knopjes wijst naar boven, zodat daar niets
+op drukt.
+
+De **basis** van het handvat zit diep in helft A, net als de voet van de
+punten; de punt van de bout wijst naar helft B.
+
+Het handvat is **103,3** lang en bestaat uit een **lijf van hard plastic**
+over de hele lengte, met een **rubber handvat** eromheen:
+
+| Deel | Waar (vanaf de basis) | Diameter ronding | Hoogte grafsteen | Afronding |
+|---|---|---|---|---|
+| plastic lijf (display, knopjes) | 0 – 103,3 | 13,9 | 16,85 | R 2 |
+| rubber handvat | 63,8 – 93,8 | 14,6 | 17,5 | R 4 |
+| boutje op de platte kant | hart op 14,7 | kop ø 3,4 | steekt 1,1 uit | — |
+| 2 knopjes op de platte kant | harten op 23,15 en 60,6 | ø 4,9 | steken 0,7 uit | — |
+| display op de platte kant | 19 – 55 | 9,55 breed | vlak (steekt niet uit) | — |
+| punt | 103,3 – 159 | ≤ 5,5 | — | — |
+
+Alle delen hebben dezelfde as. Het plastic loopt **onder het rubber door**:
+daar is de bout lijf en rubber samen. Het rubber is breder, onder dieper en
+boven hoger, maar de scherpere bovenhoeken van het plastic (R 2 tegen R 4)
+steken er 0,37 buiten — op die plekken is het plastic echt het ruimst.
+
+**Het kanaal volgt de bout** (+ 0,4 speling), met één regel voor bout en
+punten: een voorwerp schuift vanaf de snede in elk inzetstuk, dus op elke
+diepte moet het kanaal ook passen voor alles wat er **dieper** ligt en er
+onderweg doorheen komt. Het stuk met het rubber is overal het dikst. Maar
+het **boutje** zit vlak bij de basis, die als eerste helft A in gaat: het
+komt langs het hele kanaal in A, dus daar loopt een **gleufje** (3,4 + speling
+breed) van het boutje tot aan de snede. In helft B komt het boutje nooit, dus
+daar geen gleuf.
+
+Hetzelfde geldt voor de **knopjes**: ook die liggen in helft A, dus ook voor
+hen loopt een gleuf tot de snede. Rond de knopjes en het display
+houdt het kanaal **1 mm extra** ruimte (`IRON_CONTROL_CLEARANCE`, bovenop de
+0,4 speling): rammelt de bout een beetje, dan tikken knopjes en display nooit
+tegen de wand. Die extra ruimte zit alleen in het kanaal, niet in de bout.
+Het display steekt niet uit; het voegt dus alleen die extra ruimte toe (een
+ondiepe, brede gleuf van 9,55 + 2 × 1 breed, ook tot de snede).
+
 ### Dwarsdoorsnede
 
 De koker heeft als doorsnede een **afgerond trapezium**. De brede kant ligt
@@ -68,11 +115,13 @@ op tafel (de onderkant), de smalle kant is boven.
 
 De indeling van binnen (layout **B**):
 
-- **Onderste rij:** punt – bout – punt.
+- **Onderste rij:** punt – bout – punt. De bout staat met zijn ronde
+  onderkant op dezelfde vloer als de punten, en is hoger dan zij.
 - **Bovenste rij:** twee punten, met daartussen een smal kanaal voor de lange
   poot van het inbussleuteltje.
 
-Buitenmaat ongeveer **60 breed × 38 hoog**.
+Buitenmaat ongeveer **53 breed × 42 hoog** (door de rechtopstaande bout
+smaller en hoger dan eerst).
 
 ### Twee materialen, twee lagen
 
@@ -210,5 +259,5 @@ laag: netjes, en er hoeft niets overbrugd te worden.
 
 ## Nog open
 
-- Vorm van de bout.
+- Knopjes en andere details van de bout.
 - Werkelijke maten van het klittenband (breedte, dikte).

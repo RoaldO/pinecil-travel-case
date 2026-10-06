@@ -32,10 +32,37 @@ PLATE_MARGIN = 3.0  # plate edge to logo bounding box, each side
 # --- Contents (simplified envelopes) ------------------------------------------
 
 IRON_LENGTH = 159.0  # with tip, measured
-IRON_HANDLE_LENGTH = 103.0  # spec sheet
-IRON_WIDTH = 17.4  # measured, lies wide (Y)
-IRON_HEIGHT = 14.4  # measured (Z)
-IRON_METAL_DIAMETER = 5.0  # assumed; the thin part past the handle
+# The handle's cross-section is a "tombstone": a half cylinder round the tip
+# axis, with a block as wide as its diameter on its flat side and that
+# block's far corners rounded. It lies round side down, so the flat face with
+# the display and the buttons faces up. The handle's base lies deep in insert
+# A, the tip points into insert B. Sections are (diameter, total height,
+# corner radius).
+IRON_HANDLE_LENGTH = 103.3  # base to where the tip comes out
+IRON_BODY_SECTION = (13.9, 16.85, 2.0)  # hard plastic, the whole handle long
+# The rubber grip sits over the body (which runs on underneath it, so there
+# the iron is body and grip together): from / length along the handle, measured
+# from the base.
+IRON_GRIP_FROM = 63.8
+IRON_GRIP_LENGTH = 30.0
+IRON_GRIP_SECTION = (14.6, 17.5, 4.0)
+# Screw on the flat face, centred across it; its head sticks out.
+IRON_SCREW_AT = 14.7  # head centre, from the handle's base
+IRON_SCREW_HEAD_DIAMETER = 3.4
+IRON_SCREW_HEAD_HEIGHT = 1.1
+# Two buttons on the flat face, centred across it, centres from the base.
+IRON_BUTTONS_AT = (23.15, 60.6)
+IRON_BUTTON_DIAMETER = 4.9
+IRON_BUTTON_HEIGHT = 0.7  # sticks out of the flat face
+# Display on the flat face, centred across it, flush (sticks out 0).
+IRON_DISPLAY_FROM = 19.0  # from the base
+IRON_DISPLAY_TO = 55.0
+IRON_DISPLAY_WIDTH = 9.55
+# Extra room round the buttons and the display, on top of ITEM_CLEARANCE, so
+# an iron rattling in its channel never taps them against the wall.
+IRON_CONTROL_CLEARANCE = 1.0
+# Past the handle the iron carries a tip; its widest part there is the
+# heating-element sleeve (TIP_SLEEVE_DIAMETER).
 
 TIP_LENGTH = 92.0  # longest measured 89.3 (they vary), with margin
 TIP_DIAMETER = 11.0  # widest, measured: the collar

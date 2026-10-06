@@ -31,6 +31,7 @@ the cap half.
 | D11 | Inserts are glued into their own shell half, pushed to an **end stop**: outside the band width the insert runs up to the end cap. Velcro is threaded **after** gluing (keeps it free of glue), so the band channel must be continuous and threadable after assembly. |
 | D12 | All parts print standing (axis vertical); cap half prints end-cap-down so the logo ribs are the first layer. |
 | D13 | Tips: base (white rings) deep in insert A, in a bore that follows `TIP_BASE_STEPS`, collar-wide from `TIP_COLLAR_X` up to A's face (the collar rests on that shoulder). Past the collar nothing is wider than `TIP_SLEEVE_DIAMETER`, so insert B holds the tip end in one straight bore of it. Every bore only narrows going deeper, so tips slide in and out. |
+| D14 | Iron: "tombstone" handle (half cylinder round the tip axis + block as wide, block corners rounded), round side down so display and buttons face up; handle base deep in insert A (like the tips' bases), tip toward B. Bores (tips and iron) follow the items' pieces + `ITEM_CLEARANCE`; in each insert a bore piece is the union of its own section and every deeper one, since everything deeper passes it on the way in (for the iron: the screw head near its base grooves insert A's bore up to A's face). |
 | D13 | No magic numbers: every dimension is a named parameter; derived values are computed. |
 
 ## Coordinate system
@@ -47,10 +48,16 @@ the cap half.
 | Name | Value | Note |
 |---|---|---|
 | `IRON_LENGTH` | 159.0 | measured, with tip |
-| `IRON_HANDLE_LENGTH` | 103.0 | spec sheet |
-| `IRON_WIDTH` | 17.4 | measured, lies wide (Y) |
-| `IRON_HEIGHT` | 14.4 | measured (Z) |
-| `IRON_METAL_DIAMETER` | 5.0 | assumed; thin part past the handle |
+| `IRON_HANDLE_LENGTH` | 103.3 | base (deep in A) to where the tip comes out |
+| `IRON_BODY_SECTION` | (13.9, 16.85, 2) | hard plastic, whole handle: (Ø, tombstone height, corner R); round side down (D14) |
+| `IRON_GRIP_FROM` / `_LENGTH` | 63.8 / 30 | rubber grip, from the base; the body runs on under it |
+| `IRON_GRIP_SECTION` | (14.6, 17.5, 4) | rubber grip: (Ø, tombstone height, corner R) |
+| `IRON_SCREW_AT` | 14.7 | screw on the flat face, centred; head centre from the base |
+| `IRON_SCREW_HEAD_DIAMETER` / `_HEIGHT` | 3.4 / 1.1 | its head sticks out → groove through insert A's bore up to A's face |
+| `IRON_BUTTONS_AT` | 23.15, 60.6 | two buttons on the flat face, centred; centres from the base |
+| `IRON_BUTTON_DIAMETER` / `_HEIGHT` | 4.9 / 0.7 | |
+| `IRON_DISPLAY_FROM` / `_TO` / `_WIDTH` | 19 / 55 / 9.55 | display on the flat face, centred, flush: only adds keep-out room |
+| `IRON_CONTROL_CLEARANCE` | 1.0 | extra room round buttons and display (across and along X), on top of `ITEM_CLEARANCE`, so a rattling iron never taps them; channel only |
 | `TIP_LENGTH` | 92.0 | longest measured 89.3 (they vary), with margin |
 | `TIP_DIAMETER` | 11.0 | widest (the collar), measured |
 | `TIP_BASE_STEPS` | (24.1, 5.4), (9.7, 5.7) | base (white rings) from its end: (length, Ø); sits in insert A; channel only widens toward its mouth |

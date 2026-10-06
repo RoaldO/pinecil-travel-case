@@ -84,6 +84,7 @@ def render() -> Path:
         ((p.SHELL_SPLIT_X + p.INSERT_SPLIT_X) / 2, "overlap"),
         ((p.INSERT_SPLIT_X + p.TIP_END_X) / 2, "punt-einden in B"),
         ((p.KEY_SHORT_X0 + p.KEY_SHORT_X1) / 2, "kuiltje + haakse poot"),
+        (p.CAVITY_END_X - 20, "punt van de bout"),
         (p.CASE_LENGTH - p.END_CAP_THICKNESS / 2, "kopse kant B (logo)"),
     ]
     panels, x_cursor, top, bottom = [], 0.0, 0.0, 0.0

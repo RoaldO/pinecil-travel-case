@@ -1,8 +1,10 @@
 """The PETG insert: solid trapezoid with a channel per item, split in A and B.
 
-Tips: a stepped bore in insert A (base steps, then collar-wide up to A's
-face; the collar rests on the last shoulder) and one straight sleeve-wide bore
-in insert B. Each bore only narrows going deeper, so tips slide in and out.
+Tips and iron each get a bore that follows their pieces (+ ITEM_CLEARANCE).
+An item slides into each insert from its split face, so at every depth the
+bore also takes whatever passes it on the way in: in each insert a piece's
+bore is the union of its own section and every deeper one. Tips: stepped in
+A, the collar resting on the last shoulder; one sleeve-wide bore in B.
 
 Outside the band width it runs up to the end caps (the glue end stop); in the
 band width the band ring is cut away. Insert A stops INSERT_SPLIT_GAP short of
@@ -15,13 +17,12 @@ from __future__ import annotations
 from functools import cache
 
 from build123d import Part
-from shapely.geometry import Point
 from shapely.geometry.base import BaseGeometry
 from shapely.ops import unary_union
 
 from cad import params as p
 from cad.band import BAND_HALF_WIDTH, ring_section, ring_solid
-from cad.contents import key_short_leg_section, layout, tip_segments
+from cad.contents import key_short_leg_section, pieces
 from cad.profile import channel_sections, insert_profile
 from cad.solids import below_x, extrude_x, extrude_y
 
@@ -37,26 +38,28 @@ def pocket_section() -> BaseGeometry:
     return hull.intersection(insert_profile().buffer(-p.INSERT_WALL, p.ARC_QUAD_SEGMENTS))
 
 
-def tip_channel_segments() -> list[tuple[float, float, float]]:
-    """(x0, x1, item diameter) of a tip's bore, deepest in A first: the base
-    steps, the collar width up to insert A's face, then the sleeve width
-    through insert B. The collar rests on the shoulder at TIP_COLLAR_X."""
-    base = tip_segments()[:len(p.TIP_BASE_STEPS)]
-    out = [(x0, x1, d) for x0, x1, d in base]
-    out[0] = (p.CAVITY_START_X, *out[0][1:])
-    out.append((p.TIP_COLLAR_X, p.INSERT_SPLIT_X, p.TIP_DIAMETER))
-    out.append((p.INSERT_SPLIT_X, p.TIP_END_X + p.ITEM_END_CLEARANCE, p.TIP_SLEEVE_DIAMETER))
-    return out
+def bore_pieces(name: str) -> list[tuple[float, float, BaseGeometry]]:
+    """(x0, x1, YZ section) of the bore for a tip or the iron, split at
+    INSERT_SPLIT_X; the end pieces run on to the cavity ends."""
+    items = [(x0, x1, s.buffer(p.ITEM_CLEARANCE, p.ARC_QUAD_SEGMENTS))
+             for x0, x1, s in pieces(name, keep_out=True)]
+    first, last = items[0], items[-1]
+    items[0] = (p.CAVITY_START_X, first[1], first[2])
+    items[-1] = (last[0], min(last[1] + p.ITEM_END_CLEARANCE, p.CAVITY_END_X), last[2])
+    split = p.INSERT_SPLIT_X
+    in_a = [(x0, min(x1, split), s) for x0, x1, s in items if x0 < split]
+    in_b = [(max(x0, split), x1, s) for x0, x1, s in items if x1 > split]
+    out = []
+    for deepest_first in (in_a, in_b[::-1]):
+        passed = None
+        for x0, x1, s in deepest_first:
+            passed = s if passed is None else passed.union(s)
+            out.append((x0, x1, passed))
+    return sorted(out, key=lambda piece: piece[0])
 
 
-def tip_channel(name: str) -> Part:
-    """The bore for one tip, each piece ITEM_CLEARANCE wider than the tip."""
-    c = layout()[name].section.centroid
-    cut = Part()
-    for x0, x1, d in tip_channel_segments():
-        section = Point(c.x, c.y).buffer(d / 2 + p.ITEM_CLEARANCE, p.ARC_QUAD_SEGMENTS)
-        cut += extrude_x(section, x0, x1)
-    return cut
+def bore(name: str) -> Part:
+    return Part() + [extrude_x(s, x0, x1) for x0, x1, s in bore_pieces(name)]
 
 
 @cache
@@ -64,9 +67,9 @@ def channel_cuts() -> Part:
     """Everything cut out of the insert for the contents: item channels, key
     hole and the short-leg pocket."""
     ch = channel_sections()
-    cuts = extrude_x(ch["iron"], p.CAVITY_START_X, p.CAVITY_END_X)
+    cuts = bore("iron")
     for name in TIP_NAMES:
-        cuts += tip_channel(name)
+        cuts += bore(name)
     cuts += extrude_x(ch["key"], p.KEY_LONG_X0 - p.ITEM_END_CLEARANCE, p.KEY_SHORT_X1)
     cuts += extrude_x(pocket_section(), p.INSERT_SPLIT_X,
                       p.KEY_SHORT_X1 + p.POCKET_CLEARANCE)
