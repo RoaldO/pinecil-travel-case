@@ -120,6 +120,10 @@ TIP_GRIP = 11.0  # tips protrude this far past insert A's split face
 KEY_LEG_ANGLE = -15.0  # short leg, degrees from horizontal (negative = down)
 KEY_LEG_SIDE = 1  # +1 / -1: which side (Y) the short leg points to
 POCKET_CLEARANCE = 1.0  # pocket in insert B around the short leg
+# Shallow groove in insert A's face from the key hole along the short leg's
+# direction: shows how to line the leg up before closing.
+KEY_ALIGN_GROOVE_WIDTH = 0.8
+KEY_ALIGN_GROOVE_DEPTH = 0.6
 
 # --- Shell (PLA) and fits ------------------------------------------------------
 

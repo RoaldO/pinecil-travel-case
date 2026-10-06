@@ -215,6 +215,74 @@ de haakse poot opvangt. De uitstekende uiteinden van de punten gaan elk in hun
 eigen boring van ø 6,3. Het kuiltje loopt daarbij over de boring van de
 rechterbovenpunt heen; die twee vormen aan de voorkant één opening.
 
+Het sleuteltje draait vrij om zijn lange poot, dus vóór het sluiten moet de
+haakse poot in de goede stand staan. Daarvoor zit in de **voorkant van
+inzetstuk A** een ondiep **uitlijngroefje** (0,8 breed, 0,6 diep), vanaf het
+gat van het sleuteltje precies in de richting van de haakse poot en even
+lang: kijk je van voren op A, dan ligt de poot goed als hij boven het groefje
+ligt. Het groefje loopt deels door de boring van de punt rechtsboven; het is
+zichtbaar vlak bij het gat en aan het eind, en dat is genoeg referentie.
+
+### Magneetjes (idee, nog niet in het model)
+
+Naast het klittenband wat kleine magneetjes, zodat de koker **dichtklikt**.
+Niet als valbescherming — daarvoor blijft het klittenband — alleen zodat hij
+uit zichzelf dicht blijft.
+
+**Veilig voor bout en punten?** Ja. Een vaste magneet doet niets met de
+elektronica (geen magnetische opslag; de bewegingssensor is een
+accelerometer). Heeft een Pinecil een hall-sensor voor de slaapstand, dan kan
+een magneet hem in slaap zetten — in een koker, uit, maakt dat niet uit.
+Neodymium-magneten verliezen boven ~80 °C blijvend kracht en PLA wordt
+rond 60 °C zacht: de bout gaat er alleen afgekoeld in.
+
+**Waar ze kunnen.** De wand van het buitendeel (1,6) is te dun; de logische
+plek zijn de twee **snedevlakken van de inzetstukken** (voorkant A en voorkant
+B, bij dichte koker 0,5 mm uit elkaar). Een magneetje moet op dezelfde plek
+in beide vlakken passen, er een paar mm in kunnen zakken zonder een kanaal te
+raken, met 1,2 PETG rondom. Verkend voor ø 3 × 2 (2 mm diep in elk vlak,
+gaatje 0,2 ruimer), in de huidige indeling:
+
+| Plek | Ruimte | Afstand tot de haakse poot bij het langsschuiven |
+|---|---|---|
+| links, tussen punt linksboven, punt linksonder en de bout | ruim (ø 4 past ook) | ~12 mm |
+| rechts, op dezelfde hoogte | krap, door het kuiltje van de haakse poot | **~3,3 mm** |
+| boven in het midden, tussen de bovenste punten | krap | **~3,5 mm** |
+
+Drie in een driehoek trekken de helften recht naar elkaar toe; twee (links
+en rechts) is genoeg om te klikken. ø 2 × 3 past overal makkelijk, ø 4 alleen
+links. De punten liggen overal ≥ ~4 mm van een magneetje.
+
+**Het probleem: het sleuteltje.** Het sleuteltje is van staal en draait vrij
+om zijn lange poot. Bij dichte of open koker is er niets aan de hand: de
+magneetjes in A liggen ~12 mm voor de haakse poot. Maar tijdens het
+**dichtschuiven** schuift de voorkant van B — met zijn magneetjes — langs de
+plek van de haakse poot, rechts en boven op maar ~3,3–3,5 mm. Dat is te
+dichtbij: net voordat de poot het kuiltje in gaat kan hij een paar graden naar
+het magneetje draaien en achter de rand van het kuiltje haken, en dan heeft
+het sleuteltje bij het sluiten "een eigen wil".
+
+Overwogen:
+
+1. **Magneten alleen in A, stalen tegenstukjes in B.** Staal trekt staal niet
+   aan, dus B trekt niet aan het sleuteltje; de magneten in A blijven ~12 mm
+   van de poot. Iets minder trekkracht dan magneet op magneet, genoeg om te
+   klikken.
+2. **Alleen plekken ver van de poot.** Nu is dat alleen links — één magneet
+   trekt de koker scheef dicht.
+3. **Een trechter aan de mond van het kuiltje in B**, zodat een iets
+   gedraaide poot vanzelf het kuiltje in geleid wordt. **Gekozen**, omdat dit
+   een probleem oplost dat er óók zonder magneten al is: het sleuteltje draait
+   vrij om zijn lange poot, dus ook nu moet je de haakse poot bij het sluiten
+   eerst netjes uitlijnen met het kuiltje — mild irritant. De trechter doet
+   dat voor je, wat de oorzaak van het draaien ook is (magneet, schudden in de
+   tas, of gewoon hoe je hem erin legde). Te combineren met 1 of 2.
+
+Het sleuteltje zelf ligt nog niet helemaal vast (plek, richting). Daarom
+eerst het sleuteltje, dan de magneetjes: diameter, dikte, speling en plekken
+worden parameters, en een test bewaakt dat elk gaatje genoeg PETG houdt en
+ver genoeg van de haakse poot blijft.
+
 ### Het klittenband
 
 Eén strook dubbelzijdig klittenband (haak aan de ene kant, lus aan de andere)
@@ -292,5 +360,7 @@ laag: netjes, en er hoeft niets overbrugd te worden.
 
 ## Nog open
 
-- Knopjes en andere details van de bout.
+- Het sleuteltje (plek, richting) en de trechter aan het kuiltje. Het
+  uitlijngroefje volgt de richting van de haakse poot vanzelf.
+- Magneetjes om dicht te klikken — zie *Magneetjes*.
 - Werkelijke maten van het klittenband (breedte, dikte).

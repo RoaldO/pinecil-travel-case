@@ -21,4 +21,10 @@
 - [x] Tip collar profile (seat, ring, taper, neck)
 - [ ] Key rework (owner has an idea, after the iron is done); the mounting
       screw's groove now merges with the short-leg pocket at B's face
+- [x] Key alignment groove in insert A's face (along the short leg)
+- [ ] Funnel at the mouth of the short-leg pocket in insert B: the key turns
+      freely, so even without magnets the leg must be lined up by hand to
+      close; the funnel guides it in (docs/model.md "Magneetjes")
+- [ ] Magnets so the case clicks shut (docs/model.md "Magneetjes"): after the
+      key; parametric size/spots; keep them well clear of the short leg's path
 - [ ] Test print (shell B end cap + logo first?)

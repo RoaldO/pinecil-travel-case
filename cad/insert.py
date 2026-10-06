@@ -22,7 +22,7 @@ from shapely.ops import unary_union
 
 from cad import params as p
 from cad.band import BAND_HALF_WIDTH, ring_section, ring_solid
-from cad.contents import key_short_leg_section, pieces
+from cad.contents import key_short_leg_line, key_short_leg_section, pieces
 from cad.profile import channel_sections, insert_profile
 from cad.solids import below_x, extrude_x, extrude_y
 
@@ -89,11 +89,20 @@ def insert_solid() -> Part:
     return body - ring_solid() - channel_cuts()
 
 
+def key_align_groove() -> Part:
+    """Shallow groove in insert A's face from the key hole along the short
+    leg (as long as the leg), showing how to line the leg up; it may run
+    through other channels."""
+    face = p.INSERT_SPLIT_X - p.INSERT_SPLIT_GAP
+    section = key_short_leg_line().buffer(p.KEY_ALIGN_GROOVE_WIDTH / 2, cap_style="flat")
+    return extrude_x(section, face - p.KEY_ALIGN_GROOVE_DEPTH, face + 1)
+
+
 @cache
 def insert_a() -> Part:
     """Insert A stops INSERT_SPLIT_GAP short of insert B, so the shells
-    always close first."""
-    return insert_solid() & below_x(p.INSERT_SPLIT_X - p.INSERT_SPLIT_GAP)
+    always close first. Its face carries the key alignment groove."""
+    return (insert_solid() & below_x(p.INSERT_SPLIT_X - p.INSERT_SPLIT_GAP)) - key_align_groove()
 
 
 @cache

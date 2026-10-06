@@ -217,3 +217,22 @@ def test_iron_foot_corners_groove_insert_b_up_to_its_face_only():
             continue
         in_b = x0 >= p.INSERT_SPLIT_X
         assert s.contains(corner) == in_b, (x0, x1)
+
+
+def test_key_align_groove_in_insert_a_face_along_the_short_leg():
+    """A shallow groove in A's face along the short leg: material gone just
+    under the face along the leg's line, untouched below the groove depth."""
+    from shapely.geometry import Point
+
+    from cad.contents import key_short_leg_line
+    from cad.solids import extrude_x
+
+    face = p.INSERT_SPLIT_X - p.INSERT_SPLIT_GAP
+    line = key_short_leg_line()
+    for t in (0.15, 0.9):  # near the key hole and near the leg's end: in PETG
+        probe = Point(line.interpolate(t, normalized=True).coords[0]).buffer(0.2)
+        just_under = extrude_x(probe, face - p.KEY_ALIGN_GROOVE_DEPTH + 0.1, face - 0.1)
+        below = extrude_x(probe, face - p.KEY_ALIGN_GROOVE_DEPTH - 0.5,
+                          face - p.KEY_ALIGN_GROOVE_DEPTH - 0.1)
+        assert (just_under & insert_a()).volume < VOLUME_TOLERANCE, t
+        assert (below & insert_a()).volume > VOLUME_TOLERANCE, t
