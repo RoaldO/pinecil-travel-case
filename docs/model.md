@@ -434,6 +434,4 @@ laag: netjes, en er hoeft niets overbrugd te worden.
 
 ## Nog open
 
-- Het sleuteltje (plek, richting). Uitlijngroefje en trechter volgen de
-  richting van de haakse poot vanzelf.
 - Werkelijke maten van het klittenband (breedte, dikte).

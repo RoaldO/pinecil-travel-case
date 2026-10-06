@@ -20,8 +20,9 @@
 - [x] Iron mounting screw (groove through insert B)
 - [x] Iron foot (half square under the round side; grooves insert B)
 - [x] Tip collar profile (seat, ring, taper, neck)
-- [ ] Key rework (owner has an idea, after the iron is done); the mounting
-      screw's groove now merges with the short-leg pocket at B's face
+- [x] Key rework: the owner's idea landed as the alignment groove + funnel
+      (the mounting screw's groove merges with the short-leg pocket at B's
+      face, which is fine)
 - [x] Key alignment groove in insert A's face (along the short leg)
 - [x] Funnel at the mouth of the short-leg pocket in insert B: the key turns
       freely, so even without magnets the leg must be lined up by hand to
