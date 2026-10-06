@@ -14,27 +14,47 @@ B's face has an open pocket that takes the key's short leg.
 
 from __future__ import annotations
 
+import math
 from functools import cache
 
 from build123d import Part
+from shapely.affinity import rotate
+from shapely.geometry import box
 from shapely.geometry.base import BaseGeometry
 from shapely.ops import unary_union
 
 from cad import params as p
 from cad.band import BAND_HALF_WIDTH, ring_section, ring_solid
-from cad.contents import key_short_leg_line, key_short_leg_section, pieces
+from cad.contents import key_axis, key_short_leg_line, key_short_leg_section, pieces
 from cad.profile import channel_sections, insert_profile
 from cad.solids import below_x, extrude_x, extrude_y
 
 TIP_NAMES = ("tip_bl", "tip_br", "tip_tl", "tip_tr")
 
 
-def pocket_section() -> BaseGeometry:
+FUNNEL_ANGLE_STEP = 1.0  # degrees between swept copies of the pocket
+SWEEP_TOLERANCE = 0.02  # mm, simplify the swept outline (thousands of points otherwise)
+SLIVER_TOUCH = 1e-6  # mm: a sliver "touches" the pocket
+SLIVER_OVERLAP = 0.05  # mm, shaved bits reach this far into neighbouring cuts
+
+
+def pocket_section(turn: float = 0.0) -> BaseGeometry:
     """YZ footprint of the pocket in insert B: key and short leg, hulled,
-    grown by POCKET_CLEARANCE, kept INSERT_WALL inside the insert surface."""
+    grown by POCKET_CLEARANCE, kept INSERT_WALL inside the insert surface.
+    With ``turn`` (the funnel) it is swept that many degrees either way round
+    the key's axis and may come up to MIN_PRINT_WALL from the insert's
+    surface (no strength needed there: it is glued to shell B)."""
     ch = channel_sections()
     parts = [ch["key"], key_short_leg_section(p.ITEM_CLEARANCE)]
     hull = unary_union(parts).convex_hull.buffer(p.POCKET_CLEARANCE, p.ARC_QUAD_SEGMENTS)
+    if turn > 0:
+        n = max(1, math.ceil(2 * turn / FUNNEL_ANGLE_STEP))
+        turned = [rotate(hull, -turn + 2 * turn * i / n, origin=key_axis())
+                  for i in range(n + 1)]
+        hull = unary_union([unary_union(pair).convex_hull
+                            for pair in zip(turned, turned[1:])]).simplify(SWEEP_TOLERANCE)
+        return hull.intersection(insert_profile().buffer(-p.MIN_PRINT_WALL,
+                                                         p.ARC_QUAD_SEGMENTS))
     return hull.intersection(insert_profile().buffer(-p.INSERT_WALL, p.ARC_QUAD_SEGMENTS))
 
 
@@ -62,6 +82,54 @@ def bore(name: str) -> Part:
     return Part() + [extrude_x(s, x0, x1) for x0, x1, s in bore_pieces(name)]
 
 
+def _other_cuts_at(x: float) -> BaseGeometry:
+    """YZ section of every cut at ``x`` except the short-leg pocket."""
+    out = [s for n in ("iron", *TIP_NAMES) for x0, x1, s in bore_pieces(n) if x0 <= x < x1]
+    if p.KEY_LONG_X0 - p.ITEM_END_CLEARANCE <= x < p.KEY_SHORT_X1:
+        out.append(channel_sections()["key"])
+    return unary_union(out)
+
+
+def _shave(pocket: BaseGeometry, others: BaseGeometry) -> BaseGeometry:
+    """``pocket`` plus every bit of PETG next to it narrower than two print
+    lines (sharp spikes left between pocket, funnel and other channels).
+    Those bits are exactly what closing the cuts (grow, then shrink by one
+    print line) fills in, so one pass is enough. Outside the insert is never
+    cut, so the outer wall stays."""
+    cut = pocket.union(others)
+    r = p.MIN_PRINT_WALL
+    closed = cut.buffer(r, p.ARC_QUAD_SEGMENTS).buffer(-r, p.ARC_QUAD_SEGMENTS)
+    thin = closed.difference(cut)
+    spikes = [g for g in getattr(thin, "geoms", [thin])
+              if not g.is_empty and g.distance(pocket) < SLIVER_TOUCH]
+    if not spikes:
+        return pocket
+    # reach a little into the neighbouring cuts (never into PETG), so no
+    # razor-thin remnants are left where outlines nearly coincide
+    grown = unary_union(spikes).buffer(SLIVER_OVERLAP).intersection(closed)
+    return pocket.union(grown)
+
+
+def pocket_slices() -> list[tuple[float, float, BaseGeometry]]:
+    """(x0, x1, YZ section) of the short-leg pocket in insert B: the funnel at
+    its mouth (KEY_FUNNEL_ANGLE at B's face down to 0 at KEY_FUNNEL_DEPTH, in
+    TAPER_STEP slices at their wider, mouth-side angle), then the plain
+    pocket; each slice shaved of thin PETG next to it."""
+    start, end = p.INSERT_SPLIT_X, p.KEY_SHORT_X1 + p.POCKET_CLEARANCE
+    n = max(1, math.ceil(p.KEY_FUNNEL_DEPTH / p.TAPER_STEP))
+    cuts = {start + i * p.KEY_FUNNEL_DEPTH / n for i in range(n + 1)}
+    cuts |= {x for name in ("iron", *TIP_NAMES) for piece in bore_pieces(name)
+             for x in piece[:2]}
+    cuts |= {p.KEY_SHORT_X1, end}
+    cuts = sorted(x for x in cuts if start <= x <= end)
+    out = []
+    for x0, x1 in zip(cuts, cuts[1:]):
+        depth = x0 - start
+        turn = p.KEY_FUNNEL_ANGLE * max(0.0, 1 - depth / p.KEY_FUNNEL_DEPTH)
+        out.append((x0, x1, _shave(pocket_section(turn), _other_cuts_at((x0 + x1) / 2))))
+    return out
+
+
 @cache
 def channel_cuts() -> Part:
     """Everything cut out of the insert for the contents: item channels, key
@@ -71,8 +139,7 @@ def channel_cuts() -> Part:
     for name in TIP_NAMES:
         cuts += bore(name)
     cuts += extrude_x(ch["key"], p.KEY_LONG_X0 - p.ITEM_END_CLEARANCE, p.KEY_SHORT_X1)
-    cuts += extrude_x(pocket_section(), p.INSERT_SPLIT_X,
-                      p.KEY_SHORT_X1 + p.POCKET_CLEARANCE)
+    cuts += Part() + [extrude_x(s, x0, x1) for x0, x1, s in pocket_slices()]
     # Where the band bends round the insert's ends its channel cuts diagonally
     # past the square channel ends; round those ends off so INSERT_WALL of
     # PETG always stays between band and items.

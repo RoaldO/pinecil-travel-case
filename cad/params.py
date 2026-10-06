@@ -120,6 +120,16 @@ TIP_GRIP = 11.0  # tips protrude this far past insert A's split face
 KEY_LEG_ANGLE = -15.0  # short leg, degrees from horizontal (negative = down)
 KEY_LEG_SIDE = 1  # +1 / -1: which side (Y) the short leg points to
 POCKET_CLEARANCE = 1.0  # pocket in insert B around the short leg
+# Funnel at the mouth of the short-leg pocket in insert B: the key turns
+# freely on its long leg, so at B's face the pocket takes the leg turned up to
+# this angle either way, narrowing to the plain pocket over the depth below;
+# closing the case turns the leg into line.
+KEY_FUNNEL_ANGLE = 20.0  # degrees, each way
+KEY_FUNNEL_DEPTH = 6.0
+# Thinnest wall worth printing: one line of a 0.4 nozzle. Where strength
+# doesn't matter (the funnel near insert B's outside, glued to the shell),
+# cuts may come this close to a surface.
+MIN_PRINT_WALL = 0.45
 # Shallow groove in insert A's face from the key hole along the short leg's
 # direction: shows how to line the leg up before closing.
 KEY_ALIGN_GROOVE_WIDTH = 0.8

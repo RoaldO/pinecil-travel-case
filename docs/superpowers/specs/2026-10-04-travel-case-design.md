@@ -87,6 +87,7 @@ the cap half.
 | `KEY_LEG_ANGLE` | -15.0 | short leg, degrees from horizontal (negative = down). The brainstorm sketch had −35°, but with the key resting just above the iron (as modelled) −35° hits the iron; −20°…−5° fit. |
 | `KEY_LEG_SIDE` | 1 | +1 / −1: which side the short leg points to |
 | `POCKET_CLEARANCE` | 1.0 | pocket around the short leg |
+| `KEY_FUNNEL_ANGLE` / `_DEPTH` | 20° / 6 | funnel at the short-leg pocket's mouth in insert B: the pocket swept ±angle round the key's axis at B's face, back to 0 over the depth (TAPER_STEP slices); comes up to `MIN_PRINT_WALL` (0.45, one print line) from insert B's surface, never through it. PETG next to pocket/funnel narrower than 2 × `MIN_PRINT_WALL` (spikes between them and other channels) is shaved off |
 | `KEY_ALIGN_GROOVE_WIDTH` / `_DEPTH` | 0.8 / 0.6 | groove in insert A's face from the key hole along the short leg (as long as the leg): shows how to line the leg up before closing; may cross other channels |
 
 ### Shell and fits

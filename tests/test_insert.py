@@ -236,3 +236,50 @@ def test_key_align_groove_in_insert_a_face_along_the_short_leg():
                           face - p.KEY_ALIGN_GROOVE_DEPTH - 0.1)
         assert (just_under & insert_a()).volume < VOLUME_TOLERANCE, t
         assert (below & insert_a()).volume > VOLUME_TOLERANCE, t
+
+
+def test_key_funnel_takes_a_turned_leg_at_b_face():
+    """At B's face the pocket takes the short leg turned almost
+    KEY_FUNNEL_ANGLE either way round the key's axis (up to MIN_PRINT_WALL
+    from the insert's surface, which it never breaks through); past
+    KEY_FUNNEL_DEPTH it is the plain pocket again."""
+    from cad.profile import insert_profile
+
+    inner = insert_profile().buffer(-p.MIN_PRINT_WALL + 0.01)
+
+    from shapely.affinity import rotate
+
+    from cad.contents import key_axis
+
+    leg = key_short_leg_section(0)
+    wide = pocket_section(p.KEY_FUNNEL_ANGLE)
+    for a in (-(p.KEY_FUNNEL_ANGLE - 1), p.KEY_FUNNEL_ANGLE - 1):
+        turned = rotate(leg, a, origin=key_axis())
+        assert turned.intersection(inner.buffer(-0.02)).difference(wide).area < 0.01, a
+    assert wide.difference(inner).area < 1e-6  # a print wall stays outside
+    # mouth material gone, deep material back
+    probe = rotate(leg, p.KEY_FUNNEL_ANGLE / 2, origin=key_axis()).difference(
+        pocket_section(0).buffer(0.3))
+    assert not probe.is_empty
+    assert not _hits(probe, p.INSERT_SPLIT_X + 0.05, p.INSERT_SPLIT_X + 0.15, insert_b())
+    assert _hits(probe, p.INSERT_SPLIT_X + p.KEY_FUNNEL_DEPTH + 0.2,
+                 p.INSERT_SPLIT_X + p.KEY_FUNNEL_DEPTH + 1, insert_b())
+
+
+def test_no_thin_spikes_next_to_the_key_pocket():
+    """Next to the short-leg pocket and its funnel no PETG is left narrower
+    than two print lines (beyond shaving crumbs); the outer wall stays."""
+    from shapely.geometry import box
+
+    from cad.insert import _other_cuts_at, pocket_slices
+    from cad.profile import insert_profile
+
+    r = p.MIN_PRINT_WALL
+    x0, y0, x1, y1 = insert_profile().bounds
+    for a, b, pocket in pocket_slices():
+        cut = pocket.union(_other_cuts_at((a + b) / 2))
+        solid = box(x0 - 5, y0 - 5, x1 + 5, y1 + 5).difference(cut)
+        thin = solid.difference(solid.buffer(-r).buffer(r))
+        spikes = [g.area for g in getattr(thin, "geoms", [thin])
+                  if g.distance(pocket) < 1e-6 and g.area > 0.05]
+        assert not spikes, (a, spikes)

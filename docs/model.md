@@ -223,6 +223,32 @@ lang: kijk je van voren op A, dan ligt de poot goed als hij boven het groefje
 ligt. Het groefje loopt deels door de boring van de punt rechtsboven; het is
 zichtbaar vlak bij het gat en aan het eind, en dat is genoeg referentie.
 
+Staat de poot toch wat scheef, dan vangt een **trechter** aan de mond van het
+kuiltje hem op. Omdat het sleuteltje om zijn lange poot draait, is de
+trechter geen gewone verwijding maar **draait hij mee om die as**: aan de
+voorkant van B neemt het kuiltje de poot op tot **20° verdraaid** naar elke
+kant, en over **6 mm** diepte loopt dat terug naar 0°, daarna is het het
+gewone kuiltje. Bij het dichtschuiven draait de trechter de poot zo vanzelf
+recht. De poot komt pas ~11 mm voor het dichtgaan in het kuiltje, dus die
+6 mm is er ruim.
+
+De trechter mag aan de voorkant tot vlak bij de buitenkant van inzetstuk B
+komen, maar er blijft altijd **minstens één printwand** (0,45,
+`MIN_PRINT_WALL`) staan: verder dan dat kan de poot toch nauwelijks staan
+(de rand van buitendeel B schuift er eerst langs), en sterkte is daar geen
+punt — dat wandje wordt tegen het PLA van buitendeel B gelijmd.
+
+Waar kuiltje en trechter dicht langs andere kanalen lopen (de bout, de gleuf
+van het montageboutje, de punt rechtsboven), zouden dunne, scherpe spitsjes
+PETG blijven staan die lelijk printen. Die worden **weggeschaafd**: naast het
+kuiltje blijft niets staan dat smaller is dan twee printlijnen (0,9). Het
+buitenwandje telt daarbij niet mee. Hij loopt ook over de boring van de punt
+rechtsboven heen; die punt wordt dieper in B nog gewoon vastgehouden.
+
+In het model bestaat de trechter uit plakjes van 0,2 (een printlaag), elk op
+de grootste hoek. Inzetstuk B print met zijn achterkant op het bed, dan loopt
+de trechter naar boven open en hangt er niets over.
+
 ### Magneetjes (idee, nog niet in het model)
 
 Naast het klittenband wat kleine magneetjes, zodat de koker **dichtklikt**.
@@ -271,7 +297,7 @@ Overwogen:
 2. **Alleen plekken ver van de poot.** Nu is dat alleen links — één magneet
    trekt de koker scheef dicht.
 3. **Een trechter aan de mond van het kuiltje in B**, zodat een iets
-   gedraaide poot vanzelf het kuiltje in geleid wordt. **Gekozen**, omdat dit
+   gedraaide poot vanzelf het kuiltje in geleid wordt. **Gekozen en gemaakt** (zie *Het inbussleuteltje*), omdat dit
    een probleem oplost dat er óók zonder magneten al is: het sleuteltje draait
    vrij om zijn lange poot, dus ook nu moet je de haakse poot bij het sluiten
    eerst netjes uitlijnen met het kuiltje — mild irritant. De trechter doet
@@ -360,7 +386,7 @@ laag: netjes, en er hoeft niets overbrugd te worden.
 
 ## Nog open
 
-- Het sleuteltje (plek, richting) en de trechter aan het kuiltje. Het
-  uitlijngroefje volgt de richting van de haakse poot vanzelf.
+- Het sleuteltje (plek, richting). Uitlijngroefje en trechter volgen de
+  richting van de haakse poot vanzelf.
 - Magneetjes om dicht te klikken — zie *Magneetjes*.
 - Werkelijke maten van het klittenband (breedte, dikte).
