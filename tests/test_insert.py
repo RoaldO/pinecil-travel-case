@@ -5,7 +5,8 @@ import pytest
 from cad import params as p
 from cad.contents import contents_solids, key_short_leg_section
 from cad.band import BAND_HALF_WIDTH, ring_section
-from cad.insert import channel_cuts, insert_a, insert_b, pocket_section
+from cad.insert import (channel_cuts, insert_a, insert_b, pocket_section,
+                        tip_channel_segments)
 from cad.solids import extrude_y
 
 VOLUME_TOLERANCE = 1e-3  # mm³: "no overlap"
@@ -62,3 +63,48 @@ def test_channels_keep_insert_wall_from_the_band_bends():
     near_band = extrude_y(ring_section().buffer(p.INSERT_WALL - WALL_TOLERANCE),
                           BAND_HALF_WIDTH)
     assert (channel_cuts() & near_band).volume < VOLUME_TOLERANCE
+
+
+@pytest.mark.parametrize("name", ["tip_bl", "tip_tr"])
+def test_tip_channel_follows_the_base_steps(name):
+    """Each base step sits in a bore only ITEM_CLEARANCE wider (+ a hair for
+    polygonised arcs): a slightly fatter cylinder already hits insert A."""
+    from build123d import Cylinder, Location, Plane
+
+    from cad.contents import layout, tip_segments
+
+    c = layout()[name].section.centroid
+    for x0, x1, d in tip_segments()[:len(p.TIP_BASE_STEPS)]:
+        plane = Plane(origin=(x0 + 0.5, c.x, c.y), x_dir=(0, 1, 0), z_dir=(1, 0, 0))
+        r = d / 2 + p.ITEM_CLEARANCE + 0.05
+        probe = plane * (Location((0, 0, (x1 - x0 - 1) / 2)) * Cylinder(r, x1 - x0 - 1))
+        assert (probe & insert_a()).volume > VOLUME_TOLERANCE, (x0, d)
+
+
+def test_tip_bores_only_narrow_going_deeper():
+    """A tip slides in from each insert's face: in A the bore widens toward
+    the face, in B it may only narrow away from it."""
+    segs = tip_channel_segments()
+    in_a = [d for x0, _, d in segs if x0 < p.INSERT_SPLIT_X]
+    in_b = [d for x0, _, d in segs if x0 >= p.INSERT_SPLIT_X]
+    assert in_a == sorted(in_a)
+    assert in_b == sorted(in_b, reverse=True)
+
+
+def test_tip_collar_and_base_are_in_insert_a():
+    collar_end = p.TIP_COLLAR_X + p.TIP_COLLAR_LENGTH
+    assert collar_end <= p.INSERT_SPLIT_X - p.INSERT_SPLIT_GAP
+
+
+def test_tip_sleeve_bore_in_insert_b_is_snug():
+    """Insert B holds the tip end in a bore only ITEM_CLEARANCE wider."""
+    from build123d import Cylinder, Location, Plane
+
+    from cad.contents import layout
+
+    c = layout()["tip_tl"].section.centroid
+    x0, x1 = p.INSERT_SPLIT_X + 0.5, p.TIP_END_X
+    plane = Plane(origin=(x0, c.x, c.y), x_dir=(0, 1, 0), z_dir=(1, 0, 0))
+    r = p.TIP_SLEEVE_DIAMETER / 2 + p.ITEM_CLEARANCE + 0.05
+    probe = plane * (Location((0, 0, (x1 - x0) / 2)) * Cylinder(r, x1 - x0))
+    assert (probe & insert_b()).volume > VOLUME_TOLERANCE

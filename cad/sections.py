@@ -16,7 +16,7 @@ from build123d import Edge, GeomType, Plane
 
 from cad import params as p
 from cad.band import band_solid
-from cad.contents import contents_solids
+from cad.contents import contents_solids, layout
 from cad.insert import insert_a, insert_b
 from cad.shell import shell_a, shell_b
 
@@ -75,9 +75,14 @@ def _panel(all_parts: dict, plane: Plane, to_2d, title: str) -> tuple[str, tuple
 def render() -> Path:
     all_parts = parts()
     yz = lambda v: (v.Y, v.Z)  # noqa: E731
+    first_step = p.TIP_BASE_STEPS[0][0]
     cross = [
-        (p.ITEM_START_X + p.TIP_LENGTH / 3, "in helft A"),
+        (p.ITEM_START_X + first_step / 2, "punt-voet ø%g" % p.TIP_BASE_STEPS[0][1]),
+        (p.ITEM_START_X + first_step + p.TIP_BASE_STEPS[1][0] / 2,
+         "punt-voet ø%g" % p.TIP_BASE_STEPS[1][1]),
+        ((p.TIP_COLLAR_X + p.SHELL_SPLIT_X) / 2, "kraag"),
         ((p.SHELL_SPLIT_X + p.INSERT_SPLIT_X) / 2, "overlap"),
+        ((p.INSERT_SPLIT_X + p.TIP_END_X) / 2, "punt-einden in B"),
         ((p.KEY_SHORT_X0 + p.KEY_SHORT_X1) / 2, "kuiltje + haakse poot"),
         (p.CASE_LENGTH - p.END_CAP_THICKNESS / 2, "kopse kant B (logo)"),
     ]
@@ -88,12 +93,18 @@ def render() -> Path:
         panels.append(f'<g transform="translate({x_cursor - x0:.2f},0)">{body}</g>')
         x_cursor += (x1 - x0) + GAP
         top, bottom = min(top, y0), max(bottom, y1)
-    long_body, (lx0, ly0, lx1, ly1) = _panel(
-        all_parts, Plane.XZ, lambda v: (v.X, v.Z), "lengtedoorsnede y = 0 (dicht)")
-    long_dy = bottom - ly0 + GAP
-    panels.append(f'<g transform="translate({-lx0:.2f},{long_dy:.2f})">{long_body}</g>')
-    width = max(x_cursor, lx1 - lx0) + GAP
-    height = (long_dy + ly1) - top + GAP
+    tip_y = layout()["tip_bl"].section.centroid.x
+    long_dy, long_w = bottom, 0.0
+    for y, title in ((0.0, "lengtedoorsnede y = 0 (dicht)"),
+                     (tip_y, f"lengtedoorsnede y = {tip_y:.1f}, door de onderste punten (dicht)")):
+        body, (lx0, ly0, lx1, ly1) = _panel(
+            all_parts, Plane.XZ.offset(-y), lambda v: (v.X, v.Z), title)
+        long_dy += GAP - ly0
+        panels.append(f'<g transform="translate({-lx0:.2f},{long_dy:.2f})">{body}</g>')
+        long_dy += ly1
+        long_w = max(long_w, lx1 - lx0)
+    width = max(x_cursor, long_w) + GAP
+    height = long_dy - top + GAP
     svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{width * PX_PER_MM:.0f}" '
            f'height="{height * PX_PER_MM:.0f}" viewBox="{-GAP / 2} {top - GAP / 2} {width} {height}" '
            f'font-family="sans-serif"><rect x="{-GAP / 2}" y="{top - GAP / 2}" '

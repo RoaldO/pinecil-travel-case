@@ -7,3 +7,5 @@ build/
 *.3mf
 .claude/settings.local.json
 .pytest_cache/
+# reference photos (not ours to publish)
+docs/*.jpg

@@ -23,13 +23,14 @@ the cap half.
 | D3 | Inner part is a **solid insert with per-item channels** (not a thin tube). |
 | D4 | Insert split derived from `TIP_GRIP` (D6); shell split = insert split − `OVERLAP` → insert A protrudes `OVERLAP` from shell A and slides into shell B. |
 | D5 | Half A: items protrude from insert A when opened, easy to grab. Half B ("cap"): **logo on B's end cap**. |
-| D6 | Key K2 (L-shaped hex key): long leg in a blind hole in insert A, centred between the top tips; the short leg lies just past the top-tip ends, **outside insert A, free to grab** when opened, angled `KEY_LEG_ANGLE` down to `KEY_LEG_SIDE` (16 mm doesn't fit horizontally). Tips protrude `TIP_GRIP` from insert A. Insert B's face has an open **grip pocket** that takes the protruding tip ends and the short leg. (K1 — short leg buried at A's deep end — dropped: the leg couldn't pass the top-tip webs, and the owner wants a hole, not a slot.) |
+| D6 | Key K2 (L-shaped hex key): long leg in a blind hole in insert A, centred between the top tips; the short leg lies just past the top-tip ends, **outside insert A, free to grab** when opened, angled `KEY_LEG_ANGLE` down to `KEY_LEG_SIDE` (16 mm doesn't fit horizontally). Tips protrude `TIP_GRIP` from insert A. Insert B's face has an open **pocket** that takes the short leg; the protruding tip ends each go in their own sleeve-wide bore (D13). (K1 — short leg buried at A's deep end — dropped: the leg couldn't pass the top-tip webs, and the owner wants a hole, not a slot.) |
 | D7 | Velcro: one closed lengthwise loop. Top: flush groove, continuous across the splits. Ends: bends inward, runs between insert and shell behind the end caps. Bottom: the two strip ends overlap → double layer → deeper groove. |
 | D8 | Velcro path = **band ring**: in side view, an outer rounded block minus an inner rounded block, *almost* concentric (inner block is one band thickness smaller at top and ends, two at the bottom); extruded across the band width; subtracted (with clearance) from shell **and** insert. Bends, no corners; band must slide freely so the case can be opened. |
 | D9 | Shell top wall = 1 band layer + clearance + floor; bottom wall = 2 layers + clearance + floor; side walls plain. |
 | D10 | Logo upright when the case rests on its wide side (logo top → narrow side); must lie within the straight vertical run of the band behind the end cap, with margin. |
 | D11 | Inserts are glued into their own shell half, pushed to an **end stop**: outside the band width the insert runs up to the end cap. Velcro is threaded **after** gluing (keeps it free of glue), so the band channel must be continuous and threadable after assembly. |
 | D12 | All parts print standing (axis vertical); cap half prints end-cap-down so the logo ribs are the first layer. |
+| D13 | Tips: base (white rings) deep in insert A, in a bore that follows `TIP_BASE_STEPS`, collar-wide from `TIP_COLLAR_X` up to A's face (the collar rests on that shoulder). Past the collar nothing is wider than `TIP_SLEEVE_DIAMETER`, so insert B holds the tip end in one straight bore of it. Every bore only narrows going deeper, so tips slide in and out. |
 | D13 | No magic numbers: every dimension is a named parameter; derived values are computed. |
 
 ## Coordinate system
@@ -50,8 +51,12 @@ the cap half.
 | `IRON_WIDTH` | 17.4 | measured, lies wide (Y) |
 | `IRON_HEIGHT` | 14.4 | measured (Z) |
 | `IRON_METAL_DIAMETER` | 5.0 | assumed; thin part past the handle |
-| `TIP_LENGTH` | 90.0 | measured |
-| `TIP_DIAMETER` | 11.0 | widest, measured |
+| `TIP_LENGTH` | 92.0 | longest measured 89.3 (they vary), with margin |
+| `TIP_DIAMETER` | 11.0 | widest (the collar), measured |
+| `TIP_BASE_STEPS` | (24.1, 5.4), (9.7, 5.7) | base (white rings) from its end: (length, Ø); sits in insert A; channel only widens toward its mouth |
+| `TIP_COLLAR_LENGTH` | 4.0 | estimated, not critical (the A bore stays collar-wide up to A's face) |
+| `TIP_SLEEVE_DIAMETER` | 5.5 | heating-element sleeve, widest past the collar; insert B holds the tip in one straight bore of it |
+| `TIP_COLLAR_MIN_DEPTH` | 6.0 | min length of the collar-wide channel in insert A |
 | `KEY_LONG_LEG` | 46.0 | measured |
 | `KEY_SHORT_LEG` | 16.0 | measured |
 | `KEY_HEX` | 1.46 | measured (across flats) |
@@ -70,7 +75,7 @@ the cap half.
 | `TIP_GRIP` | 11.0 | tip protrusion past insert A's split face |
 | `KEY_LEG_ANGLE` | -15.0 | short leg, degrees from horizontal (negative = down). The brainstorm sketch had −35°, but with the key resting just above the iron (as modelled) −35° hits the iron; −20°…−5° fit. |
 | `KEY_LEG_SIDE` | 1 | +1 / −1: which side the short leg points to |
-| `POCKET_CLEARANCE` | 1.0 | grip pocket around tip ends and short leg |
+| `POCKET_CLEARANCE` | 1.0 | pocket around the short leg |
 
 ### Shell and fits
 
@@ -122,7 +127,7 @@ the cap half.
   + `CAVITY_LENGTH` (≈ 172.8).
 - `TIP_END_X` = cavity start + `ITEM_END_CLEARANCE` + `TIP_LENGTH`
   (all four tips start at the cavity start).
-- `INSERT_SPLIT_X` = `TIP_END_X` − `TIP_GRIP` (≈ 85.9).
+- `INSERT_SPLIT_X` = `TIP_END_X` − `TIP_GRIP` (≈ 87.9).
 - `SHELL_SPLIT_X` = `INSERT_SPLIT_X` − `OVERLAP` (≈ 65.9).
 - Key: short leg at x = `TIP_END_X` + `ITEM_CLEARANCE`; long leg runs back
   `KEY_LONG_LEG` from there (≈ 33 mm of it inside insert A).
@@ -138,9 +143,9 @@ the cap half.
    channel centred between the top tips.
 2. **Channels**: each item's cross-section offset by `ITEM_CLEARANCE`,
    extruded over its length (+ clearance). The key's long leg gets a plain
-   hole. Insert B's face gets the **grip pocket**: open toward the split,
-   from `INSERT_SPLIT_X` to just past the short leg, covering the top row
-   and the swept short leg, all + `POCKET_CLEARANCE`.
+   hole. Tips get a stepped bore (D13). Insert B's face gets the **pocket**:
+   open toward the split, from `INSERT_SPLIT_X` to just past the short leg,
+   covering the key and the swept short leg, + `POCKET_CLEARANCE`.
 3. **Insert profile** (`profile.py`): the smallest symmetric rounded trapezoid
    (`INSERT_CORNER_RADIUS`) containing all channels offset by `INSERT_WALL`,
    with the top half-width widened just enough for the band's edges to lie
@@ -190,7 +195,7 @@ the cap half.
    `LOGO_BAND_MARGIN`, and within `VELCRO_WIDTH` minus margin.
 7. Logo upright: its top (P1) is toward +Z.
 8. Key short leg lies entirely outside insert A and shell A (free to grab
-   when opened) and inside insert B's grip pocket; tips protrude `TIP_GRIP`.
+   when opened) and inside insert B's pocket; tips protrude `TIP_GRIP`.
 9. `CASE_LENGTH`, `INSERT_SPLIT_X`, `SHELL_SPLIT_X` match the derived formulas.
 10. Band channel is continuous: everywhere ≥ `VELCRO_THICKNESS` (× layers)
     + `VELCRO_CLEARANCE` thick, so the band can be threaded after gluing.

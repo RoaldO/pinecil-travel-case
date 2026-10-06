@@ -133,11 +133,26 @@ def iron_solid() -> Part:
     return handle + metal
 
 
+def tip_segments() -> list[tuple[float, float, float]]:
+    """(x0, x1, diameter) of a tip's coaxial pieces, base (white rings) first:
+    the base steps, the collar, then everything up to the working end as one
+    sleeve-diameter envelope."""
+    out, x = [], p.ITEM_START_X
+    for length, d in p.TIP_BASE_STEPS:
+        out.append((x, x + length, d))
+        x += length
+    out.append((x, x + p.TIP_COLLAR_LENGTH, p.TIP_DIAMETER))
+    out.append((x + p.TIP_COLLAR_LENGTH, p.TIP_END_X, p.TIP_SLEEVE_DIAMETER))
+    return out
+
+
 def tip_solid(name: str) -> Part:
-    item = layout()[name]
-    c = item.section.centroid
-    return _along_x(c.x, c.y, item.x0, item.x1,
-                    lambda L: Location((0, 0, L / 2)) * Cylinder(p.TIP_DIAMETER / 2, L))
+    c = layout()[name].section.centroid
+    return Part() + [
+        _along_x(c.x, c.y, x0, x1,
+                 lambda L, d=d: Location((0, 0, L / 2)) * Cylinder(d / 2, L))
+        for x0, x1, d in tip_segments()
+    ]
 
 
 def key_solid() -> Part:

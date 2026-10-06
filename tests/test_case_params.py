@@ -31,3 +31,14 @@ def test_shell_walls_hold_the_grooves():
 
 def test_split_order():
     assert 0 < p.SHELL_SPLIT_X < p.INSERT_SPLIT_X < p.TIP_END_X < p.CASE_LENGTH
+
+
+def test_tip_base_narrows_going_deeper():
+    """The tip slides in and out: going deeper the diameter never grows."""
+    diameters = [d for _, d in p.TIP_BASE_STEPS] + [p.TIP_DIAMETER]
+    assert diameters == sorted(diameters)
+
+
+def test_tip_collar_sits_deep_enough_in_insert_a():
+    mouth = p.INSERT_SPLIT_X - p.INSERT_SPLIT_GAP
+    assert mouth - p.TIP_COLLAR_X >= p.TIP_COLLAR_MIN_DEPTH

@@ -37,8 +37,19 @@ IRON_WIDTH = 17.4  # measured, lies wide (Y)
 IRON_HEIGHT = 14.4  # measured (Z)
 IRON_METAL_DIAMETER = 5.0  # assumed; the thin part past the handle
 
-TIP_LENGTH = 90.0  # measured
-TIP_DIAMETER = 11.0  # widest, measured
+TIP_LENGTH = 92.0  # longest measured 89.3 (they vary), with margin
+TIP_DIAMETER = 11.0  # widest, measured: the collar
+# The tip's base (the end with the white rings), measured from that end, as
+# (length, diameter) — narrowest first. Then the collar (TIP_DIAMETER). The
+# base sits deep in insert A, so you can see which tip is which on opening;
+# the channel only widens toward its mouth, so a tip slides in and out.
+TIP_BASE_STEPS = ((24.1, 5.4), (9.7, 5.7))
+TIP_COLLAR_LENGTH = 4.0  # estimated (chamfered, hard to measure); not critical
+# Past the collar the widest part is the sleeve round the heating element;
+# everything up to the working end fits inside this diameter, so insert B
+# holds the tip in one straight bore of it.
+TIP_SLEEVE_DIAMETER = 5.5
+TIP_COLLAR_MIN_DEPTH = 6.0  # min length of the collar-wide channel in insert A
 
 KEY_LONG_LEG = 46.0  # measured
 KEY_SHORT_LEG = 16.0  # measured
@@ -57,7 +68,7 @@ TOP_EXTRA_WIDTH = 0.0  # widen the top flat (e.g. for more margin beside the gro
 TIP_GRIP = 11.0  # tips protrude this far past insert A's split face
 KEY_LEG_ANGLE = -15.0  # short leg, degrees from horizontal (negative = down)
 KEY_LEG_SIDE = 1  # +1 / -1: which side (Y) the short leg points to
-POCKET_CLEARANCE = 1.0  # grip pocket in insert B around tip ends + short leg
+POCKET_CLEARANCE = 1.0  # pocket in insert B around the short leg
 
 # --- Shell (PLA) and fits ------------------------------------------------------
 
@@ -103,6 +114,7 @@ CASE_LENGTH = CAVITY_END_X + INSERT_END_WALL + RING_END + END_CAP_THICKNESS
 
 ITEM_START_X = CAVITY_START_X + ITEM_END_CLEARANCE  # iron and all tips start here
 TIP_END_X = ITEM_START_X + TIP_LENGTH
+TIP_COLLAR_X = ITEM_START_X + sum(length for length, _ in TIP_BASE_STEPS)  # rests here
 INSERT_SPLIT_X = TIP_END_X - TIP_GRIP
 SHELL_SPLIT_X = INSERT_SPLIT_X - OVERLAP
 

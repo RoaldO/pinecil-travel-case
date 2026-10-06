@@ -17,12 +17,47 @@ stukken geprint wordt die rechtop staan.
 | Voorwerp | Maat (vereenvoudigd) |
 |---|---|
 | Pinecil V2 met punt erop | 159 lang; handvat 103 lang, 17,4 breed × 14,4 hoog; daarna het dunne metalen puntje |
-| 4 reservepunten | 90 lang, grootste diameter 11 |
+| 4 reservepunten | ≤ 92 lang (langste gemeten 89,3); voet getrapt, kraag ø 11, daarna ≤ ø 5,5 — zie *De punten* |
 | Inbussleutel | L-vorm: lange poot 46, haakse poot 16, dikte 1,46 |
 
-De vormen zijn voorlopig eenvoudig (ellips, cilinders, balkjes). De exacte
-vormen van bout en punten werken we later uit; dan veranderen alleen de
-kanalen in het inzetstuk.
+De bout en het sleuteltje zijn voorlopig eenvoudig (ellips, cilinders,
+balkjes). De punten zijn gemodelleerd (zie *De punten*); de bout volgt nog. Dan veranderen alleen de kanalen in het
+inzetstuk.
+
+### De punten
+
+Elke punt is anders, dus als je de koker opent wil je zien welke welke is.
+Daarom zit de **voet** (het eind met de witte ringetjes) diep in inzetstuk A
+en steekt het werkende eind eruit.
+
+De voet, gemeten vanaf dat uiteinde:
+
+| Stuk | Lengte | Diameter |
+|---|---|---|
+| eerste deel | 24,1 | 5,4 |
+| tweede deel | 9,7 | 5,7 |
+| kraag (breedste deel) | — | 11,0 |
+
+Het kanaal volgt die trappen, met 0,4 speling rondom (ø 6,2 → 6,5 → 11,8).
+Omdat een punt erin en eruit moet, wordt het kanaal **dieper in alleen maar
+nauwer**, nooit weer breder. De punt rust met de platte kant van zijn kraag
+op de laatste schouder; daardoor blijft er 1 mm vrij onder de voet. Het brede
+deel van het kanaal is minstens 6 mm diep (`TIP_COLLAR_MIN_DEPTH`); nu is het
+ruim 44 mm, tot aan de snede van inzetstuk A.
+
+Na de kraag (geschat 4 dik, niet kritisch) is het breedste stuk de huls om
+het verwarmingselement: **ø 5,5**. Alles daarna tot aan het werkende eind
+past daarbinnen, hoe de vorm verder ook varieert. Daarom is de punt na de
+kraag in het model één cilinder van ø 5,5, en houdt **inzetstuk B** hem vast
+in één rechte boring van ø 6,3 (5,5 + speling) over de hele lengte. Gerekend
+wordt met de langste punt plus marge: **92 mm**; kortere punten hebben
+gewoon wat meer ruimte aan het eind van de boring.
+
+In inzetstuk A blijft het kanaal na de kraag ø 11,8 tot aan de snede — het
+mag naar de opening toe niet nauwer worden.
+
+Inzetstuk A print je met de kopse kant op het
+bed, dan liggen de schouders open naar boven en hoeft er niets te overhangen.
 
 ## Hoe het eruitziet
 
@@ -94,7 +129,9 @@ schouder van de bout heen. Hoek en kant zijn parameters. (Met een iets bredere
 bovenkant kan hij ook horizontaal.)
 
 In de voorkant van inzetstuk B zit een **open kuiltje** dat bij het dichtdoen
-de uitstekende uiteinden van de punten en de haakse poot opvangt.
+de haakse poot opvangt. De uitstekende uiteinden van de punten gaan elk in hun
+eigen boring van ø 6,3. Het kuiltje loopt daarbij over de boring van de
+rechterbovenpunt heen; die twee vormen aan de voorkant één opening.
 
 ### Het klittenband
 
@@ -173,5 +210,5 @@ laag: netjes, en er hoeft niets overbrugd te worden.
 
 ## Nog open
 
-- Exacte vorm van de kanalen voor bout en punten.
+- Vorm van de bout.
 - Werkelijke maten van het klittenband (breedte, dikte).
