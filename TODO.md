@@ -25,6 +25,7 @@
 - [x] Funnel at the mouth of the short-leg pocket in insert B: the key turns
       freely, so even without magnets the leg must be lined up by hand to
       close; the funnel guides it in (docs/model.md "Magneetjes")
-- [ ] Magnets so the case clicks shut (docs/model.md "Magneetjes"): after the
-      key; parametric size/spots; keep them well clear of the short leg's path
+- [x] Magnets so the case clicks shut: two bottom corners + top centre, holes
+      in both insert faces; the case widens to fit (docs/model.md "Magneetjes")
+- [x] Magnet size confirmed: ø3 × 2
 - [ ] Test print (shell B end cap + logo first?)

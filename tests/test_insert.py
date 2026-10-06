@@ -283,3 +283,51 @@ def test_no_thin_spikes_next_to_the_key_pocket():
         spikes = [g.area for g in getattr(thin, "geoms", [thin])
                   if g.distance(pocket) < 1e-6 and g.area > 0.05]
         assert not spikes, (a, spikes)
+
+
+def test_magnet_holes_keep_their_walls_and_distance():
+    """Every magnet hole keeps INSERT_WALL of PETG to all cuts and the
+    insert surface, over its depth in both faces, and stays
+    MAGNET_KEY_DISTANCE from the outer half of the short leg."""
+    from shapely.ops import unary_union
+
+    from cad.contents import key_short_leg_line
+    from shapely.ops import substring
+
+    from cad.insert import _other_cuts_at, pocket_slices
+    from cad.profile import insert_profile, magnet_section
+
+    holes = magnet_section()
+    depth = p.MAGNET_THICKNESS + p.MAGNET_CLEARANCE
+    face_a = p.INSERT_SPLIT_X - p.INSERT_SPLIT_GAP
+    xs = [face_a - depth + i * depth / 8 for i in range(9)]
+    xs += [p.INSERT_SPLIT_X + i * depth / 8 for i in range(9)]
+    groove = key_short_leg_line().buffer(p.KEY_ALIGN_GROOVE_WIDTH / 2, cap_style="flat")
+    for x in xs:
+        cut = unary_union([_other_cuts_at(x), groove]
+                          + [s for a, b, s in pocket_slices() if a <= x < b])
+        assert holes.distance(cut) >= p.INSERT_WALL - WALL_TOLERANCE, x
+    inner = insert_profile().buffer(-(p.INSERT_WALL - WALL_TOLERANCE))
+    assert holes.difference(inner).area < 1e-6
+    line = key_short_leg_line()
+    outer = substring(line, 0.5, 1, normalized=True).buffer(p.KEY_HEX_CORNERS / 2)
+    assert holes.distance(outer) >= p.MAGNET_KEY_DISTANCE
+
+
+@pytest.mark.parametrize("name", INSERTS)
+def test_magnet_holes_are_in_both_faces(name):
+    from shapely.geometry import Point
+
+    from cad.solids import extrude_x
+
+    face, sign = ((p.INSERT_SPLIT_X - p.INSERT_SPLIT_GAP, -1) if name == "insert A"
+                  else (p.INSERT_SPLIT_X, 1))
+    from cad.profile import magnet_spots
+
+    for y, z in magnet_spots():
+        mag = Point(y, z).buffer(p.MAGNET_DIAMETER / 2)
+        inside = sorted([face, face + sign * p.MAGNET_THICKNESS])
+        below = sorted([face + sign * (p.MAGNET_THICKNESS + p.MAGNET_CLEARANCE + 0.1),
+                        face + sign * (p.MAGNET_THICKNESS + 1)])
+        assert (extrude_x(mag, *inside) & INSERTS[name]()).volume < VOLUME_TOLERANCE
+        assert (extrude_x(mag, *below) & INSERTS[name]()).volume > VOLUME_TOLERANCE

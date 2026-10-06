@@ -88,6 +88,10 @@ the cap half.
 | `KEY_LEG_SIDE` | 1 | +1 / −1: which side the short leg points to |
 | `POCKET_CLEARANCE` | 1.0 | pocket around the short leg |
 | `KEY_FUNNEL_ANGLE` / `_DEPTH` | 20° / 6 | funnel at the short-leg pocket's mouth in insert B: the pocket swept ±angle round the key's axis at B's face, back to 0 over the depth (TAPER_STEP slices); comes up to `MIN_PRINT_WALL` (0.45, one print line) from insert B's surface, never through it. PETG next to pocket/funnel narrower than 2 × `MIN_PRINT_WALL` (spikes between them and other channels) is shaved off |
+| `MIN_PRINT_WALL` | 0.45 | thinnest wall worth printing (one 0.4-nozzle line), where strength doesn't matter |
+| `MAGNET_DIAMETER` / `_THICKNESS` / `_CLEARANCE` | 3 / 2 / 0.1 | click-shut magnets (not a drop guard), glued into holes in both insert faces, opposite poles facing |
+| (magnet spots) | derived | `profile.magnet_spots()`: two bottom corners (on the floor, `INSERT_WALL` outboard of the bottom tips' channels) + one centred in the top (level with the top tips' channels); the insert fit includes the holes, so the case widens to fit them |
+| `MAGNET_KEY_DISTANCE` | 8 | min from a magnet hole to the outer half of the short leg (B's magnets slide past it while closing; a pull near the key's axis has no lever to turn it) |
 | `KEY_ALIGN_GROOVE_WIDTH` / `_DEPTH` | 0.8 / 0.6 | groove in insert A's face from the key hole along the short leg (as long as the leg): shows how to line the leg up before closing; may cross other channels |
 
 ### Shell and fits

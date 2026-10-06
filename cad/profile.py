@@ -1,7 +1,7 @@
 """2D cross-sections (YZ plane, shapely): channels, insert and shell profiles.
 
 Insert: the smallest symmetric rounded trapezoid that keeps INSERT_WALL around
-every channel. Shell: the same trapezoid grown by GLUE_CLEARANCE +
+every channel and magnet hole. Shell: the same trapezoid grown by GLUE_CLEARANCE +
 SHELL_SIDE_WALL at the sides and out to the top/bottom wall thickness, with z=0
 at its bottom face.
 """
@@ -11,7 +11,7 @@ from __future__ import annotations
 import math
 from functools import cache
 
-from shapely.geometry import LineString, Polygon
+from shapely.geometry import LineString, Point, Polygon
 from shapely.geometry.base import BaseGeometry
 from shapely.ops import unary_union
 
@@ -41,11 +41,38 @@ def channel_sections() -> dict[str, BaseGeometry]:
     return {k: v.section.buffer(p.ITEM_CLEARANCE, p.ARC_QUAD_SEGMENTS) for k, v in layout().items()}
 
 
+def magnet_hole_radius() -> float:
+    return p.MAGNET_DIAMETER / 2 + p.MAGNET_CLEARANCE
+
+
+@cache
+def magnet_spots() -> tuple[tuple[float, float], ...]:
+    """(y, z) of the magnet holes: the two bottom corners — on the floor,
+    INSERT_WALL outboard of the bottom tips' channels — and one centred in
+    the top, level with the top tips' channels."""
+    ch = channel_sections()
+    r = magnet_hole_radius()
+    tip = ch["tip_br"]
+    c = tip.centroid
+    tip_r = (tip.bounds[2] - tip.bounds[0]) / 2
+    z = tip.bounds[1] + r
+    dz = c.y - z
+    y = c.x + math.sqrt((tip_r + p.INSERT_WALL + r) ** 2 - dz ** 2)
+    top = ch["tip_tl"].bounds[3] - r
+    return (-y, z), (y, z), (0.0, top)
+
+
+def magnet_section() -> BaseGeometry:
+    """YZ footprint of the magnet holes."""
+    return unary_union([Point(y, z).buffer(magnet_hole_radius(), p.ARC_QUAD_SEGMENTS)
+                        for y, z in magnet_spots()])
+
+
 @cache
 def insert_trapezoid() -> tuple[float, float, float, float]:
     """(bottom_hw, top_hw, z0, z1) of the insert's core trapezoid."""
     # The trapezoid is convex, so fitting the convex hull is exact and far cheaper.
-    need = (unary_union(list(channel_sections().values()))
+    need = (unary_union([*channel_sections().values(), magnet_section()])
             .buffer(p.INSERT_WALL, p.ARC_QUAD_SEGMENTS).convex_hull)
     # Bottom is exact by construction (the bottom row stands on it); the
     # polygonised channels would put it a hair higher.

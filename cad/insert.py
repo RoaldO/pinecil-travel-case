@@ -19,14 +19,14 @@ from functools import cache
 
 from build123d import Part
 from shapely.affinity import rotate
-from shapely.geometry import box
+from shapely.geometry import Point, box
 from shapely.geometry.base import BaseGeometry
 from shapely.ops import unary_union
 
 from cad import params as p
 from cad.band import BAND_HALF_WIDTH, ring_section, ring_solid
 from cad.contents import key_axis, key_short_leg_line, key_short_leg_section, pieces
-from cad.profile import channel_sections, insert_profile
+from cad.profile import channel_sections, insert_profile, magnet_section
 from cad.solids import below_x, extrude_x, extrude_y
 
 TIP_NAMES = ("tip_bl", "tip_br", "tip_tl", "tip_tr")
@@ -165,13 +165,26 @@ def key_align_groove() -> Part:
     return extrude_x(section, face - p.KEY_ALIGN_GROOVE_DEPTH, face + 1)
 
 
+def magnet_holes_a() -> Part:
+    face = p.INSERT_SPLIT_X - p.INSERT_SPLIT_GAP
+    return extrude_x(magnet_section(), face - p.MAGNET_THICKNESS - p.MAGNET_CLEARANCE, face + 1)
+
+
+def magnet_holes_b() -> Part:
+    face = p.INSERT_SPLIT_X
+    return extrude_x(magnet_section(), face - 1, face + p.MAGNET_THICKNESS + p.MAGNET_CLEARANCE)
+
+
 @cache
 def insert_a() -> Part:
     """Insert A stops INSERT_SPLIT_GAP short of insert B, so the shells
-    always close first. Its face carries the key alignment groove."""
-    return (insert_solid() & below_x(p.INSERT_SPLIT_X - p.INSERT_SPLIT_GAP)) - key_align_groove()
+    always close first. Its face carries the key alignment groove and the
+    magnet holes."""
+    return ((insert_solid() & below_x(p.INSERT_SPLIT_X - p.INSERT_SPLIT_GAP))
+            - key_align_groove() - magnet_holes_a())
 
 
 @cache
 def insert_b() -> Part:
-    return insert_solid() - below_x(p.INSERT_SPLIT_X)
+    """Its face carries the magnet holes opposite insert A's."""
+    return insert_solid() - below_x(p.INSERT_SPLIT_X) - magnet_holes_b()

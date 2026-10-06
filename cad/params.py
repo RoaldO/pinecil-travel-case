@@ -126,6 +126,19 @@ POCKET_CLEARANCE = 1.0  # pocket in insert B around the short leg
 # closing the case turns the leg into line.
 KEY_FUNNEL_ANGLE = 20.0  # degrees, each way
 KEY_FUNNEL_DEPTH = 6.0
+# Magnets so the case clicks shut (not as a drop guard: that stays the
+# velcro). One pair per spot: a hole in insert A's face and one opposite in
+# insert B's face, magnets glued in with opposite poles facing. Three spots,
+# derived from the layout (cad/profile.py): the two bottom corners, outboard
+# of the bottom tips on the floor (the insert widens to fit them), and one
+# centred in the top, level with the top tips (see docs/model.md
+# "Magneetjes").
+MAGNET_DIAMETER = 3.0
+MAGNET_THICKNESS = 2.0
+MAGNET_CLEARANCE = 0.1  # radial, and extra hole depth (never sticks out)
+# Min from a magnet hole to the outer half of the short leg: a pull near the
+# key's axis has no lever to turn it, a pull on the leg's far end does.
+MAGNET_KEY_DISTANCE = 8.0
 # Thinnest wall worth printing: one line of a 0.4 nozzle. Where strength
 # doesn't matter (the funnel near insert B's outside, glued to the shell),
 # cuts may come this close to a surface.

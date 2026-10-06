@@ -153,7 +153,7 @@ De indeling van binnen (layout **B**):
 - **Bovenste rij:** twee punten, met daartussen een smal kanaal voor de lange
   poot van het inbussleuteltje.
 
-Buitenmaat ongeveer **53 breed × 42 hoog** (door de rechtopstaande bout
+Buitenmaat ongeveer **57 breed × 43,5 hoog** (door de rechtopstaande bout
 smaller en hoger dan eerst).
 
 ### Twee materialen, twee lagen
@@ -249,7 +249,7 @@ In het model bestaat de trechter uit plakjes van 0,2 (een printlaag), elk op
 de grootste hoek. Inzetstuk B print met zijn achterkant op het bed, dan loopt
 de trechter naar boven open en hangt er niets over.
 
-### Magneetjes (idee, nog niet in het model)
+### Magneetjes
 
 Naast het klittenband wat kleine magneetjes, zodat de koker **dichtklikt**.
 Niet als valbescherming — daarvoor blijft het klittenband — alleen zodat hij
@@ -266,8 +266,8 @@ rond 60 °C zacht: de bout gaat er alleen afgekoeld in.
 plek zijn de twee **snedevlakken van de inzetstukken** (voorkant A en voorkant
 B, bij dichte koker 0,5 mm uit elkaar). Een magneetje moet op dezelfde plek
 in beide vlakken passen, er een paar mm in kunnen zakken zonder een kanaal te
-raken, met 1,2 PETG rondom. Verkend voor ø 3 × 2 (2 mm diep in elk vlak,
-gaatje 0,2 ruimer), in de huidige indeling:
+raken, met 1,2 PETG rondom. Eerste verkenning voor ø 3 × 2 (2 mm diep in
+elk vlak, gaatje 0,2 ruimer), nog vóór de trechter:
 
 | Plek | Ruimte | Afstand tot de haakse poot bij het langsschuiven |
 |---|---|---|
@@ -304,10 +304,41 @@ Overwogen:
    dat voor je, wat de oorzaak van het draaien ook is (magneet, schudden in de
    tas, of gewoon hoe je hem erin legde). Te combineren met 1 of 2.
 
-Het sleuteltje zelf ligt nog niet helemaal vast (plek, richting). Daarom
-eerst het sleuteltje, dan de magneetjes: diameter, dikte, speling en plekken
-worden parameters, en een test bewaakt dat elk gaatje genoeg PETG houdt en
-ver genoeg van de haakse poot blijft.
+**Hoe het nu is.** Na de trechter verdween de plek rechts, en alleen links
+(twee magneetjes) trok de koker uit het midden dicht — niet overtuigend.
+Daarom is de koker onderaan **iets breder** gemaakt, zodat er drie
+magneetjes in een driehoek passen:
+
+- **twee in de onderhoeken**, op de vloer, net buiten de onderste punten;
+- **één midden in de top**, tussen de bovenste punten, recht boven het
+  sleuteltje.
+
+De plekken worden uit de indeling berekend (ze schuiven mee als die
+verandert), en het inzetstuk wordt vanzelf zo breed als nodig: de
+magneetgaatjes tellen mee bij het passen van het trapezium. Dat maakt de
+koker **4,5 mm breder** (57,2 i.p.v. 52,7). Het kost zoveel omdat de
+punten in de voorkant van A in een boring van ø 11,8 zitten (voor de kraag)
+en het magneetje daar met 1,2 PETG ernaast moet.
+
+De top-magneet zit dicht bij de **wortel** van de haakse poot (~3,5 mm),
+maar een trekkracht vlak bij de as van het sleuteltje heeft geen hefboom om
+het te laten draaien. Wat het sleuteltje draait is trekkracht op het
+**uiteinde** van de poot, en de buitenste helft van de poot ligt ~10 mm van
+het magneetje. Wat er toch draait vangt de trechter op.
+
+- Magneetje ø 3 × 2 (`MAGNET_DIAMETER`, `MAGNET_THICKNESS`), gaatje 0,1
+  ruimer en 0,1 dieper (`MAGNET_CLEARANCE`): hij steekt nooit uit en er is
+  ruimte voor een drupje lijm.
+- Per plek een gaatje in de voorkant van A en recht tegenover in die van B;
+  bij dichte koker zitten ze ~0,7 mm uit elkaar.
+- Beide inzetstukken printen met de voorkant boven, dus de gaatjes liggen
+  open naar boven.
+- **Let op de polariteit** bij het inlijmen: in A en B tegengestelde polen
+  naar elkaar toe. Handig: leg een losse magneet tegen degene die je inlijmt,
+  en lijm die in de andere helft met dezelfde kant naar buiten.
+- Een test bewaakt 1,2 PETG rondom elk gaatje (ook tot trechter en
+  uitlijngroefje) en ≥ 8 mm tot de buitenste helft van de haakse poot
+  (`MAGNET_KEY_DISTANCE`).
 
 ### Het klittenband
 
@@ -376,17 +407,18 @@ laag: netjes, en er hoeft niets overbrugd te worden.
 
 ## Montage
 
-1. Lijm elk inzetstuk in zijn eigen buitenhelft; duw tot de eindstop.
-2. Laat de lijm uitharden.
-3. **Daarna pas** het klittenband doorvoeren: boven bij de sleuf naar binnen,
+1. Lijm de magneetjes in de voorkant van beide inzetstukken (let op de
+   polariteit, zie *Magneetjes*).
+2. Lijm elk inzetstuk in zijn eigen buitenhelft; duw tot de eindstop.
+3. Laat de lijm uitharden.
+4. **Daarna pas** het klittenband doorvoeren: boven bij de sleuf naar binnen,
    achter de kopse kant langs, onder weer naar buiten — aan beide uiteinden.
    Zo komt er geen lijm aan het klittenband. Het kanaal heeft overal ruime
    bochten, zodat de band erdoor te duwen is.
-4. Spullen in helft A, dop erover schuiven, klittenband onder dichtplakken.
+5. Spullen in helft A, dop erover schuiven, klittenband onder dichtplakken.
 
 ## Nog open
 
 - Het sleuteltje (plek, richting). Uitlijngroefje en trechter volgen de
   richting van de haakse poot vanzelf.
-- Magneetjes om dicht te klikken — zie *Magneetjes*.
 - Werkelijke maten van het klittenband (breedte, dikte).
