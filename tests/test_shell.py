@@ -65,3 +65,18 @@ def test_logo_cuts_through_shell_b_end_cap():
     plain = cap_area(shell_a(), p.END_CAP_THICKNESS / 2)
     with_logo = cap_area(shell_b(), p.CASE_LENGTH - p.END_CAP_THICKNESS / 2)
     assert plain - with_logo == pytest.approx(sum(h.area for h in holes_mm()), rel=1e-3)
+
+
+def test_shell_b_mouth_has_an_inner_chamfer():
+    """Right at shell B's mouth the PLA round the cavity is gone over (almost)
+    the chamfer's size; past its depth the cavity wall is back."""
+    from cad.profile import insert_cavity
+    from cad.solids import extrude_x
+
+    cavity = insert_cavity(p.SLIDE_CLEARANCE)
+    rim = cavity.buffer(p.SHELL_B_MOUTH_CHAMFER - 0.25).difference(cavity)
+    wall = cavity.buffer(0.1).difference(cavity)
+    x = p.SHELL_SPLIT_X
+    assert (extrude_x(rim, x + 0.02, x + 0.1) & shell_b()).volume < VOLUME_TOLERANCE
+    deep = (x + p.SHELL_B_MOUTH_CHAMFER + 0.1, x + p.SHELL_B_MOUTH_CHAMFER + 0.3)
+    assert (extrude_x(wall, *deep) & shell_b()).volume > VOLUME_TOLERANCE

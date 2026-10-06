@@ -16,7 +16,7 @@ from cad import params as p
 from cad.band import ring_solid, straight_run_z
 from cad.build import logo_cutter
 from cad.profile import insert_cavity, shell_profile
-from cad.solids import below_x, extrude_x
+from cad.solids import below_x, chamfer_cutter, extrude_x
 
 # The logo cutter starts this far inside the band channel and pokes the same
 # distance out of the end face, so it cuts cleanly through the end cap.
@@ -52,5 +52,10 @@ def shell_a() -> Part:
 
 @cache
 def shell_b() -> Part:
+    """With the logo through its end cap and a chamfer round the inside of
+    its mouth, the lead-in for sliding it over insert A."""
     cutter = logo_plane() * logo_cutter(p.END_CAP_THICKNESS + 2 * LOGO_CUT_OVERRUN)
-    return shell_solid() - below_x(p.SHELL_SPLIT_X) - cutter
+    mouth = chamfer_cutter(insert_cavity(p.SLIDE_CLEARANCE), p.SHELL_SPLIT_X,
+                           p.SHELL_B_MOUTH_CHAMFER, +1, p.TAPER_STEP, hole=True,
+                           resolution=p.ARC_QUAD_SEGMENTS)
+    return shell_solid() - below_x(p.SHELL_SPLIT_X) - cutter - mouth

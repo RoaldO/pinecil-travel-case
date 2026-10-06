@@ -331,3 +331,22 @@ def test_magnet_holes_are_in_both_faces(name):
                         face + sign * (p.MAGNET_THICKNESS + 1)])
         assert (extrude_x(mag, *inside) & INSERTS[name]()).volume < VOLUME_TOLERANCE
         assert (extrude_x(mag, *below) & INSERTS[name]()).volume > VOLUME_TOLERANCE
+
+
+@pytest.mark.parametrize("name, face, inward, size", [
+    ("insert A", p.END_CAP_THICKNESS, 1, p.INSERT_BED_CHAMFER),
+    ("insert A", p.INSERT_SPLIT_X - p.INSERT_SPLIT_GAP, -1, p.INSERT_A_LEAD_IN),
+    ("insert B", p.CASE_LENGTH - p.END_CAP_THICKNESS, -1, p.INSERT_BED_CHAMFER),
+])
+def test_insert_edge_chamfers(name, face, inward, size):
+    """Right at the face the outer edge is gone over (almost) the chamfer's
+    size; past the chamfer's depth the full outline is back."""
+    from cad.profile import insert_profile
+
+    profile = insert_profile()
+    edge = profile.difference(profile.buffer(-(size - 0.25)))
+    near = sorted([face + inward * 0.02, face + inward * 0.1])
+    deep = sorted([face + inward * (size + 0.1), face + inward * (size + 0.3)])
+    rim = profile.difference(profile.buffer(-0.1))
+    assert (extrude_x(edge, *near) & INSERTS[name]()).volume < VOLUME_TOLERANCE
+    assert (extrude_x(rim, *deep) & INSERTS[name]()).volume > VOLUME_TOLERANCE

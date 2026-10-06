@@ -8,6 +8,7 @@
 - [ ] Work through `REVIEW-FOLLOWUPS.md` (review minors), then delete that file
 - [x] Design the Pinecil V2 travel case — spec: docs/superpowers/specs/2026-10-04-travel-case-design.md, plain-language: docs/model.md
 - [x] Model shell A/B + insert A/B, sections, viewer
+- [x] Chamfers: inserts on their print face, thin lead-in on insert A, shell B mouth
 - [ ] Owner review in the viewer
 - [ ] Confirm velcro width/thickness with the real strip
 - [x] Tip base (white rings) shape + stepped channel in insert A

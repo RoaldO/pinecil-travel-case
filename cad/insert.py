@@ -27,7 +27,7 @@ from cad import params as p
 from cad.band import BAND_HALF_WIDTH, ring_section, ring_solid
 from cad.contents import key_axis, key_short_leg_line, key_short_leg_section, pieces
 from cad.profile import channel_sections, insert_profile, magnet_section
-from cad.solids import below_x, extrude_x, extrude_y
+from cad.solids import below_x, chamfer_cutter, extrude_x, extrude_y
 
 TIP_NAMES = ("tip_bl", "tip_br", "tip_tl", "tip_tr")
 
@@ -175,16 +175,29 @@ def magnet_holes_b() -> Part:
     return extrude_x(magnet_section(), face - 1, face + p.MAGNET_THICKNESS + p.MAGNET_CLEARANCE)
 
 
+def edge_chamfer(face: float, size: float, inward: int) -> Part:
+    """Cutter for a 45° chamfer of ``size`` round the insert's outer edge at
+    the end face ``face``; ``inward`` points from the face into the insert."""
+    return chamfer_cutter(insert_profile(), face, size, inward, p.TAPER_STEP,
+                          resolution=p.ARC_QUAD_SEGMENTS)
+
+
 @cache
 def insert_a() -> Part:
     """Insert A stops INSERT_SPLIT_GAP short of insert B, so the shells
     always close first. Its face carries the key alignment groove and the
-    magnet holes."""
-    return ((insert_solid() & below_x(p.INSERT_SPLIT_X - p.INSERT_SPLIT_GAP))
-            - key_align_groove() - magnet_holes_a())
+    magnet holes; chamfered on the face it prints on and on its split face
+    (lead-in for shell B)."""
+    face = p.INSERT_SPLIT_X - p.INSERT_SPLIT_GAP
+    return ((insert_solid() & below_x(face))
+            - key_align_groove() - magnet_holes_a()
+            - edge_chamfer(p.END_CAP_THICKNESS, p.INSERT_BED_CHAMFER, +1)
+            - edge_chamfer(face, p.INSERT_A_LEAD_IN, -1))
 
 
 @cache
 def insert_b() -> Part:
-    """Its face carries the magnet holes opposite insert A's."""
-    return insert_solid() - below_x(p.INSERT_SPLIT_X) - magnet_holes_b()
+    """Its face carries the magnet holes opposite insert A's; chamfered on
+    the face it prints on (its outer end)."""
+    return (insert_solid() - below_x(p.INSERT_SPLIT_X) - magnet_holes_b()
+            - edge_chamfer(p.CASE_LENGTH - p.END_CAP_THICKNESS, p.INSERT_BED_CHAMFER, -1))

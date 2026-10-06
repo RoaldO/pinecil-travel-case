@@ -159,6 +159,15 @@ OVERLAP = 20.0  # insert A protrudes this far from shell A
 # Axial gap left between insert A and insert B when the case is closed, so
 # print/glue tolerance on the inserts can never stop the shells from closing.
 INSERT_SPLIT_GAP = 0.5
+# 45° chamfers round the inserts' outer edge: on the face each prints on (its
+# outer end, which leads into its own shell half when glued; also takes up
+# elephant's foot), and a thin one on insert A's split face, where shell B
+# slides over (thin: magnet holes sit INSERT_WALL from that edge).
+INSERT_BED_CHAMFER = 0.6
+INSERT_A_LEAD_IN = 0.3
+# 45° chamfer round the inside of shell B's mouth: with INSERT_A_LEAD_IN the
+# lead-in for sliding shell B over insert A.
+SHELL_B_MOUTH_CHAMFER = 0.6
 
 # --- Velcro --------------------------------------------------------------------
 

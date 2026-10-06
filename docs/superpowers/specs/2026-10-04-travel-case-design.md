@@ -105,6 +105,9 @@ the cap half.
 | `SLIDE_CLEARANCE` | 0.2 | insert A → shell B (overlap) |
 | `OVERLAP` | 20.0 | insert A protrusion from shell A |
 | `INSERT_SPLIT_GAP` | 0.5 | axial gap between insert A and B when closed, so glue/print tolerance never stops the shells from meeting |
+| `INSERT_BED_CHAMFER` | 0.6 | 45° round each insert's outer edge on the face it prints on (its outer end, leading into its shell half; takes up elephant's foot) |
+| `INSERT_A_LEAD_IN` | 0.3 | thin 45° on insert A's split face (magnet holes sit `INSERT_WALL` from that edge) |
+| `SHELL_B_MOUTH_CHAMFER` | 0.6 | 45° round the inside of shell B's mouth: the rest of the lead-in over insert A |
 
 ### Velcro
 

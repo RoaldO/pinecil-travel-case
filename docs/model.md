@@ -197,6 +197,21 @@ Tussen de twee inzetstukken blijft als de koker dicht is een **spleetje van
 kunnen lijm- en printtoleranties nooit verhinderen dat de twee buitendelen
 netjes op elkaar aansluiten — de buitendelen raken elkaar altijd eerst.
 
+**Afschuiningen om in elkaar te schuiven** (allemaal 45°, als plakjes van
+0,2 gemodelleerd):
+
+- Beide inzetstukken hebben op het vlak waarop ze geprint worden — hun
+  buitenste uiteinde, dat bij het lijmen als eerste in het eigen buitendeel
+  gaat — een afschuining van **0,6** rondom (`INSERT_BED_CHAMFER`). Die vangt
+  meteen de "olifantenvoet" van de eerste laag op.
+- Inzetstuk A heeft op zijn snedevlak alleen een **dun richeltje van 0,3**
+  (`INSERT_A_LEAD_IN`): de magneetjes zitten daar 1,2 van de rand, en zo
+  blijft er 0,9 over.
+- De rest van de inloop zit in **buitendeel B**: de binnenrand van zijn mond
+  heeft een afschuining van **0,6** (`SHELL_B_MOUTH_CHAMFER`). Die print
+  zonder overhang (buitendeel B print met de kopse kant op het bed, de mond
+  boven). Onder de klittenbandgoot blijft aan de rand 0,6 PLA over.
+
 ### Het inbussleuteltje
 
 Een gewoon L-vormig inbussleuteltje. De **lange poot** steekt in een gaatje in
