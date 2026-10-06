@@ -102,6 +102,23 @@ def iron_axis() -> tuple[float, float]:
     return 0.0, FLOOR_Z + _iron_radius()
 
 
+def tip_profile_past_base() -> list[tuple[float, float]]:
+    """(length, diameter) of a tip from its collar's base to its working end:
+    the collar profile (tapers as TAPER_STEP steps at their wider end), then
+    the sleeve."""
+    out = []
+    for (x0, d0), (x1, d1) in zip(p.TIP_COLLAR_PROFILE, p.TIP_COLLAR_PROFILE[1:]):
+        if x1 <= x0:
+            continue  # a step
+        n = 1 if d0 == d1 else max(1, math.ceil((x1 - x0) / p.TAPER_STEP - 1e-9))
+        for i in range(n):
+            t0, t1 = i / n, (i + 1) / n
+            out.append(((x1 - x0) / n, max(d0 + (d1 - d0) * t0, d0 + (d1 - d0) * t1)))
+    collar = p.TIP_COLLAR_PROFILE[-1][0]
+    rest = p.TIP_LENGTH - sum(length for length, _ in p.TIP_BASE_STEPS) - collar
+    return out + [(rest, p.TIP_SLEEVE_DIAMETER)]
+
+
 def _iron_piece_sections(y: float, z: float, keep_out: bool = False
                          ) -> list[tuple[float, BaseGeometry]]:
     """(length, section) of the iron's pieces, from its handle's base to its
@@ -135,13 +152,13 @@ def _iron_piece_sections(y: float, z: float, keep_out: bool = False
         (p.IRON_FOOT_FROM, p.IRON_FOOT_TO, foot),
         *(bump(at, p.IRON_BUTTON_DIAMETER, p.IRON_BUTTON_HEIGHT, extra)
           for at in p.IRON_BUTTONS_AT),
-        # its tip: collar right against the handle, then the sleeve (the
-        # tip's base is inside the handle)
-        (p.IRON_HANDLE_LENGTH, p.IRON_HANDLE_LENGTH + p.TIP_COLLAR_LENGTH,
-         _circle(y, z, p.TIP_DIAMETER)),
-        (p.IRON_HANDLE_LENGTH + p.TIP_COLLAR_LENGTH, p.IRON_LENGTH,
-         _circle(y, z, p.TIP_SLEEVE_DIAMETER)),
     ]
+    # its tip: the collar's base right against the handle's front (the tip's
+    # own base is inside the handle)
+    x = p.IRON_HANDLE_LENGTH
+    for length, d in tip_profile_past_base():
+        features.append((x, x + length, _circle(y, z, d)))
+        x += length
     if keep_out:  # the display is flush: it only adds room above it
         w = p.IRON_DISPLAY_WIDTH / 2 + extra
         features.append((p.IRON_DISPLAY_FROM - extra, p.IRON_DISPLAY_TO + extra,
@@ -218,9 +235,8 @@ def pieces(name: str, keep_out: bool = False) -> list[tuple[float, float, BaseGe
         lengths_sections = _iron_piece_sections(*iron_axis(), keep_out=keep_out)
     else:
         lengths_sections = [(length, _circle(c.x, c.y, d)) for length, d in p.TIP_BASE_STEPS]
-        lengths_sections.append((p.TIP_COLLAR_LENGTH, _circle(c.x, c.y, p.TIP_DIAMETER)))
-        rest = p.TIP_LENGTH - sum(length for length, _ in lengths_sections)
-        lengths_sections.append((rest, _circle(c.x, c.y, p.TIP_SLEEVE_DIAMETER)))
+        lengths_sections += [(length, _circle(c.x, c.y, d))
+                             for length, d in tip_profile_past_base()]
     out, x = [], item.x0
     for length, section in lengths_sections:
         out.append((x, x + length, section))

@@ -96,9 +96,13 @@ def test_tip_bores_are_snug(name):
 
 
 def test_iron_bore_follows_the_handle():
-    """Every iron piece is held snug (at least at its sides and bottom) in the
-    insert(s) it lies in."""
+    """Every handle piece is held snug (at least at its sides and bottom) in
+    the insert(s) it lies in. (Not every tip piece: the collar's seat is
+    shallower in B than its wider ring, which passes it on the way in.)"""
+    handle_end = p.ITEM_START_X + p.IRON_HANDLE_LENGTH
     for x0, x1, s in pieces("iron"):
+        if x0 >= handle_end - 1e-6:
+            continue
         for part, lo, hi in ((insert_a(), x0, min(x1, p.INSERT_SPLIT_X - p.INSERT_SPLIT_GAP)),
                              (insert_b(), max(x0, p.INSERT_SPLIT_X), x1)):
             if hi - lo > 1:
@@ -129,7 +133,7 @@ def test_iron_screw_head_gets_a_groove_up_to_insert_a_face_only():
 
 
 def test_tip_collar_and_base_are_in_insert_a():
-    collar_end = p.TIP_COLLAR_X + p.TIP_COLLAR_LENGTH
+    collar_end = p.TIP_COLLAR_X + p.TIP_COLLAR_PROFILE[-1][0]
     assert collar_end <= p.INSERT_SPLIT_X - p.INSERT_SPLIT_GAP
 
 

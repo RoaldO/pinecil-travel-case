@@ -18,7 +18,7 @@
 - [x] Iron display (flush; keep-out room only)
 - [x] Iron mounting screw (groove through insert B)
 - [x] Iron foot (half square under the round side; grooves insert B)
-- [ ] Describe the tip collar more precisely
+- [x] Tip collar profile (seat, ring, taper, neck)
 - [ ] Key rework (owner has an idea, after the iron is done); the mounting
       screw's groove now merges with the short-leg pocket at B's face
 - [ ] Test print (shell B end cap + logo first?)

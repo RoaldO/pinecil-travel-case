@@ -35,7 +35,7 @@ def test_split_order():
 
 def test_tip_base_narrows_going_deeper():
     """The tip slides in and out: going deeper the diameter never grows."""
-    diameters = [d for _, d in p.TIP_BASE_STEPS] + [p.TIP_DIAMETER]
+    diameters = [d for _, d in p.TIP_BASE_STEPS] + [p.TIP_COLLAR_PROFILE[0][1], p.TIP_DIAMETER]
     assert diameters == sorted(diameters)
 
 

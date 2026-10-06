@@ -17,7 +17,7 @@ stukken geprint wordt die rechtop staan.
 | Voorwerp | Maat (vereenvoudigd) |
 |---|---|
 | Pinecil V2 met punt erop | 161,5 lang met de langste punt (gemeten 159 met een punt van 89,3); handvat 103,3 lang, "grafsteen" ≤ 14,6 breed × 17,5 hoog — zie *De bout* |
-| 4 reservepunten | ≤ 92 lang (langste gemeten 89,3); voet getrapt, kraag ø 11, daarna ≤ ø 5,5 — zie *De punten* |
+| 4 reservepunten | ≤ 92 lang (langste gemeten 89,3); voet getrapt, kraag ≤ ø 11, daarna ≤ ø 5,5 — zie *De punten* |
 | Inbussleutel | L-vorm: lange poot 46, haakse poot 16, dikte 1,46 |
 
 Het sleuteltje is voorlopig eenvoudig (cilinder en balkje). Punten en bout
@@ -37,19 +37,33 @@ De voet, gemeten vanaf dat uiteinde:
 |---|---|---|
 | eerste deel | 24,1 | 5,4 |
 | tweede deel | 9,7 | 5,7 |
-| kraag (breedste deel) | — | 11,0 |
 
-Het kanaal volgt die trappen, met 0,4 speling rondom (ø 6,2 → 6,5 → 11,8).
+Dan de **kraag**, gemeten vanaf zijn basis: het vlak dat bij de punt in de
+bout tegen het handvat ligt.
+
+| Van – tot (vanaf de basis van de kraag) | Diameter |
+|---|---|
+| 0 – 1,75 | 10,55 (zitvlak) |
+| 1,75 – 2,3 | 11,0 (ring, het breedste deel) |
+| 2,3 – 4,2 | taps van 11,0 naar 5,2 |
+| 4,2 – 12,7 | 5,2 (hals) |
+
+Het tapse stuk staat in het model als trapjes van 0,2 (`TAPER_STEP`), elk
+op de grootste diameter: dat is ongeveer een printlaag, dus geprint is het
+gewoon de kegel.
+
+Het kanaal volgt die trappen, met 0,4 speling rondom (ø 6,2 → 6,5 → 11,35
+→ 11,8).
 Omdat een punt erin en eruit moet, wordt het kanaal **dieper in alleen maar
-nauwer**, nooit weer breder. De punt rust met de platte kant van zijn kraag
-op de laatste schouder; daardoor blijft er 1 mm vrij onder de voet. Het brede
+nauwer**, nooit weer breder. De punt rust met het zitvlak van zijn kraag
+op de schouder van 6,5 naar 11,35; daardoor blijft er 1 mm vrij onder de voet. Het brede
 deel van het kanaal is minstens 6 mm diep (`TIP_COLLAR_MIN_DEPTH`); nu is het
 ruim 44 mm, tot aan de snede van inzetstuk A.
 
-Na de kraag (geschat 4 dik, niet kritisch) is het breedste stuk de huls om
-het verwarmingselement: **ø 5,5**. Alles daarna tot aan het werkende eind
-past daarbinnen, hoe de vorm verder ook varieert. Daarom is de punt na de
-kraag in het model één cilinder van ø 5,5, en houdt **inzetstuk B** hem vast
+Na de kraag is het breedste stuk de huls om het verwarmingselement:
+**ø 5,5**. Alles daarna tot aan het werkende eind past daarbinnen, hoe de
+vorm verder ook varieert. Daarom is de punt na de kraag in het model één
+cilinder van ø 5,5, en houdt **inzetstuk B** hem vast
 in één rechte boring van ø 6,3 (5,5 + speling) over de hele lengte. Gerekend
 wordt met de langste punt plus marge: **92 mm**; kortere punten hebben
 gewoon wat meer ruimte aan het eind van de boring.
@@ -86,12 +100,13 @@ over de hele lengte, met een **rubber handvat** eromheen:
 | display op de platte kant | 19 – 55 | 9,55 breed | vlak (steekt niet uit) | — |
 | montageboutje (houdt de punt vast) op de platte kant | hart op 98,5 | kop ø 6 | steekt 2,8 uit | — |
 | voetje onder de ronde kant | 98,4 – 102 | half vierkant 13,9 breed, 6,95 diep | — | R 1 |
-| punt: kraag | 103,3 – 107,3 | 11 | — | — |
-| punt: huls tot het eind | 107,3 – 161,5 | ≤ 5,5 | — | — |
+| punt: kraag (zie *De punten*) | 103,3 – 116 | ≤ 11 | — | — |
+| punt: huls tot het eind | 116 – 161,5 | ≤ 5,5 | — | — |
 
 De punt in de bout is dezelfde als de reservepunten (zie *De punten*) en
-wijst dezelfde kant op: de voet zit in het handvat, de kraag direct tegen de
-neus. De lengte van de bout volgt daaruit, met de langste punt (92).
+wijst dezelfde kant op: de voet zit in het handvat, de basis van de kraag
+(het zitvlak) direct tegen de neus. In B is het kanaal rond dat zitvlak
+11,8: de ring van 11 ligt dieper in B en komt er bij het insteken langs. De lengte van de bout volgt daaruit, met de langste punt (92).
 
 Alle delen hebben dezelfde as. Het plastic loopt **onder het rubber door**:
 daar is de bout lijf en rubber samen. Het rubber is breder, onder dieper en

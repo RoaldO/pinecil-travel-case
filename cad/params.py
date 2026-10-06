@@ -78,17 +78,28 @@ IRON_CONTROL_CLEARANCE = 1.0
 # heating-element sleeve (TIP_SLEEVE_DIAMETER).
 
 TIP_LENGTH = 92.0  # longest measured 89.3 (they vary), with margin
-TIP_DIAMETER = 11.0  # widest, measured: the collar
+TIP_DIAMETER = 11.0  # widest, measured: the collar's ring
 # The tip's base (the end with the white rings), measured from that end, as
-# (length, diameter) — narrowest first. Then the collar (TIP_DIAMETER). The
-# base sits deep in insert A, so you can see which tip is which on opening;
-# the channel only widens toward its mouth, so a tip slides in and out.
+# (length, diameter) — narrowest first. Then the collar. The base sits deep
+# in insert A, so you can see which tip is which on opening; the channel only
+# widens toward its mouth, so a tip slides in and out.
 TIP_BASE_STEPS = ((24.1, 5.4), (9.7, 5.7))
-TIP_COLLAR_LENGTH = 4.0  # estimated (chamfered, hard to measure); not critical
+# The collar as a profile: (distance from its base, diameter) points; a
+# repeated distance is a step, a change in diameter between two distances a
+# taper. Its base is the face that rests on the shoulder in insert A, and on
+# the iron the face against the handle's front.
+TIP_COLLAR_PROFILE = (
+    (0.0, 10.55), (1.75, 10.55),  # seat
+    (1.75, 11.0), (2.3, 11.0),  # ring
+    (4.2, 5.2),  # taper
+    (12.7, 5.2),  # neck
+)
 # Past the collar the widest part is the sleeve round the heating element;
-# everything up to the working end fits inside this diameter, so insert B
-# holds the tip in one straight bore of it.
+# everything up to the working end fits inside this diameter.
 TIP_SLEEVE_DIAMETER = 5.5
+# Tapers are modelled as steps this long, each at the taper's wider end: no
+# more than a print layer, so it prints as the taper.
+TAPER_STEP = 0.2
 TIP_COLLAR_MIN_DEPTH = 6.0  # min length of the collar-wide channel in insert A
 
 KEY_LONG_LEG = 46.0  # measured

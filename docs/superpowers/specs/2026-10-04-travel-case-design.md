@@ -30,7 +30,7 @@ the cap half.
 | D10 | Logo upright when the case rests on its wide side (logo top → narrow side); must lie within the straight vertical run of the band behind the end cap, with margin. |
 | D11 | Inserts are glued into their own shell half, pushed to an **end stop**: outside the band width the insert runs up to the end cap. Velcro is threaded **after** gluing (keeps it free of glue), so the band channel must be continuous and threadable after assembly. |
 | D12 | All parts print standing (axis vertical); cap half prints end-cap-down so the logo ribs are the first layer. |
-| D13 | Tips: base (white rings) deep in insert A, in a bore that follows `TIP_BASE_STEPS`, collar-wide from `TIP_COLLAR_X` up to A's face (the collar rests on that shoulder). Past the collar nothing is wider than `TIP_SLEEVE_DIAMETER`, so insert B holds the tip end in one straight bore of it. Every bore only narrows going deeper, so tips slide in and out. |
+| D13 | Tips: base (white rings) deep in insert A, in a bore that follows `TIP_BASE_STEPS`, collar-wide from `TIP_COLLAR_X` up to A's face (the collar's seat rests on that shoulder). Past the collar nothing is wider than `TIP_SLEEVE_DIAMETER`, so insert B holds the tip end in one straight bore of it. Every bore only narrows going deeper, so tips slide in and out. |
 | D14 | Iron: "tombstone" handle (half cylinder round the tip axis + block as wide, block corners rounded), round side down so display and buttons face up; handle base deep in insert A (like the tips' bases), tip toward B. Bores (tips and iron) follow the items' pieces + `ITEM_CLEARANCE`; in each insert a bore piece is the union of its own section and every deeper one, since everything deeper passes it on the way in (for the iron: the screw head near its base grooves insert A's bore up to A's face). |
 | D13 | No magic numbers: every dimension is a named parameter; derived values are computed. |
 
@@ -64,7 +64,8 @@ the cap half.
 | `TIP_LENGTH` | 92.0 | longest measured 89.3 (they vary), with margin |
 | `TIP_DIAMETER` | 11.0 | widest (the collar), measured |
 | `TIP_BASE_STEPS` | (24.1, 5.4), (9.7, 5.7) | base (white rings) from its end: (length, Ø); sits in insert A; channel only widens toward its mouth |
-| `TIP_COLLAR_LENGTH` | 4.0 | estimated, not critical (the A bore stays collar-wide up to A's face) |
+| `TIP_COLLAR_PROFILE` | (0, 10.55) (1.75, 10.55) (1.75, 11) (2.3, 11) (4.2, 5.2) (12.7, 5.2) | collar as (distance from its base, Ø) points: seat, ring, taper, neck; its base rests on A's shoulder (spares) / against the handle (iron) |
+| `TAPER_STEP` | 0.2 | tapers modelled as steps this long at their wider end (≈ a print layer) |
 | `TIP_SLEEVE_DIAMETER` | 5.5 | heating-element sleeve, widest past the collar; insert B holds the tip in one straight bore of it |
 | `TIP_COLLAR_MIN_DEPTH` | 6.0 | min length of the collar-wide channel in insert A |
 | `KEY_LONG_LEG` | 46.0 | measured |
