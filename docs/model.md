@@ -424,6 +424,10 @@ langste deel is buitendeel B met ~107,5 mm — ruim binnen 180 mm.
 De dop print met de kopse kant op het bed, dus de logoribben zijn de eerste
 laag: netjes, en er hoeft niets overbrugd te worden.
 
+**Naad (seam):** in de slicer met de hand plaatsen (op een plek die er
+niet toe doet) of op willekeurig — een uitgelijnde naad maakt sneetjes in
+het werkstuk (testprint ronde 2). Geldt voor alle onderdelen.
+
 De **inzetstukken printen allebei op hun buitenste uiteinde** (de kant die
 bij het lijmen als eerste in het eigen buitendeel gaat, met de afschuining
 voor het bed). Dan lopen alle kanalen naar boven toe wijder (geen overhang
@@ -464,13 +468,15 @@ testen, de brug in het grondvlak, welke parameter bij welke klacht):
 
 1. Lijm de magneetjes in de voorkant van beide inzetstukken (let op de
    polariteit, zie *Magneetjes*).
-2. Lijm elk inzetstuk in zijn eigen buitenhelft; duw tot de eindstops.
-3. Laat de lijm uitharden.
-4. **Daarna pas** het klittenband doorvoeren: boven bij de sleuf naar binnen,
+2. Trek het **uitlijngroefje** in de voorkant van inzetstuk A na met een
+   **viltstift**: zonder kleur is het nauwelijks te zien.
+3. Lijm elk inzetstuk in zijn eigen buitenhelft; duw tot de eindstops.
+4. Laat de lijm uitharden.
+5. **Daarna pas** het klittenband doorvoeren: boven bij de sleuf naar binnen,
    achter de kopse kant langs, onder weer naar buiten — aan beide uiteinden.
    Zo komt er geen lijm aan het klittenband. Het kanaal heeft overal ruime
    bochten, zodat de band erdoor te duwen is.
-5. Spullen in helft A, dop erover schuiven, klittenband onder dichtplakken.
+6. Spullen in helft A, dop erover schuiven, klittenband onder dichtplakken.
 
 ## Nog open
 

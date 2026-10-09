@@ -210,11 +210,23 @@ buitendeel (eindstops); het inzetstuk print vlak. Het besluit hierboven
 (schuren en fillen) vervalt. **4b opnieuw printen** (en 4a hoort er nu bij
 in ronde 3: daarin zitten de eindstops).
 
+### Ronde 2 — plakje 2a + 3, PETG 240 °C, 2026-10-09
+
+- **Geen aanpassingen nodig.** Magneetjes zien er goed uit.
+- **Uitlijngroefje:** breed en diep genoeg, maar pas goed zichtbaar met een
+  **viltstift** erin → toegevoegd aan de montage.
+- **Naad (seam):** stond overal op dezelfde plek en maakt daardoor een paar
+  sneetjes in het werkstuk → in de slicer de naad **met de hand plaatsen**
+  (seam painting, op een plek die niet telt) of op **willekeurig** zetten.
+  Geldt voor alle onderdelen.
+- Volgende: ronde 3 (2b + 4a, PLA) en 4b opnieuw (PETG, nu zonder brug).
+
 ### Printinstellingen PETG
 
 | Instelling | Was | Nu | Waarom |
 |---|---|---|---|
 | spuittemperatuur (alle lagen) | 250 °C | **240 °C** | stringing; 250 is bovenin het bereik van PETG |
+| naad (seam) | uitgelijnd | **met de hand / willekeurig** | een uitgelijnde naad gaf sneetjes in het werkstuk (ronde 2); geldt ook voor PLA |
 
 Eén knop tegelijk. Na de print: breekt het plakje makkelijk tussen twee
 lagen, dan is het te koud → 245 °C. Nog veel stringing → volgende knop is

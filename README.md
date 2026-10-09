@@ -60,7 +60,8 @@ make viewer     # build/travel-case-viewer.html — standalone 3D viewer
 make render     # build/logo-centerlines.svg — logo rib centrelines
 ```
 
-Print every part standing (axis vertical); shell B end-cap-down so the logo
+Print every part standing (axis vertical), seam painted or random (an
+aligned seam scored the test prints); shell B end-cap-down so the logo
 ribs are the first layer; both inserts on their outer end (bed chamfer), so
 every bore widens upward. That face is flat: beside the band channel the
 shell (PLA) runs on to the insert as its end stops, so no ~20 mm bridge over
