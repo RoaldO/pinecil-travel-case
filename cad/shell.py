@@ -41,9 +41,10 @@ def shell_solid() -> Part:
     # each insert glued into its own half; in the overlap insert A slides in
     # shell B — three stretches, so either clearance can be the smaller one
     glue = insert_cavity(p.GLUE_CLEARANCE)
-    body -= extrude_x(glue, p.END_CAP_THICKNESS, p.SHELL_SPLIT_X)
+    # beside the band the shell runs on up to the inserts: the end stops
+    body -= extrude_x(glue, p.INSERT_START_X, p.SHELL_SPLIT_X)
     body -= extrude_x(insert_cavity(p.SLIDE_CLEARANCE), p.SHELL_SPLIT_X, p.INSERT_SPLIT_X)
-    body -= extrude_x(glue, p.INSERT_SPLIT_X, p.CASE_LENGTH - p.END_CAP_THICKNESS)
+    body -= extrude_x(glue, p.INSERT_SPLIT_X, p.INSERT_END_X)
     body -= ring_solid()
     return body
 

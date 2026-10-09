@@ -50,9 +50,10 @@ def coupons() -> list[Coupon]:
                "clicks onto 2a (magnets); funnel with the real key; tip-end bores; "
                "mounting-screw and foot grooves"),
         Coupon("4a-shell-a-end", shell_a, "shell A", 0.0, COUPON, True,
-               "takes 4b: glue clearance, end stop, band channel"),
-        Coupon("4b-insert-a-end", insert_a, "insert A", p.END_CAP_THICKNESS, p.END_CAP_THICKNESS + COUPON,
-               True, "glues into 4a: bed chamfer, end stop"),
+               "takes 4b: glue clearance, PLA end stops beside the band, band channel"),
+        Coupon("4b-insert-a-end", insert_a, "insert A", p.INSERT_START_X,
+               p.INSERT_START_X + COUPON, True,
+               "glues into 4a: flat print face (no bridge), bed chamfer, end stop"),
     ]
 
 

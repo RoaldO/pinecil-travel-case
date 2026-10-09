@@ -94,3 +94,19 @@ def test_shell_to_insert_clearance_is_measured(shell, insert, x, clearance):
     gap = min(a.distance_to(b) for a in PARTS[shell]().intersect(plane)
               for b in PARTS[insert]().intersect(plane))
     assert gap == pytest.approx(clearance, abs=0.01)
+
+
+@pytest.mark.parametrize("shell, x", [("shell A", p.END_CAP_THICKNESS + p.RING_END / 2),
+                                      ("shell B", p.CASE_LENGTH - p.END_CAP_THICKNESS
+                                       - p.RING_END / 2)])
+def test_shell_end_stops_beside_the_band(shell, x):
+    """Between end cap and insert the shell is solid PLA beside the band (the
+    end stops the insert rests on), and open over the band's width."""
+    from build123d import Box, Pos
+
+    def solid_at(y: float, z: float) -> bool:
+        probe = Pos(x, y, z) * Box(0.5, 0.5, 0.5)
+        return (PARTS[shell]() & probe).volume > VOLUME_TOLERANCE
+
+    assert solid_at(BAND_HALF_WIDTH + 3, 20.0)
+    assert not solid_at(0.0, 20.0)

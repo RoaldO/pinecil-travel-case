@@ -51,9 +51,9 @@ def test_inserts_leave_a_gap_so_the_shells_close_first():
     assert insert_b().bounding_box().min.X == pytest.approx(p.INSERT_SPLIT_X)
 
 
-def test_inserts_rest_on_the_end_caps():
-    assert insert_a().bounding_box().min.X == pytest.approx(p.END_CAP_THICKNESS)
-    assert insert_b().bounding_box().max.X == pytest.approx(p.CASE_LENGTH - p.END_CAP_THICKNESS)
+def test_inserts_rest_on_the_end_stops():
+    assert insert_a().bounding_box().min.X == pytest.approx(p.INSERT_START_X)
+    assert insert_b().bounding_box().max.X == pytest.approx(p.INSERT_END_X)
 
 
 def test_channels_keep_insert_wall_from_the_band_bends():
@@ -336,9 +336,9 @@ def test_magnet_holes_are_in_both_faces(name):
 
 
 @pytest.mark.parametrize("name, face, inward, size", [
-    ("insert A", p.END_CAP_THICKNESS, 1, p.INSERT_BED_CHAMFER),
+    ("insert A", p.INSERT_START_X, 1, p.INSERT_BED_CHAMFER),
     ("insert A", p.INSERT_SPLIT_X - p.INSERT_SPLIT_GAP, -1, p.INSERT_A_LEAD_IN),
-    ("insert B", p.CASE_LENGTH - p.END_CAP_THICKNESS, -1, p.INSERT_BED_CHAMFER),
+    ("insert B", p.INSERT_END_X, -1, p.INSERT_BED_CHAMFER),
 ])
 def test_insert_edge_chamfers(name, face, inward, size):
     """Right at the face the outer edge is gone over (almost) the chamfer's
@@ -362,3 +362,22 @@ def test_contents_keep_item_clearance_from_the_inserts(item):
     need = p.TIP_BASE_CLEARANCE if item.startswith("tip") else p.ITEM_CLEARANCE
     for name, part in INSERTS.items():
         assert solid.distance_to(part()) >= need - WALL_TOLERANCE, name
+
+
+
+@pytest.mark.parametrize("name, face, inward", [
+    ("insert A", p.INSERT_START_X, 1), ("insert B", p.INSERT_END_X, -1)])
+def test_inserts_print_face_is_flat_no_bridge(name, face, inward):
+    """The face each insert prints on is one flat face: the layer on the bed
+    covers the whole outline apart from the bed chamfer and the band's
+    bends — nothing of the insert hangs over the band channel."""
+    from build123d import Plane
+
+    from cad.profile import insert_profile
+
+    part = INSERTS[name]()
+    on_bed = sum(f.area for f in part.intersect(Plane.YZ.offset(face + inward * 0.05)))
+    higher = sum(f.area for f in part.intersect(Plane.YZ.offset(face + inward * 3)))
+    # on the bed: (almost) all of the deeper layer is already there
+    assert on_bed > 0.85 * higher
+    assert on_bed < insert_profile().area

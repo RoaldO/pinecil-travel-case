@@ -166,8 +166,7 @@ def channel_cuts() -> Part:
 @cache
 def insert_solid() -> Part:
     """The whole insert, before splitting."""
-    body = extrude_x(insert_profile(), p.END_CAP_THICKNESS,
-                     p.CASE_LENGTH - p.END_CAP_THICKNESS)
+    body = extrude_x(insert_profile(), p.INSERT_START_X, p.INSERT_END_X)
     return body - ring_solid() - channel_cuts()
 
 
@@ -206,7 +205,7 @@ def insert_a() -> Part:
     face = p.INSERT_SPLIT_X - p.INSERT_SPLIT_GAP
     return ((insert_solid() & below_x(face))
             - key_align_groove() - magnet_holes_a()
-            - edge_chamfer(p.END_CAP_THICKNESS, p.INSERT_BED_CHAMFER, +1)
+            - edge_chamfer(p.INSERT_START_X, p.INSERT_BED_CHAMFER, +1)
             - edge_chamfer(face, p.INSERT_A_LEAD_IN, -1))
 
 
@@ -215,4 +214,4 @@ def insert_b() -> Part:
     """Its face carries the magnet holes opposite insert A's; chamfered on
     the face it prints on (its outer end)."""
     return (insert_solid() - below_x(p.INSERT_SPLIT_X) - magnet_holes_b()
-            - edge_chamfer(p.CASE_LENGTH - p.END_CAP_THICKNESS, p.INSERT_BED_CHAMFER, -1))
+            - edge_chamfer(p.INSERT_END_X, p.INSERT_BED_CHAMFER, -1))

@@ -48,8 +48,8 @@ keer printen kan dus zonde van de printtijd zijn. Wat raakt wat:
 - `ITEM_CLEARANCE` (punt, bout, sleuteltje) bepaalt de maat van de
   kanalen, daarmee de hele indeling, de breedte van de inzetstukken en de
   vorm van de buitendelen → raakt **alle** plakjes.
-- Lukt de brug in 4b niet, dan print inzetstuk A misschien andersom → raakt
-  de afschuiningen en welke kant waar zit.
+- De printstand van de inzetstukken (zie hoofdstuk 4; de brug is inmiddels
+  opgelost).
 - `SLIDE_CLEARANCE` / `GLUE_CLEARANCE` raken alleen de buitendelen (2b, 4a).
 - Magneetjes en trechter raken alleen de voorkanten (2a, 3).
 
@@ -57,7 +57,7 @@ Daarom, van grote invloed naar klein:
 
 | Ronde | Plakjes | Waarom eerst |
 |---|---|---|
-| 1 | **1 + 4b** | pasvorm punten en bout (kan alles verschuiven) en of de brug lukt (kan de printstand veranderen); 4b is klein en snel |
+| 1 | **1 + 4b** | pasvorm punten en bout (kan alles verschuiven) en of het grondvlak goed print (kan de printstand veranderen); 4b is klein en snel |
 | 2 | **2a + 3** | voorkanten: magneetjes, trechter, sleuteltje, punt-einden |
 | 3 | **2b + 4a** | buitendelen, pas als de vorm van de inzetstukken vastligt; de grootste plakjes |
 
@@ -116,34 +116,29 @@ zoals straks vanaf het snedevlak in inzetstuk A.
 
 - [ ] **4b in 4a** met de afgeschuinde kant (bedkant) vooruit: moet er
       net in kunnen met ruimte voor lijm, niet klemmen en niet ruim
-      rammelen. Zakt hij tot de eindstop (tegen de kopse kant)?
-- [ ] **De brug in 4b** — zie hieronder. Hoe ziet de onderkant van 4b
-      eruit waar de rechthoek ontbreekt?
+      rammelen. Zakt hij tot de eindstops (de PLA-blokjes naast de band)?
+- [ ] **Onderkant van 4b**: vlak? Hoe zien de twee randen eruit waar de
+      band om het inzetstuk buigt (korte overhang)? Zie hieronder.
 
-## 4. Bekend aandachtspunt: de brug in het grondvlak van de inzetstukken
+## 4. Opgelost aandachtspunt: de brug in het grondvlak van de inzetstukken
 
-Het klittenband loopt achter de kopse kant van de koker langs. Daarom is
-elk inzetstuk aan zijn buitenste uiteinde, over de breedte van de band
-(~20 mm), **2,3 mm korter** — op de onderkant van 4b zie je dat als een
-rechthoek die ontbreekt. Omdat de inzetstukken op dat uiteinde printen,
-wordt dat een **brug van ~20 mm**, met de bochten van het bandkanaal als
-overhang. Inzetstuk B heeft precies hetzelfde aan zijn uiteinde.
+Het klittenband loopt achter de kopse kant van de koker langs. Eerst liep
+elk inzetstuk naast de band door tot de kopse kant, dus over de breedte van
+de band (~20 mm) was het aan zijn buitenste uiteinde 2,3 mm korter. Omdat
+de inzetstukken op dat uiteinde printen, werd dat een **brug van ~20 mm**
+(ronde 1: lelijk).
 
-In PETG lukt zo'n brug meestal, maar 4b laat het zien. Lukt het niet
-mooi, dan kan:
+**Opgelost (2026-10-09):** de stukken naast de band (de "bruggenhoofden",
+tevens de eindstops) zijn nu van het **PLA-buitendeel**, vast aan de kopse
+kant. Het inzetstuk eindigt overal op één vlak en print vlak op het bed —
+geen brug, geen schuren of fillen meer nodig. De pasvorm verandert niet.
+Wat overblijft: waar de band om de hoeken van het inzetstuk buigt
+(straal 5), loopt de rand de eerste ~4 lagen steil schuin naar buiten —
+een korte overhang aan twee randen.
 
-1. **Inzetstuk A andersom printen** (snedevlak op het bed). Dan is er
-   geen brug, maar worden de trapjes in de puntkanalen kleine overhangen
-   (aan de schouder van de kraag ~2,6 mm). De afschuining voor het bed
-   moet dan naar die kant. Voor inzetstuk B is het andersom printen
-   lastiger: de trechter wordt dan een overhang.
-2. **De brug ondersteunen in het model**, bijvoorbeeld met een
-   afbreekbaar steunribje, of het bandkanaal daar zo vormen dat het
-   zonder brug print (schuin).
-
-Beslissen na de testprint. → **Besloten (ronde 1, 2026-10-09):** brug
-lelijk maar acceptabel; zo laten, vlak schuren en dun fillen (zie
-Resultaten).
+Overwogen en niet gedaan: inzetstuk A andersom printen (dan worden de
+trapjes in de puntkanalen overhangen, en voor B de trechter), of de brug
+ondersteunen.
 
 ## 5. Bijstellen
 
@@ -206,6 +201,14 @@ Veel stringing (PETG te vroeg uit de droger), na afbramen getest:
   schuift (kanaal maar 2,3 mm): **vlak** schuren en dun fillen, zodat het
   kanaal niet smaller wordt. Geldt ook voor inzetstuk B.
 - Ronde 1 klaar → ronde 2 (plakje 2a + 3).
+
+### Na ronde 1 — de brug weggewerkt, 2026-10-09
+
+Idee van de eigenaar: de "bruggenhoofden" naast de band van PLA maken. De
+stukken naast de band tussen kopse kant en inzetstuk horen nu bij het
+buitendeel (eindstops); het inzetstuk print vlak. Het besluit hierboven
+(schuren en fillen) vervalt. **4b opnieuw printen** (en 4a hoort er nu bij
+in ronde 3: daarin zitten de eindstops).
 
 ### Printinstellingen PETG
 

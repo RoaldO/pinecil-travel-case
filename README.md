@@ -62,9 +62,9 @@ make render     # build/logo-centerlines.svg — logo rib centrelines
 
 Print every part standing (axis vertical); shell B end-cap-down so the logo
 ribs are the first layer; both inserts on their outer end (bed chamfer), so
-every bore widens upward — over the band slot that face bridges ~20 mm
-(coupon 4b: ugly but fine; sand flat and fill thinly, the band slides
-there — see `docs/testprint.md`). Glue each insert into its shell half up to the end
+every bore widens upward. That face is flat: beside the band channel the
+shell (PLA) runs on to the insert as its end stops, so no ~20 mm bridge over
+the band (see `docs/testprint.md`). Glue each insert into its shell half up to the end
 stop, let it cure, then thread the velcro (see `docs/model.md`, Montage).
 
 ## Source

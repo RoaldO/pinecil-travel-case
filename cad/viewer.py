@@ -40,8 +40,8 @@ def specs() -> dict[str, str]:
     return {
         "Case": f"{p.CASE_LENGTH:.1f} × {maxx - minx:.1f} × {case_height():.1f} mm",
         "Shell A / B": f"{p.SHELL_SPLIT_X:.1f} / {p.CASE_LENGTH - p.SHELL_SPLIT_X:.1f} mm",
-        "Insert A / B": f"{p.INSERT_SPLIT_X - p.INSERT_SPLIT_GAP - p.END_CAP_THICKNESS:.1f} / "
-                        f"{p.CASE_LENGTH - p.END_CAP_THICKNESS - p.INSERT_SPLIT_X:.1f} mm",
+        "Insert A / B": f"{p.INSERT_SPLIT_X - p.INSERT_SPLIT_GAP - p.INSERT_START_X:.1f} / "
+                        f"{p.INSERT_END_X - p.INSERT_SPLIT_X:.1f} mm",
         "Overlap": f"{p.OVERLAP:g} mm",
         "Velcro": f"{p.VELCRO_WIDTH:g} × {p.VELCRO_THICKNESS:g} mm",
         "Logo": f"{p.LOGO_MAX_SIZE:g} mm, ribs {p.RIB_WIDTH:g}",

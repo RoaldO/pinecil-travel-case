@@ -195,8 +195,10 @@ een andere plek**:
 | Helft B — de "dop", met het **logo** | ≈ 107,5 | ≈ 85,5 |
 
 Elk inzetstuk wordt in zijn eigen buitenhelft gelijmd. Het zakt daarbij
-vanzelf tot de juiste diepte: naast de band loopt het inzetstuk door tot
-tegen de kopse kant — dat is de **eindstop**. Daarna is elke helft één
+vanzelf tot de juiste diepte: naast de band loopt het **buitendeel** (PLA)
+door van de kopse kant tot het inzetstuk — dat zijn de **eindstops**, de
+"bruggenhoofden" naast het bandkanaal. Het inzetstuk eindigt zelf overal op
+één vlak, net voorbij het bandkanaal. Daarna is elke helft één
 geheel; alleen de overlap schuift.
 
 Tussen de twee inzetstukken blijft als de koker dicht is een **spleetje van
@@ -426,11 +428,13 @@ De **inzetstukken printen allebei op hun buitenste uiteinde** (de kant die
 bij het lijmen als eerste in het eigen buitendeel gaat, met de afschuining
 voor het bed). Dan lopen alle kanalen naar boven toe wijder (geen overhang
 aan de trappen van de punten), en de trechter en de magneetgaatjes liggen
-open naar boven. Prijs: over de bandsleuf in dat vlak een **brug van
-~20 mm**. Getest met testplakje 4b: de brug wordt lelijk, maar dat is
-acceptabel — afwerken met filler en schuurpapier, er zit altijd klittenband
-voor. Wel **vlak** schuren en dun fillen: het is de wand waar het
-klittenband langs schuift, en dat kanaal is maar 2,3 mm.
+open naar boven. Dat vlak is **helemaal vlak, zonder brug**: eerst liep het
+inzetstuk naast de band door tot de kopse kant, waardoor het over de
+bandsleuf een brug van ~20 mm moest printen (testplakje 4b: lelijk). Nu zijn
+die stukken naast de band van het PLA-buitendeel (de eindstops), en zakt het
+hele PETG-deel vlak op het bed. Aan de pasvorm verandert niets. Alleen waar
+de band om de hoeken van het inzetstuk buigt (straal 5), loopt de rand de
+eerste ~4 lagen steil schuin naar buiten: een korte overhang, geen brug.
 
 | Deel | Materiaal | Lengte ≈ |
 |---|---|---|
@@ -454,22 +458,19 @@ testen, de brug in het grondvlak, welke parameter bij welke klacht):
 | 1 | inzetstuk A bij de kraag | boringen ø 5,7 → zitvlak → ring van de punten; grafsteen van de bout met de gleuven van display, knopje en boutje |
 | 2a + 2b | voorkant inzetstuk A + mond buitendeel B | 2a schuift in 2b: schuifspeling en inloop; magneetjes, gaatje + uitlijngroefje van het sleuteltje |
 | 3 | voorkant inzetstuk B | klikt op 2a (magneetjes); trechter met het echte sleuteltje; boringen van de punt-einden; gleuven van montageboutje en voetje |
-| 4a + 4b | uiteinde buitendeel A + grondvlak inzetstuk A | 4b in 4a: lijmspeling, afschuining, eindstop, kanaal klittenband |
+| 4a + 4b | uiteinde buitendeel A + grondvlak inzetstuk A | 4b in 4a: lijmspeling, afschuining, eindstops van PLA, kanaal klittenband; 4b print vlak (geen brug) |
 
 ## Montage
 
-1. Schuur de brug in het grondvlak van beide inzetstukken (over de
-   bandsleuf) **vlak** en vul hem dun af — het klittenband schuift daar
-   straks langs, en daarna kom je er niet meer bij.
-2. Lijm de magneetjes in de voorkant van beide inzetstukken (let op de
+1. Lijm de magneetjes in de voorkant van beide inzetstukken (let op de
    polariteit, zie *Magneetjes*).
-3. Lijm elk inzetstuk in zijn eigen buitenhelft; duw tot de eindstop.
-4. Laat de lijm uitharden.
-5. **Daarna pas** het klittenband doorvoeren: boven bij de sleuf naar binnen,
+2. Lijm elk inzetstuk in zijn eigen buitenhelft; duw tot de eindstops.
+3. Laat de lijm uitharden.
+4. **Daarna pas** het klittenband doorvoeren: boven bij de sleuf naar binnen,
    achter de kopse kant langs, onder weer naar buiten — aan beide uiteinden.
    Zo komt er geen lijm aan het klittenband. Het kanaal heeft overal ruime
    bochten, zodat de band erdoor te duwen is.
-6. Spullen in helft A, dop erover schuiven, klittenband onder dichtplakken.
+5. Spullen in helft A, dop erover schuiven, klittenband onder dichtplakken.
 
 ## Nog open
 

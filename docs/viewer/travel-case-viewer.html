@@ -200,6 +200,7 @@
   <div class="sub">tube · PLA shell + PETG insert · velcro loop</div>
   <dl class="specs" id="specs"></dl>
   <label class="explode">open <input type="range" id="explode" min="0" max="120" value="0" step="1" /> <span id="explode-val">0 mm</span></label>
+  <label class="explode">doorzicht <input type="range" id="opacity" min="10" max="100" value="100" step="5" /> <span id="opacity-val">100 %</span></label>
 </div>
 
 <div class="hud layers" id="layers">
@@ -210,6 +211,7 @@
   <button class="chip" data-layer="band" aria-pressed="true"><span class="sw" style="background:var(--band)"></span> Velcro <span class="key">5</span></button>
   <button class="chip" data-layer="contents" aria-pressed="true"><span class="sw" style="background:var(--contents)"></span> Iron, tips, key <span class="key">6</span></button>
   <button class="chip" data-layer="grid" aria-pressed="true"><span class="sw" style="background:var(--stage-grid)"></span> Grid <span class="key">7</span></button>
+  <button class="chip" data-layer="edges" aria-pressed="true"><span class="sw" style="background:var(--ink)"></span> Ribben <span class="key">8</span></button>
 </div>
 
 <div class="hud views" id="views">
@@ -299,6 +301,17 @@
   const meshes = {};
   NAMES.forEach((n) => { meshes[n] = new THREE.Mesh(geoms[n], mat(COLOR[n])); scene.add(meshes[n]); });
 
+  // edges ("ribben"): only the sharp ones, not the facets of curved faces;
+  // children of their mesh, so they move and hide with it
+  const EDGE_ANGLE = 25;  // degrees between faces before it counts as an edge
+  const edgeMat = new THREE.LineBasicMaterial({ color: new THREE.Color(cssVar("--ink")),
+                                                transparent: true, opacity: 0.55 });
+  const edges = NAMES.map((n) => {
+    const e = new THREE.LineSegments(new THREE.EdgesGeometry(geoms[n], EDGE_ANGLE), edgeMat);
+    meshes[n].add(e);
+    return e;
+  });
+
   // half B (shell B + insert B) slides along +X when "opening"
   const movesWithB = ["shellB", "insertB"];
 
@@ -325,6 +338,7 @@
     renderer.setClearColor(new THREE.Color(cssVar("--stage-bg")), 1);
     NAMES.forEach((n) => meshes[n].material.color.set(cssVar(COLOR[n])));
     grid.material.color = new THREE.Color(cssVar("--stage-grid"));
+    edgeMat.color.set(cssVar("--ink"));
   }
   applyThemeColors();
   const mq = matchMedia("(prefers-color-scheme: dark)");
@@ -389,6 +403,7 @@
   // ---- controls ---------------------------------------------------------
   const targets = { grid: [grid] };
   NAMES.forEach((n) => (targets[n] = [meshes[n]]));
+  targets.edges = edges;
   document.querySelectorAll(".chip").forEach((btn) => {
     btn.addEventListener("click", () => {
       const on = btn.getAttribute("aria-pressed") === "true";
@@ -399,12 +414,27 @@
   document.querySelectorAll("#views button").forEach((btn) => {
     btn.addEventListener("click", () => { setView(btn.dataset.view); updateCamera(); });
   });
-  const keys = ["shellA", "shellB", "insertA", "insertB", "band", "contents", "grid"];
+  const keys = ["shellA", "shellB", "insertA", "insertB", "band", "contents", "grid", "edges"];
   addEventListener("keydown", (e) => {
     const i = parseInt(e.key, 10) - 1;
     if (i >= 0 && i < keys.length) document.querySelector(`.chip[data-layer="${keys[i]}"]`).click();
     const vmap = { i: "iso", t: "top", f: "front", s: "side" };
     if (vmap[e.key]) { setView(vmap[e.key]); updateCamera(); }
+  });
+  // see-through: case parts only; the contents stay solid
+  const seeThrough = ["shellA", "shellB", "insertA", "insertB", "band"];
+  const opacity = $("#opacity");
+  opacity.addEventListener("input", () => {
+    const o = Number(opacity.value) / 100;
+    seeThrough.forEach((n) => {
+      const m = meshes[n].material;
+      m.transparent = o < 1;
+      m.opacity = o;
+      m.depthWrite = o >= 1;  // let parts behind show through
+      m.side = o < 1 ? THREE.DoubleSide : THREE.FrontSide;
+      m.needsUpdate = true;
+    });
+    $("#opacity-val").textContent = opacity.value + " %";
   });
   const slider = $("#explode");
   slider.addEventListener("input", () => {

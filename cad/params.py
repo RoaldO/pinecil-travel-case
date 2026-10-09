@@ -202,9 +202,14 @@ SHELL_BOTTOM_WALL = RING_BOTTOM + SHELL_FLOOR
 TIP_BASE_LENGTH = sum(length for length, _ in TIP_BASE_STEPS)  # base end -> collar
 IRON_LENGTH = IRON_HANDLE_LENGTH + TIP_LENGTH - TIP_BASE_LENGTH
 CAVITY_LENGTH = IRON_LENGTH + 2 * ITEM_END_CLEARANCE
-CAVITY_START_X = END_CAP_THICKNESS + RING_END + INSERT_END_WALL
+# The inserts end flat at the band channel behind the end caps; beside the
+# band the shell (PLA) fills up to them — the end stops — so the inserts
+# print flat on the bed, with no bridge over the band.
+INSERT_START_X = END_CAP_THICKNESS + RING_END
+CAVITY_START_X = INSERT_START_X + INSERT_END_WALL
 CAVITY_END_X = CAVITY_START_X + CAVITY_LENGTH
 CASE_LENGTH = CAVITY_END_X + INSERT_END_WALL + RING_END + END_CAP_THICKNESS
+INSERT_END_X = CASE_LENGTH - INSERT_START_X
 
 ITEM_START_X = CAVITY_START_X + ITEM_END_CLEARANCE  # iron and all tips start here
 TIP_END_X = ITEM_START_X + TIP_LENGTH
