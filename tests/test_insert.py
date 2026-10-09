@@ -89,8 +89,10 @@ def test_tip_bores_are_snug(name):
     """Base steps in A and the sleeve in B sit in a bore only ITEM_CLEARANCE
     wider: a slightly fatter probe already hits the insert."""
     ps = pieces(name)
-    for x0, x1, s in ps[:len(p.TIP_BASE_STEPS) + 1]:  # base steps + collar
-        assert _hits(s.buffer(SNUG), x0 + 0.5, min(x1, p.INSERT_SPLIT_X) - 0.5, insert_a())
+    n = len(p.TIP_BASE_STEPS)
+    for i, (x0, x1, s) in enumerate(ps[:n + 1]):  # base steps + collar seat
+        room = (p.TIP_BASE_CLEARANCE if i < n else p.ITEM_CLEARANCE) + 0.05
+        assert _hits(s.buffer(room), x0 + 0.5, min(x1, p.INSERT_SPLIT_X) - 0.5, insert_a())
     x0, x1, s = ps[-1]
     assert _hits(s.buffer(SNUG), p.INSERT_SPLIT_X + 0.5, x1 - 0.5, insert_b())
 
@@ -350,3 +352,13 @@ def test_insert_edge_chamfers(name, face, inward, size):
     rim = profile.difference(profile.buffer(-0.1))
     assert (extrude_x(edge, *near) & INSERTS[name]()).volume < VOLUME_TOLERANCE
     assert (extrude_x(rim, *deep) & INSERTS[name]()).volume > VOLUME_TOLERANCE
+
+
+@pytest.mark.parametrize("item", ["iron", "tip_bl", "tip_br", "tip_tl", "tip_tr", "key"])
+def test_contents_keep_item_clearance_from_the_inserts(item):
+    """Measured, not just "no overlap": every item stays at least its
+    clearance from both inserts (polygonised arcs: a hair less)."""
+    solid = contents_solids()[item]
+    need = p.TIP_BASE_CLEARANCE if item.startswith("tip") else p.ITEM_CLEARANCE
+    for name, part in INSERTS.items():
+        assert solid.distance_to(part()) >= need - WALL_TOLERANCE, name

@@ -1,11 +1,9 @@
-"""build123d geometry: the Pinecil logo as a cutter, a test plate, and the
-export of every printable part.
+"""Export of every printable part, and the logo test plate.
 
     uv run python -m cad.build   ->  build/<part>.step + build/<part>.stl
                                      for logo-plate, shell-a, shell-b,
                                      insert-a, insert-b
 
-``logo_cutter`` is the reusable part: shell B subtracts it from its end cap.
 The test plate exists to print-check rib width.
 """
 
@@ -13,36 +11,14 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from build123d import (
-    Align,
-    Box,
-    BuildPart,
-    BuildSketch,
-    Part,
-    Polygon,
-    export_step,
-    export_stl,
-    extrude,
-)
+from build123d import Align, Box, Part, export_step, export_stl
 
 from cad import params
-from cad.pinecil_logo import holes_mm, outline_mm
+from cad.insert import insert_a, insert_b
+from cad.pinecil_logo import logo_cutter, outline_mm
+from cad.shell import shell_a, shell_b
 
 BUILD = Path(__file__).resolve().parent.parent / "build"
-
-
-def logo_cutter(
-    depth: float,
-    rib_width: float = params.RIB_WIDTH,
-    max_size: float = params.LOGO_MAX_SIZE,
-) -> Part:
-    """The logo holes extruded from z=0 to z=depth, centred on the origin."""
-    with BuildPart() as cutter:
-        with BuildSketch():
-            for hole in holes_mm(rib_width, max_size):
-                Polygon(*hole.exterior.coords[:-1], align=None)
-        extrude(amount=depth)
-    return cutter.part
 
 
 def logo_plate(
@@ -61,10 +37,6 @@ def logo_plate(
 
 def case_parts() -> dict[str, Part]:
     """Every printable case part, keyed by output file stem."""
-    # Imported here: cad.shell imports logo_cutter from this module.
-    from cad.insert import insert_a, insert_b
-    from cad.shell import shell_a, shell_b
-
     return {"shell-a": shell_a(), "shell-b": shell_b(),
             "insert-a": insert_a(), "insert-b": insert_b()}
 

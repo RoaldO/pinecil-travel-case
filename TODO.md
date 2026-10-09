@@ -2,10 +2,10 @@
 
 ## Logo
 - [x] Owner validates rib centrelines L1..L6 (`make render`) — approved 2026-10-04
-- [ ] Test-print `build/logo-plate.stl`; pick `RIB_WIDTH` that prints cleanly
+- [x] Test-print `build/logo-plate.stl` (PLA, 2026-10-09): `RIB_WIDTH` 0.8 prints clean and sturdy — keep it
 
 ## Case
-- [ ] Work through `REVIEW-FOLLOWUPS.md` (review minors), then delete that file
+- [x] Work through the review minors (REVIEW-FOLLOWUPS.md, now deleted)
 - [x] Design the Pinecil V2 travel case — spec: docs/superpowers/specs/2026-10-04-travel-case-design.md, plain-language: docs/model.md
 - [x] Model shell A/B + insert A/B, sections, viewer
 - [x] Chamfers: inserts on their print face, thin lead-in on insert A, shell B mouth

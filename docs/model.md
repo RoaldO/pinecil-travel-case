@@ -52,11 +52,14 @@ Het tapse stuk staat in het model als trapjes van 0,2 (`TAPER_STEP`), elk
 op de grootste diameter: dat is ongeveer een printlaag, dus geprint is het
 gewoon de kegel.
 
-Het kanaal volgt die trappen, met 0,4 speling rondom (ø 6,2 → 6,5 → 11,35
-→ 11,8).
+Het kanaal volgt die trappen: de voet met 0,3 speling rondom
+(`TIP_BASE_CLEARANCE`, na testprint 1 strakker gemaakt), de kraag met 0,4
+(ø 6,0 → 6,3 → 11,35 → 11,8).
 Omdat een punt erin en eruit moet, wordt het kanaal **dieper in alleen maar
 nauwer**, nooit weer breder. De punt rust met het zitvlak van zijn kraag
-op de schouder van 6,5 naar 11,35; daardoor blijft er 1 mm vrij onder de voet. Het brede
+op de schouder van 6,5 naar 11,35. Die schouder ligt 0,4 dieper dan het
+zitvlak in het model (ook in de lengte 0,4 speling), dus de punt zakt 0,4
+door en er blijft 0,6 vrij onder de voet. Het brede
 deel van het kanaal is minstens 6 mm diep (`TIP_COLLAR_MIN_DEPTH`); nu is het
 ruim 44 mm, tot aan de snede van inzetstuk A.
 
@@ -93,13 +96,13 @@ over de hele lengte, met een **rubber handvat** eromheen:
 
 | Deel | Waar (vanaf de basis) | Diameter ronding | Hoogte grafsteen | Afronding |
 |---|---|---|---|---|
-| plastic lijf (display, knopjes) | 0 – 103,3 | 13,9 | 16,85 | R 2 |
+| plastic lijf (display, knopjes) | 0 – 103,3 | 13,78 (nagemeten bij de testprint; eerst 13,9) | 16,85 | R 2 |
 | rubber handvat | 63,8 – 93,8 | 14,6 | 17,5 | R 4 |
 | boutje op de platte kant | hart op 14,7 | kop ø 3,4 | steekt 1,1 uit | — |
 | 2 knopjes op de platte kant | harten op 23,15 en 60,6 | ø 4,9 | steken 0,7 uit | — |
 | display op de platte kant | 19 – 55 | 9,55 breed | vlak (steekt niet uit) | — |
 | montageboutje (houdt de punt vast) op de platte kant | hart op 98,5 | kop ø 6 | steekt 2,8 uit | — |
-| voetje onder de ronde kant | 98,4 – 102 | half vierkant 13,9 breed, 6,95 diep | — | R 1 |
+| voetje onder de ronde kant | 98,4 – 102 | half vierkant 13,78 breed, 6,89 diep | — | R 1 |
 | punt: kraag (zie *De punten*) | 103,3 – 116 | ≤ 11 | — | — |
 | punt: huls tot het eind | 116 – 161,5 | ≤ 5,5 | — | — |
 
@@ -116,7 +119,11 @@ steken er 0,37 buiten — op die plekken is het plastic echt het ruimst.
 **Het kanaal volgt de bout** (+ 0,4 speling), met één regel voor bout en
 punten: een voorwerp schuift vanaf de snede in elk inzetstuk, dus op elke
 diepte moet het kanaal ook passen voor alles wat er **dieper** ligt en er
-onderweg doorheen komt. Het stuk met het rubber is overal het dikst. Maar
+onderweg doorheen komt. En ook in de lengte is er 0,4 speling: elke trap in
+een kanaal ligt 0,4 dieper dan de schouder van het voorwerp erboven. Zonder
+dat zat de bout precies klem tussen A (het boutje tegen het eind van zijn
+gleuf) en B (de neus tegen de schouder naar de kraag), en zou de kleinste
+printafwijking het sluiten tegenhouden. Het stuk met het rubber is overal het dikst. Maar
 het **boutje** zit vlak bij de basis, die als eerste helft A in gaat: het
 komt langs het hele kanaal in A, dus daar loopt een **gleufje** (3,4 + speling
 breed) van het boutje tot aan de snede. In helft B komt het boutje nooit, dus
@@ -399,11 +406,13 @@ Het Pinecil-logo (de PINE64-dennenappel) zit als **doorkijkgat** in de kopse
 kant van de dop. Het staat **rechtop** als de koker op zijn brede kant ligt:
 de top van de dennenappel wijst naar de smalle kant van het trapezium.
 
-- Maximaal 19 mm groot (hoogte en breedte), rib-breedte 0,8 — zie de README
+- Maximaal 19 mm groot (hoogte en breedte), rib-breedte 0,8 (getest in PLA
+  met het logoplaatje: print netjes, ribben stevig — blijft zo) — zie de README
   voor hoe de ribben werken.
 - Het logo moet binnen het **rechte stuk** van de band achter de kopse kant
   vallen, met wat marge, want de bocht van de band door het logo heen zien is
-  lelijk. Het rechte stuk is nu ~21,7 hoog, dus 19 past; groter kan alleen
+  lelijk. Het rechte stuk is nu ~26,8 hoog (door de hogere koker), dus 19
+  past ruim (~5,8 marge over); groter kan, tot ~24,8; nog groter alleen
   met een kleinere bochtstraal.
 
 ## Printen
@@ -412,6 +421,16 @@ Elk deel wordt **rechtop** geprint (de as van de koker verticaal), het
 langste deel is buitendeel B met ~107,5 mm — ruim binnen 180 mm.
 De dop print met de kopse kant op het bed, dus de logoribben zijn de eerste
 laag: netjes, en er hoeft niets overbrugd te worden.
+
+De **inzetstukken printen allebei op hun buitenste uiteinde** (de kant die
+bij het lijmen als eerste in het eigen buitendeel gaat, met de afschuining
+voor het bed). Dan lopen alle kanalen naar boven toe wijder (geen overhang
+aan de trappen van de punten), en de trechter en de magneetgaatjes liggen
+open naar boven. Prijs: over de bandsleuf in dat vlak een **brug van
+~20 mm**. Getest met testplakje 4b: de brug wordt lelijk, maar dat is
+acceptabel — afwerken met filler en schuurpapier, er zit altijd klittenband
+voor. Wel **vlak** schuren en dun fillen: het is de wand waar het
+klittenband langs schuift, en dat kanaal is maar 2,3 mm.
 
 | Deel | Materiaal | Lengte ≈ |
 |---|---|---|
@@ -439,15 +458,18 @@ testen, de brug in het grondvlak, welke parameter bij welke klacht):
 
 ## Montage
 
-1. Lijm de magneetjes in de voorkant van beide inzetstukken (let op de
+1. Schuur de brug in het grondvlak van beide inzetstukken (over de
+   bandsleuf) **vlak** en vul hem dun af — het klittenband schuift daar
+   straks langs, en daarna kom je er niet meer bij.
+2. Lijm de magneetjes in de voorkant van beide inzetstukken (let op de
    polariteit, zie *Magneetjes*).
-2. Lijm elk inzetstuk in zijn eigen buitenhelft; duw tot de eindstop.
-3. Laat de lijm uitharden.
-4. **Daarna pas** het klittenband doorvoeren: boven bij de sleuf naar binnen,
+3. Lijm elk inzetstuk in zijn eigen buitenhelft; duw tot de eindstop.
+4. Laat de lijm uitharden.
+5. **Daarna pas** het klittenband doorvoeren: boven bij de sleuf naar binnen,
    achter de kopse kant langs, onder weer naar buiten — aan beide uiteinden.
    Zo komt er geen lijm aan het klittenband. Het kanaal heeft overal ruime
    bochten, zodat de band erdoor te duwen is.
-5. Spullen in helft A, dop erover schuiven, klittenband onder dichtplakken.
+6. Spullen in helft A, dop erover schuiven, klittenband onder dichtplakken.
 
 ## Nog open
 

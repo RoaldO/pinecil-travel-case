@@ -42,7 +42,9 @@ IRON_HANDLE_LENGTH = 103.3  # base to where the tip comes out
 # (white rings) inside the handle, the collar right against the handle's
 # front. IRON_LENGTH (derived below) is with the longest tip; measured 159
 # with an 89.3 tip.
-IRON_BODY_SECTION = (13.9, 16.85, 2.0)  # hard plastic, the whole handle long
+# hard plastic, the whole handle long; width re-measured with calipers at the
+# test print (2026-10-09): 13.78, not 13.9
+IRON_BODY_SECTION = (13.78, 16.85, 2.0)
 # The rubber grip sits over the body (which runs on underneath it, so there
 # the iron is body and grip together): from / length along the handle, measured
 # from the base.
@@ -109,6 +111,9 @@ KEY_HEX = 1.46  # measured, across flats
 # --- Insert (PETG) -------------------------------------------------------------
 
 ITEM_CLEARANCE = 0.4  # item -> channel wall, radial
+# The tips' base steps (white rings) sit tighter: test print 1 (2026-10-09)
+# showed the base loose in its bore while the collar fitted nicely.
+TIP_BASE_CLEARANCE = 0.3
 ITEM_END_CLEARANCE = 1.0  # item end -> cavity end
 INSERT_WEB = 1.2  # min PETG between two channels
 INSERT_WALL = 1.2  # min PETG between a channel and the insert surface

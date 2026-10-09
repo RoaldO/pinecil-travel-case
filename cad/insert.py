@@ -1,6 +1,7 @@
 """The PETG insert: solid trapezoid with a channel per item, split in A and B.
 
-Tips and iron each get a bore that follows their pieces (+ ITEM_CLEARANCE).
+Tips and iron each get a bore that follows their pieces (+ ITEM_CLEARANCE;
+the tips' base steps + TIP_BASE_CLEARANCE).
 An item slides into each insert from its split face, so at every depth the
 bore also takes whatever passes it on the way in: in each insert a piece's
 bore is the union of its own section and every deeper one. Tips: stepped in
@@ -60,22 +61,36 @@ def pocket_section(turn: float = 0.0) -> BaseGeometry:
 
 def bore_pieces(name: str) -> list[tuple[float, float, BaseGeometry]]:
     """(x0, x1, YZ section) of the bore for a tip or the iron, split at
-    INSERT_SPLIT_X; the end pieces run on to the cavity ends."""
-    items = [(x0, x1, s.buffer(p.ITEM_CLEARANCE, p.ARC_QUAD_SEGMENTS))
-             for x0, x1, s in pieces(name, keep_out=True)]
+    INSERT_SPLIT_X; the end pieces run on to the cavity ends.
+
+    An item slides into each insert from its split face, so at every depth
+    the bore holds whatever passes it on the way in: every piece deeper in
+    that insert, and — ITEM_CLEARANCE along the axis too — every piece up to
+    ITEM_CLEARANCE shallower. So every step in a bore lies ITEM_CLEARANCE
+    deeper than the item's shoulder above it (a tip settles that much onto
+    its collar seat), and nothing is clamped end to end."""
+    base_steps = 0 if name == "iron" else len(p.TIP_BASE_STEPS)
+    items = [(x0, x1, s.buffer(p.TIP_BASE_CLEARANCE if i < base_steps else p.ITEM_CLEARANCE,
+                               p.ARC_QUAD_SEGMENTS))
+             for i, (x0, x1, s) in enumerate(pieces(name, keep_out=True))]
     first, last = items[0], items[-1]
     items[0] = (p.CAVITY_START_X, first[1], first[2])
     items[-1] = (last[0], min(last[1] + p.ITEM_END_CLEARANCE, p.CAVITY_END_X), last[2])
-    split = p.INSERT_SPLIT_X
-    in_a = [(x0, min(x1, split), s) for x0, x1, s in items if x0 < split]
-    in_b = [(max(x0, split), x1, s) for x0, x1, s in items if x1 > split]
+    split, c, eps = p.INSERT_SPLIT_X, p.ITEM_CLEARANCE, 1e-9
     out = []
-    for deepest_first in (in_a, in_b[::-1]):
-        passed = None
-        for x0, x1, s in deepest_first:
-            passed = s if passed is None else passed.union(s)
-            out.append((x0, x1, passed))
-    return sorted(out, key=lambda piece: piece[0])
+    # insert A, deeper = lower x: at x the bore takes pieces starting before x + c
+    cuts = sorted({p.CAVITY_START_X, split}
+                  | {x0 - c for x0, _, _ in items if p.CAVITY_START_X < x0 - c < split})
+    for a, b in zip(cuts, cuts[1:]):
+        out.append((a, b, unary_union([s for x0, x1, s in items
+                                       if x0 < split and x0 - c < b - eps])))
+    # insert B, deeper = higher x: at x the bore takes pieces ending after x - c
+    end = items[-1][1]
+    cuts = sorted({split, end} | {x1 + c for _, x1, _ in items if split < x1 + c < end})
+    for a, b in zip(cuts, cuts[1:]):
+        out.append((a, b, unary_union([s for x0, x1, s in items
+                                       if x1 > split and x1 + c > a + eps])))
+    return out
 
 
 def bore(name: str) -> Part:

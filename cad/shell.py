@@ -14,7 +14,7 @@ from build123d import Part, Plane
 
 from cad import params as p
 from cad.band import ring_solid, straight_run_z
-from cad.build import logo_cutter
+from cad.pinecil_logo import logo_cutter
 from cad.profile import insert_cavity, shell_profile
 from cad.solids import below_x, chamfer_cutter, extrude_x
 
@@ -38,9 +38,12 @@ def logo_plane() -> Plane:
 @cache
 def shell_solid() -> Part:
     body = extrude_x(shell_profile(), 0.0, p.CASE_LENGTH)
-    body -= extrude_x(insert_cavity(p.GLUE_CLEARANCE), p.END_CAP_THICKNESS,
-                      p.CASE_LENGTH - p.END_CAP_THICKNESS)
+    # each insert glued into its own half; in the overlap insert A slides in
+    # shell B — three stretches, so either clearance can be the smaller one
+    glue = insert_cavity(p.GLUE_CLEARANCE)
+    body -= extrude_x(glue, p.END_CAP_THICKNESS, p.SHELL_SPLIT_X)
     body -= extrude_x(insert_cavity(p.SLIDE_CLEARANCE), p.SHELL_SPLIT_X, p.INSERT_SPLIT_X)
+    body -= extrude_x(glue, p.INSERT_SPLIT_X, p.CASE_LENGTH - p.END_CAP_THICKNESS)
     body -= ring_solid()
     return body
 

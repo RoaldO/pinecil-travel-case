@@ -75,7 +75,9 @@ def _drop(shape_at, placed: list[BaseGeometry]) -> BaseGeometry:
 
 
 def _bisect(ok, lo: float, hi: float) -> float:
-    """Smallest t in [lo, hi] (to DROP_TOLERANCE) with ok(t); ok(hi) holds."""
+    """Smallest t in [lo, hi] (to DROP_TOLERANCE) with ok(t); ok(hi) must
+    hold (a layout that doesn't fit even there fails loudly)."""
+    assert ok(hi), f"no room even at {hi:.2f}: the layout doesn't fit"
     while hi - lo > DROP_TOLERANCE:
         mid = (lo + hi) / 2
         if ok(mid):

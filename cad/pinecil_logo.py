@@ -13,7 +13,8 @@ The holes are then the original pieces minus a band of ``rib_width`` around
 each centreline, so widening the ribs never moves the logo's outer outline.
 
 Everything is computed in SVG units (y down) and converted to mm (y up, logo
-bounding box centred on the origin) at the end.
+bounding box centred on the origin) at the end. ``logo_cutter`` extrudes the
+holes into a build123d cutter (shell B's end cap, the test plate).
 """
 
 from __future__ import annotations
@@ -25,6 +26,7 @@ from dataclasses import dataclass
 from functools import cache
 from pathlib import Path
 
+import build123d as bd
 from shapely import affinity
 from shapely.geometry import LineString, Polygon
 from shapely.ops import unary_union
@@ -280,3 +282,17 @@ def holes_mm(
         )
         holes.extend(getattr(cut, "geoms", [cut]))
     return [h for h in holes if not h.is_empty]
+
+
+def logo_cutter(
+    depth: float,
+    rib_width: float = params.RIB_WIDTH,
+    max_size: float = params.LOGO_MAX_SIZE,
+) -> bd.Part:
+    """The logo holes extruded from z=0 to z=depth, centred on the origin."""
+    with bd.BuildPart() as cutter:
+        with bd.BuildSketch():
+            for hole in holes_mm(rib_width, max_size):
+                bd.Polygon(*hole.exterior.coords[:-1], align=None)
+        bd.extrude(amount=depth)
+    return cutter.part

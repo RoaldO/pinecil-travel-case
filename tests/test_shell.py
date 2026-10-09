@@ -80,3 +80,17 @@ def test_shell_b_mouth_has_an_inner_chamfer():
     assert (extrude_x(rim, x + 0.02, x + 0.1) & shell_b()).volume < VOLUME_TOLERANCE
     deep = (x + p.SHELL_B_MOUTH_CHAMFER + 0.1, x + p.SHELL_B_MOUTH_CHAMFER + 0.3)
     assert (extrude_x(wall, *deep) & shell_b()).volume > VOLUME_TOLERANCE
+
+
+@pytest.mark.parametrize("shell, insert, x, clearance", [
+    ("shell A", "insert A", (p.END_CAP_THICKNESS + p.SHELL_SPLIT_X) / 2, p.GLUE_CLEARANCE),
+    ("shell B", "insert A", (p.SHELL_SPLIT_X + p.INSERT_SPLIT_X) / 2, p.SLIDE_CLEARANCE),
+    ("shell B", "insert B", (p.INSERT_SPLIT_X + p.CASE_LENGTH) / 2, p.GLUE_CLEARANCE),
+])
+def test_shell_to_insert_clearance_is_measured(shell, insert, x, clearance):
+    """The gap between an insert and the shell round it, measured in a cross
+    section: GLUE_CLEARANCE where glued, SLIDE_CLEARANCE in the overlap."""
+    plane = Plane.YZ.offset(x)
+    gap = min(a.distance_to(b) for a in PARTS[shell]().intersect(plane)
+              for b in PARTS[insert]().intersect(plane))
+    assert gap == pytest.approx(clearance, abs=0.01)

@@ -7,6 +7,8 @@ pinecone) is cut through the cap's end face.
 
 **Tracking:** `TODO.md` in this repo.
 
+Requires [`uv`](https://docs.astral.sh/uv/); everything runs via `make`.
+
 Geometry is authored in [build123d](https://github.com/gumyr/build123d). The
 model in plain language (Dutch): [`docs/model.md`](docs/model.md). Decisions
 and acceptance criteria: the
@@ -50,7 +52,7 @@ Parameters (`cad/params.py`):
 ## Build
 
 ```sh
-make test       # pytest (~20 s)
+make test       # pytest (~5 min: builds every part several ways)
 make build      # build/{shell-a,shell-b,insert-a,insert-b,logo-plate}.{step,stl}
 make coupons    # build/coupons/*.{stl,step} — thin test-print slices of the real parts
 make sections   # build/sections.svg (+ .png) — cross-sections from the 3D model
@@ -59,7 +61,10 @@ make render     # build/logo-centerlines.svg — logo rib centrelines
 ```
 
 Print every part standing (axis vertical); shell B end-cap-down so the logo
-ribs are the first layer. Glue each insert into its shell half up to the end
+ribs are the first layer; both inserts on their outer end (bed chamfer), so
+every bore widens upward — over the band slot that face bridges ~20 mm
+(coupon 4b: ugly but fine; sand flat and fill thinly, the band slides
+there — see `docs/testprint.md`). Glue each insert into its shell half up to the end
 stop, let it cure, then thread the velcro (see `docs/model.md`, Montage).
 
 ## Source

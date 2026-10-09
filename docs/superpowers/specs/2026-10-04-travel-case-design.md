@@ -31,7 +31,7 @@ the cap half.
 | D11 | Inserts are glued into their own shell half, pushed to an **end stop**: outside the band width the insert runs up to the end cap. Velcro is threaded **after** gluing (keeps it free of glue), so the band channel must be continuous and threadable after assembly. |
 | D12 | All parts print standing (axis vertical); cap half prints end-cap-down so the logo ribs are the first layer. |
 | D13 | Tips: base (white rings) deep in insert A, in a bore that follows `TIP_BASE_STEPS`, collar-wide from `TIP_COLLAR_X` up to A's face (the collar's seat rests on that shoulder). Past the collar nothing is wider than `TIP_SLEEVE_DIAMETER`, so insert B holds the tip end in one straight bore of it. Every bore only narrows going deeper, so tips slide in and out. |
-| D14 | Iron: "tombstone" handle (half cylinder round the tip axis + block as wide, block corners rounded), round side down so display and buttons face up; handle base deep in insert A (like the tips' bases), tip toward B. Bores (tips and iron) follow the items' pieces + `ITEM_CLEARANCE`; in each insert a bore piece is the union of its own section and every deeper one, since everything deeper passes it on the way in (for the iron: the screw head near its base grooves insert A's bore up to A's face). |
+| D14 | Iron: "tombstone" handle (half cylinder round the tip axis + block as wide, block corners rounded), round side down so display and buttons face up; handle base deep in insert A (like the tips' bases), tip toward B. Bores (tips and iron) follow the items' pieces + `ITEM_CLEARANCE`; in each insert a bore piece is the union of its own section, every deeper one (everything deeper passes it on the way in) and every one up to `ITEM_CLEARANCE` shallower — so every step lies `ITEM_CLEARANCE` deeper than the item's shoulder and nothing is clamped end to end (tips settle 0.4 onto their collar seat) (for the iron: the screw head near its base grooves insert A's bore up to A's face). |
 | D13 | No magic numbers: every dimension is a named parameter; derived values are computed. |
 
 ## Coordinate system
@@ -49,7 +49,7 @@ the cap half.
 |---|---|---|
 | `IRON_LENGTH` | 161.5 (derived) | `IRON_HANDLE_LENGTH` + `TIP_LENGTH` − tip base length: the iron's tip is a spare-tip shape, base inside the handle, collar against its front (measured 159 with an 89.3 tip) |
 | `IRON_HANDLE_LENGTH` | 103.3 | base (deep in A) to where the tip comes out |
-| `IRON_BODY_SECTION` | (13.9, 16.85, 2) | hard plastic, whole handle: (Ø, tombstone height, corner R); round side down (D14) |
+| `IRON_BODY_SECTION` | (13.78, 16.85, 2) | hard plastic, whole handle: (Ø, tombstone height, corner R); round side down (D14) |
 | `IRON_GRIP_FROM` / `_LENGTH` | 63.8 / 30 | rubber grip, from the base; the body runs on under it |
 | `IRON_GRIP_SECTION` | (14.6, 17.5, 4) | rubber grip: (Ø, tombstone height, corner R) |
 | `IRON_SCREW_AT` | 14.7 | screw on the flat face, centred; head centre from the base |

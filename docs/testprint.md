@@ -141,7 +141,9 @@ mooi, dan kan:
    afbreekbaar steunribje, of het bandkanaal daar zo vormen dat het
    zonder brug print (schuin).
 
-Beslissen na de testprint.
+Beslissen na de testprint. → **Besloten (ronde 1, 2026-10-09):** brug
+lelijk maar acceptabel; zo laten, vlak schuren en dun fillen (zie
+Resultaten).
 
 ## 5. Bijstellen
 
@@ -170,3 +172,52 @@ een diameter van de punt of de bout), pas je aan bij dat voorwerp in
 Daarna: `make test`, `make coupons`, en de volgende ronde (of de geraakte
 plakjes opnieuw). Pas als alle plakjes passen de hele koker printen
 (`make build`).
+
+## 6. Resultaten
+
+### Logoplaatje — PLA, 2026-10-09
+
+Print netjes (wat stringing door vochtig weer), ribben stevig: met een
+tangetje heen en weer gebogen zonder te breken. `RIB_WIDTH` 0,8 blijft.
+
+### Ronde 1, poging 1 — plakje 1, PETG (nog niet gedroogd), 2026-10-09
+
+Veel stringing (PETG te vroeg uit de droger), na afbramen getest:
+
+- **Printnauwkeurigheid:** gat voor de bout gemeten **14,72**, model 14,70 —
+  de printer print de gaten op maat.
+- **Bout:** veel ruimte. Nagemeten: het plastic lijf is **13,78** breed, niet
+  13,9 → `IRON_BODY_SECTION` aangepast (maat van het voorwerp, niet de
+  speling). Speling blijft 0,4 per kant: in het echte inzetstuk glijdt de
+  bout over ~64 mm, daar is wat meer ruimte nodig dan in een plakje van
+  10 mm.
+- **Punt:** kraag past mooi in het brede deel; de voet zit wat los →
+  `TIP_BASE_CLEARANCE` 0,3 (boring ø 0,2 kleiner), kraag blijft 0,4.
+- Volgende: plakje 1 opnieuw met gedroogde PETG.
+
+### Ronde 1, poging 2 — plakje 1 + 4b, gedroogde PETG op 240 °C, 2026-10-09
+
+- **Plakje 1: perfect.** Bout (13,78 met 0,4 per kant), voet van de punt
+  (`TIP_BASE_CLEARANCE` 0,3) en kraag (0,4) passen. Deze spelingen blijven.
+- **Plakje 4b: de brug is lelijk**, maar acceptabel. **Besluit:** de
+  inzetstukken blijven op hun buitenste uiteinde printen; de brug wordt
+  afgewerkt met filler en schuurpapier — er zit altijd klittenband voor, dus
+  niemand ziet hem. **Let op:** het is de wand waar het klittenband langs
+  schuift (kanaal maar 2,3 mm): **vlak** schuren en dun fillen, zodat het
+  kanaal niet smaller wordt. Geldt ook voor inzetstuk B.
+- Ronde 1 klaar → ronde 2 (plakje 2a + 3).
+
+### Printinstellingen PETG
+
+| Instelling | Was | Nu | Waarom |
+|---|---|---|---|
+| spuittemperatuur (alle lagen) | 250 °C | **240 °C** | stringing; 250 is bovenin het bereik van PETG |
+
+Eén knop tegelijk. Na de print: breekt het plakje makkelijk tussen twee
+lagen, dan is het te koud → 245 °C. Nog veel stringing → volgende knop is
+de retractie. Wat hier uitkomt, gebruik je ook voor de echte inzetstukken.
+
+**Uitslag (ronde 1, poging 2):** met gedroogde PETG op 240 °C is de
+laaghechting geweldig en is de stringing weg. **240 °C blijft**, ook voor
+de echte inzetstukken. De naad (seam) is niet perfect, maar even schuren is
+genoeg: de buitenkant van de inzetstukken wordt tegen het PLA gelijmd.
