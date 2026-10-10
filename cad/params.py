@@ -144,10 +144,12 @@ MAGNET_CLEARANCE = 0.1  # radial, and extra hole depth (never sticks out)
 # Min from a magnet hole to the outer half of the short leg: a pull near the
 # key's axis has no lever to turn it, a pull on the leg's far end does.
 MAGNET_KEY_DISTANCE = 8.0
-# Thinnest wall worth printing: one line of a 0.4 nozzle. Where strength
-# doesn't matter (the funnel near insert B's outside, glued to the shell),
-# cuts may come this close to a surface.
+# One print line of a 0.4 nozzle: the unit for thin walls. PETG next to the
+# key pocket narrower than two of these is shaved off.
 MIN_PRINT_WALL = 0.45
+# Wall left between the key funnel and insert B's outside: two print lines.
+# With one, the seam kept opening a hole there (test print, 2026-10-10).
+KEY_FUNNEL_WALL = 2 * MIN_PRINT_WALL
 # Shallow groove in insert A's face from the key hole along the short leg's
 # direction: shows how to line the leg up before closing.
 KEY_ALIGN_GROOVE_WIDTH = 0.8

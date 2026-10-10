@@ -257,10 +257,12 @@ recht. De poot komt pas ~11 mm voor het dichtgaan in het kuiltje, dus die
 6 mm is er ruim.
 
 De trechter mag aan de voorkant tot vlak bij de buitenkant van inzetstuk B
-komen, maar er blijft altijd **minstens één printwand** (0,45,
-`MIN_PRINT_WALL`) staan: verder dan dat kan de poot toch nauwelijks staan
+komen, maar er blijft altijd een wandje van **twee printlijnen** (0,9,
+`KEY_FUNNEL_WALL`) staan: verder dan dat kan de poot toch nauwelijks staan
 (de rand van buitendeel B schuift er eerst langs), en sterkte is daar geen
-punt — dat wandje wordt tegen het PLA van buitendeel B gelijmd.
+punt — dat wandje wordt tegen het PLA van buitendeel B gelijmd. (Eerst was
+het één printlijn, maar daar trok de naad steeds een gat in, wat je ook met
+de naadinstellingen deed — testprint 2026-10-10.)
 
 Waar kuiltje en trechter dicht langs andere kanalen lopen (de bout, de gleuf
 van het montageboutje, de punt rechtsboven), zouden dunne, scherpe spitsjes

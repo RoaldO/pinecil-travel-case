@@ -43,7 +43,7 @@ def pocket_section(turn: float = 0.0) -> BaseGeometry:
     """YZ footprint of the pocket in insert B: key and short leg, hulled,
     grown by POCKET_CLEARANCE, kept INSERT_WALL inside the insert surface.
     With ``turn`` (the funnel) it is swept that many degrees either way round
-    the key's axis and may come up to MIN_PRINT_WALL from the insert's
+    the key's axis and may come up to KEY_FUNNEL_WALL from the insert's
     surface (no strength needed there: it is glued to shell B)."""
     ch = channel_sections()
     parts = [ch["key"], key_short_leg_section(p.ITEM_CLEARANCE)]
@@ -54,7 +54,7 @@ def pocket_section(turn: float = 0.0) -> BaseGeometry:
                   for i in range(n + 1)]
         hull = unary_union([unary_union(pair).convex_hull
                             for pair in zip(turned, turned[1:])]).simplify(SWEEP_TOLERANCE)
-        return hull.intersection(insert_profile().buffer(-p.MIN_PRINT_WALL,
+        return hull.intersection(insert_profile().buffer(-p.KEY_FUNNEL_WALL,
                                                          p.ARC_QUAD_SEGMENTS))
     return hull.intersection(insert_profile().buffer(-p.INSERT_WALL, p.ARC_QUAD_SEGMENTS))
 

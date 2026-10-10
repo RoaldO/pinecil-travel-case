@@ -221,6 +221,13 @@ in ronde 3: daarin zitten de eindstops).
   Geldt voor alle onderdelen.
 - Volgende: ronde 3 (2b + 4a, PLA) en 4b opnieuw (PETG, nu zonder brug).
 
+### Na ronde 2 — wandje bij de trechter, 2026-10-10
+
+Het wandje tussen de trechter en de buitenkant van inzetstuk B was één
+printlijn (0,45); de naad trok daar steeds een gat in, welke naadinstelling
+ook. → **twee printlijnen** (`KEY_FUNNEL_WALL` 0,9). Plakje 3 opnieuw
+printen om het te controleren.
+
 ### Printinstellingen PETG
 
 | Instelling | Was | Nu | Waarom |

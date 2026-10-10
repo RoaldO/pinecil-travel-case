@@ -88,8 +88,9 @@ the cap half.
 | `KEY_LEG_ANGLE` | -15.0 | short leg, degrees from horizontal (negative = down). The brainstorm sketch had −35°, but with the key resting just above the iron (as modelled) −35° hits the iron; −20°…−5° fit. |
 | `KEY_LEG_SIDE` | 1 | +1 / −1: which side the short leg points to |
 | `POCKET_CLEARANCE` | 1.0 | pocket around the short leg |
-| `KEY_FUNNEL_ANGLE` / `_DEPTH` | 20° / 6 | funnel at the short-leg pocket's mouth in insert B: the pocket swept ±angle round the key's axis at B's face, back to 0 over the depth (TAPER_STEP slices); comes up to `MIN_PRINT_WALL` (0.45, one print line) from insert B's surface, never through it. PETG next to pocket/funnel narrower than 2 × `MIN_PRINT_WALL` (spikes between them and other channels) is shaved off |
-| `MIN_PRINT_WALL` | 0.45 | thinnest wall worth printing (one 0.4-nozzle line), where strength doesn't matter |
+| `KEY_FUNNEL_ANGLE` / `_DEPTH` | 20° / 6 | funnel at the short-leg pocket's mouth in insert B: the pocket swept ±angle round the key's axis at B's face, back to 0 over the depth (TAPER_STEP slices); comes up to `KEY_FUNNEL_WALL` (0.9, two print lines; one line let the seam open a hole) from insert B's surface, never through it. PETG next to pocket/funnel narrower than 2 × `MIN_PRINT_WALL` (spikes between them and other channels) is shaved off |
+| `MIN_PRINT_WALL` | 0.45 | one print line of a 0.4 nozzle; PETG next to the key pocket narrower than two is shaved off |
+| `KEY_FUNNEL_WALL` | 2 × `MIN_PRINT_WALL` | wall between the key funnel and insert B's outside |
 | `MAGNET_DIAMETER` / `_THICKNESS` / `_CLEARANCE` | 3 / 2 / 0.1 | click-shut magnets (not a drop guard), glued into holes in both insert faces, opposite poles facing |
 | (magnet spots) | derived | `profile.magnet_spots()`: two bottom corners (on the floor, `INSERT_WALL` outboard of the bottom tips' channels) + one centred in the top (level with the top tips' channels); the insert fit includes the holes, so the case widens to fit them |
 | `MAGNET_KEY_DISTANCE` | 8 | min from a magnet hole to the outer half of the short leg (B's magnets slide past it while closing; a pull near the key's axis has no lever to turn it) |

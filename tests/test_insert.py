@@ -242,12 +242,12 @@ def test_key_align_groove_in_insert_a_face_along_the_short_leg():
 
 def test_key_funnel_takes_a_turned_leg_at_b_face():
     """At B's face the pocket takes the short leg turned almost
-    KEY_FUNNEL_ANGLE either way round the key's axis (up to MIN_PRINT_WALL
+    KEY_FUNNEL_ANGLE either way round the key's axis (up to KEY_FUNNEL_WALL
     from the insert's surface, which it never breaks through); past
     KEY_FUNNEL_DEPTH it is the plain pocket again."""
     from cad.profile import insert_profile
 
-    inner = insert_profile().buffer(-p.MIN_PRINT_WALL + 0.01)
+    inner = insert_profile().buffer(-p.KEY_FUNNEL_WALL + 0.01)
 
     from shapely.affinity import rotate
 
