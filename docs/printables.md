@@ -38,4 +38,8 @@ out at the bottom, with the ends overlapping underneath.
 Fully parametric (build123d). Source, design notes and test-print slices for
 tuning the fit: https://github.com/RoaldO/pinecil-travel-case
 
+Designed, measured and test-printed by me; the parametric CAD code was
+written with an AI assistant (Claude) under my direction — see the repo for
+the full history.
+
 *The pinecone logo is a trademark of PINE64; personal use only.*
