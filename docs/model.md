@@ -8,7 +8,7 @@ parameters** (in `cad/params.py`), geen vaste maten.
 ## Wat het is
 
 Een koker om een Pinecil V2 soldeerbout mee op reis te nemen, samen met vier
-reservepunten en het inbussleuteltje voor de M2-boutjes van de punten. De koker
+reservepunten en het inbussleuteltje voor een M2-inbusschroefje van de punt (zie *De bout*). De koker
 past op een printbed van 18 × 18 cm met 18 cm printhoogte, doordat hij in
 stukken geprint wordt die rechtop staan.
 
@@ -106,7 +106,7 @@ over de hele lengte, met een **rubber handvat** eromheen:
 | boutje op de platte kant | hart op 14,7 | kop ø 3,4 | steekt 1,1 uit | — |
 | 2 knopjes op de platte kant | harten op 23,15 en 60,6 | ø 4,9 | steken 0,7 uit | — |
 | display op de platte kant | 19 – 55 | 9,55 breed | vlak (steekt niet uit) | — |
-| montageboutje (houdt de punt vast) op de platte kant | hart op 98,5 | kop ø 6 | steekt 2,8 uit | — |
+| montageboutje (houdt de punt vast) op de platte kant — een schroefwieltje M2 × 5 | hart op 98,5 | kop ø 6 | steekt 2,8 uit | — |
 | voetje onder de ronde kant | 98,4 – 102 | half vierkant 13,78 breed, 6,89 diep | — | R 1 |
 | punt: kraag (zie *De punten*) | 103,3 – 116 | ≤ 11 | — | — |
 | punt: huls tot het eind | 116 – 161,5 | ≤ 5,5 | — | — |
@@ -142,6 +142,13 @@ tegen de wand. Die extra ruimte zit alleen in het kanaal, niet in de bout.
 Het display steekt niet uit; het voegt dus alleen die extra ruimte toe (een
 ondiepe, brede gleuf van 9,55 + 2 × 1 breed, ook tot de snede).
 
+De punt zit normaal vast met twee kruiskopschroefjes. Eén ervan is vervangen
+door een **schroefwieltje M2 × 5** met een grip die je met de hand aandraait
+(twee zou te lomp worden) — dat is het montageboutje hieronder. Wie liever
+een **M2 × 5 inbusschroefje** gebruikt, heeft het inbussleuteltje dat in de
+koker meegaat. Het ontwerp is voor de Pinecil V2 met de korte punten; voor
+iets anders pas je de parameters aan.
+
 Het **montageboutje** zit op de neus, in helft **B**. Helft B schuift vanaf de
 punt-kant over de bout, dus daar loopt zijn gleuf (6 + speling breed) van het
 boutje tot aan de snede van B — en niet in A. Aan de voorkant van B loopt die
@@ -168,12 +175,16 @@ De indeling van binnen (layout **B**):
 Buitenmaat ongeveer **57 breed × 43,5 hoog** (door de rechtopstaande bout
 smaller en hoger dan eerst).
 
-### Twee materialen, twee lagen
+### Twee lagen
+
+Alles wordt **PETG** — buitendeel en inzetstuk; liefst in twee kleuren. (Het
+ontwerp begon met een zwart PLA-buitendeel; uiteindelijk is alles PETG
+geworden. De testplakjes van de buitendelen zijn nog in PLA geprint.)
 
 - **Inzetstuk** — PETG in een leuke kleur. Geen dunne koker maar een massief
   stuk met voor elk voorwerp een eigen **kanaal** in de lengterichting (0,4
   speling rondom, minstens 1,2 PETG tussen de kanalen). Niets rammelt.
-- **Buitendeel** — zwart PLA, een schil om het inzetstuk heen. Zijwanden 1,6.
+- **Buitendeel** — PETG, een schil om het inzetstuk heen. Zijwanden 1,6.
   Boven- en onderwand zijn dikker, omdat daar de goot voor het klittenband in
   zit (zie verder).
 
@@ -197,11 +208,11 @@ een andere plek**:
 
 | | Buitendeel | Inzetstuk |
 |---|---|---|
-| Helft A | ≈ 68 | ≈ 85,5 |
-| Helft B — de "dop", met het **logo** | ≈ 107,5 | ≈ 85,5 |
+| Helft A | ≈ 68 | ≈ 83 |
+| Helft B — de "dop", met het **logo** | ≈ 107,5 | ≈ 83 |
 
 Elk inzetstuk wordt in zijn eigen buitenhelft gelijmd. Het zakt daarbij
-vanzelf tot de juiste diepte: naast de band loopt het **buitendeel** (PLA)
+vanzelf tot de juiste diepte: naast de band loopt het **buitendeel**
 door van de kopse kant tot het inzetstuk — dat zijn de **eindstops**, de
 "bruggenhoofden" naast het bandkanaal. Het inzetstuk eindigt zelf overal op
 één vlak, net voorbij het bandkanaal. Daarna is elke helft één
@@ -225,7 +236,7 @@ netjes op elkaar aansluiten — de buitendelen raken elkaar altijd eerst.
 - De rest van de inloop zit in **buitendeel B**: de binnenrand van zijn mond
   heeft een afschuining van **0,6** (`SHELL_B_MOUTH_CHAMFER`). Die print
   zonder overhang (buitendeel B print met de kopse kant op het bed, de mond
-  boven). Onder de klittenbandgoot blijft aan de rand 0,6 PLA over.
+  boven). Onder de klittenbandgoot blijft aan de rand 0,6 materiaal over.
 
 ### Het inbussleuteltje
 
@@ -266,7 +277,7 @@ De trechter mag aan de voorkant tot vlak bij de buitenkant van inzetstuk B
 komen, maar er blijft altijd een wandje van **twee printlijnen** (0,9,
 `KEY_FUNNEL_WALL`) staan: verder dan dat kan de poot toch nauwelijks staan
 (de rand van buitendeel B schuift er eerst langs), en sterkte is daar geen
-punt — dat wandje wordt tegen het PLA van buitendeel B gelijmd. (Eerst was
+punt — dat wandje wordt tegen buitendeel B gelijmd. (Eerst was
 het één printlijn, maar daar trok de naad steeds een gat in, wat je ook met
 de naadinstellingen deed — testprint 2026-10-10.)
 
@@ -291,8 +302,8 @@ uit zichzelf dicht blijft.
 elektronica (geen magnetische opslag; de bewegingssensor is een
 accelerometer). Heeft een Pinecil een hall-sensor voor de slaapstand, dan kan
 een magneet hem in slaap zetten — in een koker, uit, maakt dat niet uit.
-Neodymium-magneten verliezen boven ~80 °C blijvend kracht en PLA wordt
-rond 60 °C zacht: de bout gaat er alleen afgekoeld in.
+Neodymium-magneten verliezen boven ~80 °C blijvend kracht en PETG wordt
+rond 80 °C zacht: de bout gaat er alleen afgekoeld in.
 
 **Waar ze kunnen.** De wand van het buitendeel (1,6) is te dun; de logische
 plek zijn de twee **snedevlakken van de inzetstukken** (voorkant A en voorkant
@@ -413,7 +424,7 @@ het buitendeel én het inzetstuk weg. Zo ontstaan in één keer de goot boven,
 de diepere goot onder, de bochten naar binnen en het kanaal achter de kopse
 kanten.
 
-Omdat de goot niet door de PLA-wand heen mag, is de bovenwand
+Omdat de goot niet door de wand van het buitendeel heen mag, is de bovenwand
 1× banddikte + speling + 1,2 dik en de onderwand 2× banddikte + speling + 1,2.
 
 Startwaarden voor het klittenband: 20 breed, 2 dik per laag, binnenbocht
@@ -440,8 +451,10 @@ de top van de dennenappel wijst naar de smalle kant van het trapezium.
 
 ## Printen
 
-Elk deel wordt **rechtop** geprint (de as van de koker verticaal), het
-langste deel is buitendeel B met ~107,5 mm — ruim binnen 180 mm.
+Elk deel wordt **rechtop** geprint (de as van de koker verticaal), **in
+PETG, zonder supports**; het langste deel is buitendeel B met ~107,5 mm —
+ruim binnen 180 mm. Gedroogde PETG op 240 °C, naad met de hand of
+willekeurig (zie [`testprint.md`](testprint.md)).
 De dop print met de kopse kant op het bed, dus de logoribben zijn de eerste
 laag: netjes, en er hoeft niets overbrugd te worden.
 
@@ -456,17 +469,17 @@ aan de trappen van de punten), en de trechter en de magneetgaatjes liggen
 open naar boven. Dat vlak is **helemaal vlak, zonder brug**: eerst liep het
 inzetstuk naast de band door tot de kopse kant, waardoor het over de
 bandsleuf een brug van ~20 mm moest printen (testplakje 4b: lelijk). Nu zijn
-die stukken naast de band van het PLA-buitendeel (de eindstops), en zakt het
-hele PETG-deel vlak op het bed. Aan de pasvorm verandert niets. Alleen waar
+die stukken naast de band van het buitendeel (de eindstops), en zakt het
+hele inzetstuk vlak op het bed. Aan de pasvorm verandert niets. Alleen waar
 de band om de hoeken van het inzetstuk buigt (straal 5), loopt de rand de
 eerste ~4 lagen steil schuin naar buiten: een korte overhang, geen brug.
 
 | Deel | Materiaal | Lengte ≈ |
 |---|---|---|
-| Buitendeel A | zwart PLA | 68 |
-| Buitendeel B (dop, met logo) | zwart PLA | 107,5 |
-| Inzetstuk A | PETG | 85,5 |
-| Inzetstuk B | PETG | 85,5 |
+| Buitendeel A | PETG | 68 |
+| Buitendeel B (dop, met logo) | PETG | 107,5 |
+| Inzetstuk A | PETG | 83 |
+| Inzetstuk B | PETG | 83 |
 
 ### Testprints
 
@@ -483,7 +496,7 @@ testen, de brug in het grondvlak, welke parameter bij welke klacht):
 | 1 | inzetstuk A bij de kraag | boringen ø 5,7 → zitvlak → ring van de punten; grafsteen van de bout met de gleuven van display, knopje en boutje |
 | 2a + 2b | voorkant inzetstuk A + mond buitendeel B | 2a schuift in 2b: schuifspeling en inloop; magneetjes, gaatje + uitlijngroefje van het sleuteltje |
 | 3 | voorkant inzetstuk B | klikt op 2a (magneetjes); trechter met het echte sleuteltje; boringen van de punt-einden; gleuven van montageboutje en voetje |
-| 4a + 4b | uiteinde buitendeel A + grondvlak inzetstuk A | 4b in 4a: lijmspeling, afschuining, eindstops van PLA, kanaal klittenband; 4b print vlak (geen brug) |
+| 4a + 4b | uiteinde buitendeel A + grondvlak inzetstuk A | 4b in 4a: lijmspeling, afschuining, eindstops in het buitendeel, kanaal klittenband; 4b print vlak (geen brug) |
 
 ## Montage
 

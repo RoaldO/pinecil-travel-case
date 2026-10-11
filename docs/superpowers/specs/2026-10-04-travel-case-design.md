@@ -9,8 +9,8 @@ definitions, every parameter, and the acceptance criteria.
 ## Goal
 
 A 3D-printable tube case for a Pinecil V2 with its tip, 4 spare tips and the
-M2 hex key. Printer: 180 × 180 bed, 180 max print height. Inner part PETG
-(colour), outer part black PLA. Closed by one loop of double-sided velcro.
+M2 hex key. Printer: 180 × 180 bed, 180 max print height. All PETG (insert
+and shell; the shell started out as black PLA), no supports. Closed by one loop of double-sided velcro.
 The existing Pinecil logo (`cad/pinecil_logo.py`) goes through the end cap of
 the cap half.
 
@@ -32,7 +32,8 @@ the cap half.
 | D12 | All parts print standing (axis vertical); cap half prints end-cap-down so the logo ribs are the first layer. |
 | D13 | Tips: base (white rings) deep in insert A, in a bore that follows `TIP_BASE_STEPS`, collar-wide from `TIP_COLLAR_X` up to A's face (the collar's seat rests on that shoulder). Past the collar nothing is wider than `TIP_SLEEVE_DIAMETER`, so insert B holds the tip end in one straight bore of it. Every bore only narrows going deeper, so tips slide in and out. |
 | D14 | Iron: "tombstone" handle (half cylinder round the tip axis + block as wide, block corners rounded), round side down so display and buttons face up; handle base deep in insert A (like the tips' bases), tip toward B. Bores (tips and iron) follow the items' pieces + `ITEM_CLEARANCE`; in each insert a bore piece is the union of its own section, every deeper one (everything deeper passes it on the way in) and every one up to `ITEM_CLEARANCE` shallower — so every step lies `ITEM_CLEARANCE` deeper than the item's shoulder and nothing is clamped end to end (tips settle 0.4 onto their collar seat) (for the iron: the screw head near its base grooves insert A's bore up to A's face). |
-| D15 | End stops are PLA: between end cap and insert, beside the band channel, the shell runs on to the inserts (`INSERT_START_X` / `INSERT_END_X`). The inserts end flat and print flat on the bed — no ~20 mm bridge over the band (coupon 4b, round 1). Fit unchanged. (Owner's idea: make the bridge abutments PLA.) |
+| D15 | End stops are in the shell: between end cap and insert, beside the band channel, the shell runs on to the inserts (`INSERT_START_X` / `INSERT_END_X`). The inserts end flat and print flat on the bed — no ~20 mm bridge over the band (coupon 4b, round 1). Fit unchanged. (Owner's idea: make the bridge abutments part of the shell, PLA at the time.) |
+| D16 | All parts PETG, no supports (owner, after the test prints). Shell clearances were tuned with PLA coupons. |
 | D13 | No magic numbers: every dimension is a named parameter; derived values are computed. |
 
 ## Coordinate system
@@ -103,7 +104,7 @@ the cap half.
 | Name | Value | Note |
 |---|---|---|
 | `SHELL_SIDE_WALL` | 1.6 | |
-| `SHELL_FLOOR` | 1.2 | PLA left under a groove |
+| `SHELL_FLOOR` | 1.2 | shell left under a groove |
 | `END_CAP_THICKNESS` | 2.0 | logo depth |
 | `GLUE_CLEARANCE` | 0.1 | insert → own shell half (0.2 printed too loose, test round 3) |
 | `SLIDE_CLEARANCE` | 0.1 | insert A → shell B (overlap; 0.2 printed too loose, test round 3) |

@@ -30,10 +30,15 @@ na een wijziging in `cad/params.py`.
 |---|---|---|
 | 1-insert-a-collar | PETG | 34 × 50,5 × 10 |
 | 2a-insert-a-face | PETG | 34 × 50,5 × 8 |
-| 2b-shell-b-mouth | zwart PLA | 43,4 × 57,2 × 8 |
+| 2b-shell-b-mouth | PETG (getest in PLA) | 43,2 × 57,0 × 8 |
 | 3-insert-b-face | PETG | 34 × 50,5 × 8 |
-| 4a-shell-a-end | zwart PLA | 43,4 × 57,2 × 8 |
+| 4a-shell-a-end | PETG (getest in PLA) | 43,2 × 57,0 × 8 |
 | 4b-insert-a-end | PETG | 34 × 50,5 × 8 |
+
+Uiteindelijk is **alles PETG** geworden, ook de buitendelen. De spelingen van
+de buitendelen (`SLIDE_CLEARANCE`, `GLUE_CLEARANCE`) zijn met PLA-plakjes
+afgesteld; print 2b en 4a in PETG als je wilt controleren of ze in PETG net
+zo uitvallen.
 
 Print met dezelfde instellingen als straks de echte onderdelen (laaghoogte,
 lijnbreedte, temperatuur, filament): de spelingen gelden voor díe printer
@@ -116,7 +121,7 @@ zoals straks vanaf het snedevlak in inzetstuk A.
 
 - [ ] **4b in 4a** met de afgeschuinde kant (bedkant) vooruit: moet er
       net in kunnen met ruimte voor lijm, niet klemmen en niet ruim
-      rammelen. Zakt hij tot de eindstops (de PLA-blokjes naast de band)?
+      rammelen. Zakt hij tot de eindstops (de blokjes naast de band)?
 - [ ] **Onderkant van 4b**: vlak? Hoe zien de twee randen eruit waar de
       band om het inzetstuk buigt (korte overhang)? Zie hieronder.
 
@@ -275,3 +280,7 @@ De koker sluit zo mooi dat hij bij het openen vacuüm zuigt. → ontluchtings-
 gaatje ø 2 (`VENT_DIAMETER`) door de eindwand van inzetstuk B, van het eind
 van het kanaal van de bout naar het bandkanaal (verstopt achter de band).
 Alleen inzetstuk B verandert hierdoor.
+
+### Materiaal
+
+Uiteindelijk volledig **PETG**, ook de buitendelen; geen supports nodig.

@@ -164,10 +164,10 @@ KEY_FUNNEL_WALL = 2 * MIN_PRINT_WALL
 KEY_ALIGN_GROOVE_WIDTH = 0.8
 KEY_ALIGN_GROOVE_DEPTH = 0.6
 
-# --- Shell (PLA) and fits ------------------------------------------------------
+# --- Shell and fits -------------------------------------------------------------
 
 SHELL_SIDE_WALL = 1.6
-SHELL_FLOOR = 1.2  # PLA left under a velcro groove
+SHELL_FLOOR = 1.2  # shell left under a velcro groove
 END_CAP_THICKNESS = 2.0  # the logo is cut through this
 # Test print round 3 (2026-10-10): at 0.2 the gap printed 0.3 in all (the
 # insert prints 0.12 small, the shell's cavity 0.22) — too loose. At 0.1 it
@@ -217,7 +217,7 @@ TIP_BASE_LENGTH = sum(length for length, _ in TIP_BASE_STEPS)  # base end -> col
 IRON_LENGTH = IRON_HANDLE_LENGTH + TIP_LENGTH - TIP_BASE_LENGTH
 CAVITY_LENGTH = IRON_LENGTH + 2 * ITEM_END_CLEARANCE
 # The inserts end flat at the band channel behind the end caps; beside the
-# band the shell (PLA) fills up to them — the end stops — so the inserts
+# band the shell fills up to them — the end stops — so the inserts
 # print flat on the bed, with no bridge over the band.
 INSERT_START_X = END_CAP_THICKNESS + RING_END
 CAVITY_START_X = INSERT_START_X + INSERT_END_WALL

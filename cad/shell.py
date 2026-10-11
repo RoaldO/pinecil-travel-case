@@ -1,4 +1,4 @@
-"""The PLA shell: rounded-trapezoid tube with end caps, split in A and B.
+"""The shell: rounded-trapezoid tube with end caps, split in A and B.
 
 The insert cavity has GLUE_CLEARANCE, and SLIDE_CLEARANCE in the overlap zone
 of shell B where insert A slides in. The band ring cuts the grooves and the
