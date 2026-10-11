@@ -84,11 +84,13 @@ the cap half.
 | `INSERT_END_WALL` | 1.6 | insert end walls |
 | `INSERT_CORNER_RADIUS` | 3.0 | trapezoid corner radius |
 | `TOP_EXTRA_WIDTH` | 0.0 | widen the top flat (for the groove margin) |
-| `TIP_GRIP` | 11.0 | tip protrusion past insert A's split face |
+| `TIP_GRIP` | 21.0 | tip protrusion past insert A's split face (11 was too little to pull them out, real print) |
+| `TIP_LIFT` | 10.0 | spare tips sit this far above the cavity floor (PETG under their base); with `TIP_GRIP` + 10 the split stays put |
 | `KEY_LEG_ANGLE` | -15.0 | short leg, degrees from horizontal (negative = down). The brainstorm sketch had −35°, but with the key resting just above the iron (as modelled) −35° hits the iron; −20°…−5° fit. |
 | `KEY_LEG_SIDE` | 1 | +1 / −1: which side the short leg points to |
 | `POCKET_CLEARANCE` | 1.0 | pocket around the short leg |
 | `KEY_FUNNEL_ANGLE` / `_DEPTH` | 20° / 6 | funnel at the short-leg pocket's mouth in insert B: the pocket swept ±angle round the key's axis at B's face, back to 0 over the depth (TAPER_STEP slices); comes up to `KEY_FUNNEL_WALL` (0.9, two print lines; one line let the seam open a hole) from insert B's surface, never through it. PETG next to pocket/funnel narrower than 2 × `MIN_PRINT_WALL` (spikes between them and other channels) is shaved off |
+| `VENT_DIAMETER` | 2.0 | vent on the iron's axis through insert B's end wall, from the iron bore's end into the band channel (the case sucked a vacuum when opened); hidden behind the band |
 | `MIN_PRINT_WALL` | 0.45 | one print line of a 0.4 nozzle; PETG next to the key pocket narrower than two is shaved off |
 | `KEY_FUNNEL_WALL` | 2 × `MIN_PRINT_WALL` | wall between the key funnel and insert B's outside |
 | `MAGNET_DIAMETER` / `_THICKNESS` / `_CLEARANCE` | 3 / 2 / 0.1 | click-shut magnets (not a drop guard), glued into holes in both insert faces, opposite poles facing |
@@ -149,6 +151,7 @@ the cap half.
   + `CAVITY_LENGTH` (≈ 172.8).
 - `TIP_END_X` = cavity start + `ITEM_END_CLEARANCE` + `TIP_LENGTH`
   (all four tips start at the cavity start).
+- `TIP_START_X` = `ITEM_START_X` + `TIP_LIFT`; `TIP_END_X` = `TIP_START_X` + `TIP_LENGTH`.
 - `INSERT_SPLIT_X` = `TIP_END_X` − `TIP_GRIP` (≈ 87.9).
 - `SHELL_SPLIT_X` = `INSERT_SPLIT_X` − `OVERLAP` (≈ 65.9).
 - Key: short leg at x = `TIP_END_X` + `ITEM_CLEARANCE`; long leg runs back

@@ -381,3 +381,25 @@ def test_inserts_print_face_is_flat_no_bridge(name, face, inward):
     # on the bed: (almost) all of the deeper layer is already there
     assert on_bed > 0.85 * higher
     assert on_bed < insert_profile().area
+
+
+
+def test_vent_runs_from_the_iron_bore_into_the_band_channel():
+    """Through insert B's end wall on the iron's axis: open from the end of
+    the iron's bore into the band channel, inside the band's width and its
+    straight run (so the band covers it, seen through the logo)."""
+    from shapely.geometry import Point
+
+    from cad.band import ring_section, straight_run_z
+    from cad.contents import iron_axis
+
+    y, z = iron_axis()
+    r = p.VENT_DIAMETER / 2
+    core = Point(y, z).buffer(r - 0.1)
+    # no PETG anywhere along the hole through the end wall
+    assert not _hits(core, p.CAVITY_END_X - 0.5, p.INSERT_END_X, insert_b())
+    # it ends in the band channel, hidden behind the band
+    assert abs(y) + r <= BAND_HALF_WIDTH
+    lo, hi = straight_run_z()
+    assert lo <= z - r and z + r <= hi
+    assert ring_section().contains(Point(p.INSERT_END_X + 0.1, z))

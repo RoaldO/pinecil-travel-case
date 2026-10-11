@@ -61,7 +61,12 @@ op de schouder van 6,5 naar 11,35. Die schouder ligt 0,4 dieper dan het
 zitvlak in het model (ook in de lengte 0,4 speling), dus de punt zakt 0,4
 door en er blijft 0,6 vrij onder de voet. Het brede
 deel van het kanaal is minstens 6 mm diep (`TIP_COLLAR_MIN_DEPTH`); nu is het
-ruim 44 mm, tot aan de snede van inzetstuk A.
+~35 mm, tot aan de snede van inzetstuk A.
+
+De punten zitten **10 mm boven de bodem van de holte** (`TIP_LIFT`), met
+PETG onder hun voet. Met de voet helemaal onderin staken ze maar 11 mm uit
+inzetstuk A en zakten ze zo diep weg dat ze er niet meer uit te krijgen
+waren (echte print, 2026-10-11).
 
 Na de kraag is het breedste stuk de huls om het verwarmingselement:
 **ø 5,5**. Alles daarna tot aan het werkende eind past daarbinnen, hoe de
@@ -182,9 +187,10 @@ kant).
 Om open te kunnen wordt alles doorgesneden, maar **buitendeel en inzetstuk op
 een andere plek**:
 
-- Het **inzetstuk** wordt zo doorgesneden dat de punten **11 mm uit
-  inzetstuk A steken** (`TIP_GRIP`) — dan kun je ze pakken. De bout steekt
-  nog verder uit.
+- Het **inzetstuk** wordt zo doorgesneden dat de punten **21 mm uit
+  inzetstuk A steken** (`TIP_GRIP`) — dan kun je ze pakken. (Eerst 11: te
+  weinig om ze eruit te krijgen; de punten zijn 10 mm opgetild, de snede
+  bleef op zijn plek.) De bout steekt nog verder uit.
 - Het **buitendeel** wordt **20 mm eerder** doorgesneden (`OVERLAP`). Zo
   steekt inzetstuk A 20 mm uit zijn buitendeel en schuift het bij het
   dichtdoen in buitendeel B. Dat lijnt de helften uit.
@@ -224,7 +230,7 @@ netjes op elkaar aansluiten — de buitendelen raken elkaar altijd eerst.
 ### Het inbussleuteltje
 
 Een gewoon L-vormig inbussleuteltje. De **lange poot** steekt in een gaatje in
-inzetstuk A, tussen de twee bovenste punten (~33 van de 46 mm zit erin). De
+inzetstuk A, tussen de twee bovenste punten (~23 van de 46 mm zit erin). De
 **haakse poot** blijft buiten inzetstuk A, net voorbij de uiteinden van de
 punten: als de koker open is ligt hij **helemaal vrij** en is hij je grip om
 het sleuteltje eruit te trekken.
@@ -253,7 +259,7 @@ trechter geen gewone verwijding maar **draait hij mee om die as**: aan de
 voorkant van B neemt het kuiltje de poot op tot **20° verdraaid** naar elke
 kant, en over **6 mm** diepte loopt dat terug naar 0°, daarna is het het
 gewone kuiltje. Bij het dichtschuiven draait de trechter de poot zo vanzelf
-recht. De poot komt pas ~11 mm voor het dichtgaan in het kuiltje, dus die
+recht. De poot komt pas ~21 mm voor het dichtgaan in het kuiltje, dus die
 6 mm is er ruim.
 
 De trechter mag aan de voorkant tot vlak bij de buitenkant van inzetstuk B
@@ -365,6 +371,19 @@ het magneetje. Wat er toch draait vangt de trechter op.
 - Een test bewaakt 1,2 PETG rondom elk gaatje (ook tot trechter en
   uitlijngroefje) en ≥ 8 mm tot de buitenste helft van de haakse poot
   (`MAGNET_KEY_DISTANCE`).
+
+### Ontluchting
+
+De koker sluit zo goed dat hij bij het openen vacuüm zoog (echte print,
+2026-10-11). Daarom zit er een **gaatje van ø 2** (`VENT_DIAMETER`) in de
+eindwand van inzetstuk B, op de as van de bout: van het uiterste eind van het
+kanaal van de bout (bij de punt) recht naar achteren, tot in het bandkanaal
+achter de kopse kant. Het kanaal van de bout staat via de spleet tussen de
+inzetstukken in verbinding met de hele holte; het bandkanaal staat open naar
+buiten waar de band in- en uitgaat. Bij het openen komt de lucht dus langs
+het klittenband naar binnen. Het gaatje ligt binnen de bandbreedte: door het
+logo kijkend zie je de band, niet het gaatje. Inzetstuk B print met dat
+uiteinde op het bed, dus het gaatje staat rechtop.
 
 ### Het klittenband
 

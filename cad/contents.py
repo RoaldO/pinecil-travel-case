@@ -5,8 +5,9 @@ Cross-section layout B (looking along X; Y across, Z up):
     bottom row:  tip  iron  tip      (bottoms level, on the insert floor)
     top row:     tip  key   tip      (top tips dropped onto the bottom row)
 
-Along X every item starts at ``ITEM_START_X`` with its base: the tips' white
-rings and the iron's handle lie deep in half A. The L-shaped hex
+Along X the iron starts at ``ITEM_START_X`` and the spare tips TIP_LIFT higher
+at ``TIP_START_X``, each with its base (the iron's handle, the tips' white
+rings) deep in half A. The L-shaped hex
 key's short leg sits just past the tip ends, angled ``KEY_LEG_ANGLE`` down to
 ``KEY_LEG_SIDE``.
 
@@ -187,7 +188,7 @@ def layout() -> dict[str, Item]:
     tip_tr = _drop(lambda z: _circle(top_y, z, p.TIP_DIAMETER), placed)
     key = _drop(lambda z: _circle(0, z, p.KEY_HEX_CORNERS), placed + [tip_tl, tip_tr])
 
-    tips = (p.ITEM_START_X, p.TIP_END_X)
+    tips = (p.TIP_START_X, p.TIP_END_X)
     return {
         "iron": Item("iron", iron, p.ITEM_START_X, p.ITEM_START_X + p.IRON_LENGTH),
         "tip_bl": Item("tip_bl", tip_bl, *tips),

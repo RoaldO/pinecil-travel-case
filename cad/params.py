@@ -121,7 +121,11 @@ INSERT_END_WALL = 1.6  # insert end walls
 INSERT_CORNER_RADIUS = 3.0  # rounded-trapezoid corners
 TOP_EXTRA_WIDTH = 0.0  # widen the top flat (e.g. for more margin beside the groove)
 
-TIP_GRIP = 11.0  # tips protrude this far past insert A's split face
+TIP_GRIP = 21.0  # tips protrude this far past insert A's split face
+# The spare tips sit this far above the cavity floor: with their base at the
+# floor they protruded only 11 and sank too deep to pull out (real print,
+# 2026-10-11). Lifting them keeps the split (and the shells) where they were.
+TIP_LIFT = 10.0
 KEY_LEG_ANGLE = -15.0  # short leg, degrees from horizontal (negative = down)
 KEY_LEG_SIDE = 1  # +1 / -1: which side (Y) the short leg points to
 POCKET_CLEARANCE = 1.0  # pocket in insert B around the short leg
@@ -144,6 +148,11 @@ MAGNET_CLEARANCE = 0.1  # radial, and extra hole depth (never sticks out)
 # Min from a magnet hole to the outer half of the short leg: a pull near the
 # key's axis has no lever to turn it, a pull on the leg's far end does.
 MAGNET_KEY_DISTANCE = 8.0
+# Vent: the case fits so well it sucked a vacuum when opened (real print,
+# 2026-10-11). A hole on the iron's axis through insert B's end wall, from
+# the end of the iron's bore into the band channel behind the end cap: air
+# comes in along the velcro, and seen through the logo the band hides it.
+VENT_DIAMETER = 2.0
 # One print line of a 0.4 nozzle: the unit for thin walls. PETG next to the
 # key pocket narrower than two of these is shaved off.
 MIN_PRINT_WALL = 0.45
@@ -216,9 +225,10 @@ CAVITY_END_X = CAVITY_START_X + CAVITY_LENGTH
 CASE_LENGTH = CAVITY_END_X + INSERT_END_WALL + RING_END + END_CAP_THICKNESS
 INSERT_END_X = CASE_LENGTH - INSERT_START_X
 
-ITEM_START_X = CAVITY_START_X + ITEM_END_CLEARANCE  # iron and all tips start here
-TIP_END_X = ITEM_START_X + TIP_LENGTH
-TIP_COLLAR_X = ITEM_START_X + TIP_BASE_LENGTH  # rests here
+ITEM_START_X = CAVITY_START_X + ITEM_END_CLEARANCE  # the iron starts here
+TIP_START_X = ITEM_START_X + TIP_LIFT  # the spare tips' base
+TIP_END_X = TIP_START_X + TIP_LENGTH
+TIP_COLLAR_X = TIP_START_X + TIP_BASE_LENGTH  # rests here
 INSERT_SPLIT_X = TIP_END_X - TIP_GRIP
 SHELL_SPLIT_X = INSERT_SPLIT_X - OVERLAP
 

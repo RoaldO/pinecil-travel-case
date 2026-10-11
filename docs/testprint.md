@@ -262,3 +262,16 @@ de retractie. Wat hier uitkomt, gebruik je ook voor de echte inzetstukken.
 laaghechting geweldig en is de stringing weg. **240 °C blijft**, ook voor
 de echte inzetstukken. De naad (seam) is niet perfect, maar even schuren is
 genoeg: de buitenkant van de inzetstukken wordt tegen het PLA gelijmd.
+
+### Echte print, inzetstukken — 2026-10-11
+
+De losse punten zakten zo diep weg in inzetstuk A (11 mm uitsteken) dat ze
+er niet meer uit te krijgen waren. → punten **10 mm opgetild**
+(`TIP_LIFT`), steken nu 21 uit (`TIP_GRIP`). De snede en de buitendelen
+blijven gelijk; **beide inzetstukken opnieuw printen** (de puntkanalen,
+het sleuteltje en zijn kuiltje schuiven 10 mm mee).
+
+De koker sluit zo mooi dat hij bij het openen vacuüm zuigt. → ontluchtings-
+gaatje ø 2 (`VENT_DIAMETER`) door de eindwand van inzetstuk B, van het eind
+van het kanaal van de bout naar het bandkanaal (verstopt achter de band).
+Alleen inzetstuk B verandert hierdoor.

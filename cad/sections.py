@@ -77,8 +77,8 @@ def render() -> Path:
     yz = lambda v: (v.Y, v.Z)  # noqa: E731
     first_step = p.TIP_BASE_STEPS[0][0]
     cross = [
-        (p.ITEM_START_X + first_step / 2, "punt-voet ø%g" % p.TIP_BASE_STEPS[0][1]),
-        (p.ITEM_START_X + first_step + p.TIP_BASE_STEPS[1][0] / 2,
+        (p.TIP_START_X + first_step / 2, "punt-voet ø%g" % p.TIP_BASE_STEPS[0][1]),
+        (p.TIP_START_X + first_step + p.TIP_BASE_STEPS[1][0] / 2,
          "punt-voet ø%g" % p.TIP_BASE_STEPS[1][1]),
         ((p.TIP_COLLAR_X + p.SHELL_SPLIT_X) / 2, "kraag"),
         ((p.SHELL_SPLIT_X + p.INSERT_SPLIT_X) / 2, "overlap"),

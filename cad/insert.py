@@ -26,7 +26,8 @@ from shapely.ops import unary_union
 
 from cad import params as p
 from cad.band import BAND_HALF_WIDTH, ring_section, ring_solid
-from cad.contents import key_axis, key_short_leg_line, key_short_leg_section, pieces
+from cad.contents import (iron_axis, key_axis, key_short_leg_line, key_short_leg_section,
+                          pieces)
 from cad.profile import channel_sections, insert_profile, magnet_section
 from cad.solids import below_x, chamfer_cutter, extrude_x, extrude_y
 
@@ -74,7 +75,8 @@ def bore_pieces(name: str) -> list[tuple[float, float, BaseGeometry]]:
                                p.ARC_QUAD_SEGMENTS))
              for i, (x0, x1, s) in enumerate(pieces(name, keep_out=True))]
     first, last = items[0], items[-1]
-    items[0] = (p.CAVITY_START_X, first[1], first[2])
+    # the base end: ITEM_END_CLEARANCE of room under it, PETG below that
+    items[0] = (first[0] - p.ITEM_END_CLEARANCE, first[1], first[2])
     items[-1] = (last[0], min(last[1] + p.ITEM_END_CLEARANCE, p.CAVITY_END_X), last[2])
     split, c, eps = p.INSERT_SPLIT_X, p.ITEM_CLEARANCE, 1e-9
     out = []
@@ -196,6 +198,14 @@ def edge_chamfer(face: float, size: float, inward: int) -> Part:
                           resolution=p.ARC_QUAD_SEGMENTS)
 
 
+def vent_hole() -> Part:
+    """Hole on the iron's axis through insert B's end wall: from the end of
+    the iron's bore into the band channel behind the end cap."""
+    y, z = iron_axis()
+    section = Point(y, z).buffer(p.VENT_DIAMETER / 2, p.ARC_QUAD_SEGMENTS)
+    return extrude_x(section, p.CAVITY_END_X - 1, p.INSERT_END_X + 1)
+
+
 @cache
 def insert_a() -> Part:
     """Insert A stops INSERT_SPLIT_GAP short of insert B, so the shells
@@ -212,6 +222,6 @@ def insert_a() -> Part:
 @cache
 def insert_b() -> Part:
     """Its face carries the magnet holes opposite insert A's; chamfered on
-    the face it prints on (its outer end)."""
+    the face it prints on (its outer end); vented through its end wall."""
     return (insert_solid() - below_x(p.INSERT_SPLIT_X) - magnet_holes_b()
-            - edge_chamfer(p.INSERT_END_X, p.INSERT_BED_CHAMFER, -1))
+            - edge_chamfer(p.INSERT_END_X, p.INSERT_BED_CHAMFER, -1) - vent_hole())
