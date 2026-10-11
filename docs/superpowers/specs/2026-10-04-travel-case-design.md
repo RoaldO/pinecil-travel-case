@@ -103,8 +103,8 @@ the cap half.
 | `SHELL_SIDE_WALL` | 1.6 | |
 | `SHELL_FLOOR` | 1.2 | PLA left under a groove |
 | `END_CAP_THICKNESS` | 2.0 | logo depth |
-| `GLUE_CLEARANCE` | 0.2 | insert → own shell half |
-| `SLIDE_CLEARANCE` | 0.2 | insert A → shell B (overlap) |
+| `GLUE_CLEARANCE` | 0.1 | insert → own shell half (0.2 printed too loose, test round 3) |
+| `SLIDE_CLEARANCE` | 0.1 | insert A → shell B (overlap; 0.2 printed too loose, test round 3) |
 | `OVERLAP` | 20.0 | insert A protrusion from shell A |
 | `INSERT_SPLIT_GAP` | 0.5 | axial gap between insert A and B when closed, so glue/print tolerance never stops the shells from meeting |
 | `INSERT_BED_CHAMFER` | 0.6 | 45° round each insert's outer edge on the face it prints on (its outer end, leading into its shell half; takes up elephant's foot) |

@@ -148,8 +148,8 @@ Alle spelingen staan in `cad/params.py`. Waar zit het, en welke knop:
 |---|---|---|
 | punt in zijn kanaal, bout in zijn kanaal, gaatje sleuteltje | te strak / te los | `ITEM_CLEARANCE` (0,4, rondom) |
 | ruimte rond knopjes en display van de bout | tikt / haakt | `IRON_CONTROL_CLEARANCE` (1,0 extra) |
-| inzetstuk A in buitendeel B (de overlap) | schuift zwaar / spel | `SLIDE_CLEARANCE` (0,2) |
-| inzetstuk in zijn eigen buitendeel (lijmen) | klemt / te ruim | `GLUE_CLEARANCE` (0,2) |
+| inzetstuk A in buitendeel B (de overlap) | schuift zwaar / spel | `SLIDE_CLEARANCE` (0,1) |
+| inzetstuk in zijn eigen buitendeel (lijmen) | klemt / te ruim | `GLUE_CLEARANCE` (0,1) |
 | magneetje in zijn gaatje | past niet / te los | `MAGNET_CLEARANCE` (0,1, ook extra diepte) |
 | inloop overlap | haakt bij het dichtdoen | `SHELL_B_MOUTH_CHAMFER` (0,6), `INSERT_A_LEAD_IN` (0,3) |
 | inzetstuk in buitendeel bij het lijmen | haakt, olifantenvoet | `INSERT_BED_CHAMFER` (0,6) |
@@ -226,7 +226,26 @@ in ronde 3: daarin zitten de eindstops).
 Het wandje tussen de trechter en de buitenkant van inzetstuk B was één
 printlijn (0,45); de naad trok daar steeds een gat in, welke naadinstelling
 ook. → **twee printlijnen** (`KEY_FUNNEL_WALL` 0,9). Plakje 3 opnieuw
-printen om het te controleren.
+printen om het te controleren. → **Plakje 3 opnieuw geprint: helemaal goed.**
+
+### 4b opnieuw — zonder brug, PETG 240 °C, 2026-10-10
+
+Ziet er goed uit: het grondvlak print vlak, de PLA-eindstops maken de brug
+overbodig. Lijmpassing en eindstops volgen met 4a in ronde 3.
+
+### Ronde 3 — plakje 2b + 4a, PLA, 2026-10-10
+
+Beide passingen (2a in 2b, 4b in 4a) hebben te veel speling. Gemeten:
+
+| | Model | Geprint | Verschil |
+|---|---|---|---|
+| inzetstuk (hoogte) | 34,02 | 33,9 | −0,12 |
+| holte buitendeel (hoogte) | 34,42 | 34,2 | −0,22 |
+| speling samen | 0,40 | 0,30 | |
+
+Netto print de speling 0,1 kleiner dan het model. → `SLIDE_CLEARANCE` en
+`GLUE_CLEARANCE` van 0,2 naar **0,1** per kant (verwacht geprint ~0,1
+samen). 2b en 4a opnieuw printen.
 
 ### Printinstellingen PETG
 

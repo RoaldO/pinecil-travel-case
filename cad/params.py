@@ -160,8 +160,11 @@ KEY_ALIGN_GROOVE_DEPTH = 0.6
 SHELL_SIDE_WALL = 1.6
 SHELL_FLOOR = 1.2  # PLA left under a velcro groove
 END_CAP_THICKNESS = 2.0  # the logo is cut through this
-GLUE_CLEARANCE = 0.2  # insert -> its own shell half
-SLIDE_CLEARANCE = 0.2  # insert A -> shell B, in the overlap
+# Test print round 3 (2026-10-10): at 0.2 the gap printed 0.3 in all (the
+# insert prints 0.12 small, the shell's cavity 0.22) — too loose. At 0.1 it
+# should print ~0.1 in all.
+GLUE_CLEARANCE = 0.1  # insert -> its own shell half
+SLIDE_CLEARANCE = 0.1  # insert A -> shell B, in the overlap
 OVERLAP = 20.0  # insert A protrudes this far from shell A
 # Axial gap left between insert A and insert B when the case is closed, so
 # print/glue tolerance on the inserts can never stop the shells from closing.
