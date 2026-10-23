@@ -8,6 +8,8 @@ Pinecil logo (the PINE64 pinecone) is cut through the cap, with the velcro
 showing through it.
 
 It prints in **four parts, all PETG, no supports**, on a 180 × 180 mm bed.
+Ready-to-print STLs and photos:
+[Printables](https://www.printables.com/model/1887698-pinecil-v2-travel-case-iron-4-spare-tips-hex-key).
 
 **Tracking:** `TODO.md` in this repo. The model in plain language (Dutch):
 [`docs/model.md`](docs/model.md). Decisions and acceptance criteria: the
